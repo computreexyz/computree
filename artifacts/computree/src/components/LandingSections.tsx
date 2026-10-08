@@ -36,13 +36,14 @@ function SectionIntro({ label, title, body, id, dark = false }: { label?: string
 }
 
 function Artwork({ src, alt, className = '', loading = 'lazy' }: { src: string; alt: string; className?: string; loading?: 'eager' | 'lazy' }) {
-  return <img className={`art ${className}`} src={src} alt={alt} loading={loading} />;
+  return <img className={`art ${className}`} src={src} alt={alt} loading={loading} draggable={false} />;
 }
 
 export function Hero() {
   return (
     <>
       <section className="hero" id="top">
+        <div className="hero-background-art" aria-hidden="true" data-protect-media />
         <div className="hero-backdrop-grid" aria-hidden="true" />
         <div className="container hero-content">
           <div className="hero-copy reveal">
@@ -57,7 +58,7 @@ export function Hero() {
             </div>
           </div>
           <div className="hero-art-wrap">
-            <Artwork src="/hero-tree.webp" alt="A sculptural computational tree made from circuit branches and GPU infrastructure modules" className="hero-art" loading="eager" />
+            <Artwork src="/hero-tree-supplied.webp" alt="A sculptural computational tree made from circuit branches and GPU infrastructure modules" className="hero-art" loading="eager" />
             <svg className="hero-art-lines" viewBox="0 0 500 500" aria-hidden="true"><path d="M42 115h64v70h60m235 73h-72v78h-86" /><circle cx="106" cy="115" r="3" /><circle cx="329" cy="336" r="3" /></svg>
           </div>
         </div>
