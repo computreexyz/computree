@@ -1,4 +1,4 @@
-# 10 Detailed Computree Discord Posts
+# 7 Detailed Computree Discord Posts
 
 Each numbered section is a complete, standalone English Discord message. The heading is part of the post. These are written for a technically informed community; planned components are explicitly distinguished from verified, live functionality.
 
@@ -60,24 +60,3 @@ A production worker still needs a specified model version, runtime configuration
 
 ---
 
-## 08 — A successful API response does not prove that a production GPU workload executed.
-
-An HTTP health check can prove that a server responded. An API request can prove that a route accepted input. A CPU test can prove part of the job flow. None of those results, by themselves, prove that a production GPU worker ran the requested workload.
-
-Before claiming GPU availability, a build report should identify what was actually tested and provide verifiable job evidence: the job state, execution source, timestamps, and measured resource usage where available. Demo responses and mock dashboard values should not be presented as GPU runs. What minimum evidence would you expect in a public infrastructure test?
-
----
-
-## 09 — Demo dashboards and production telemetry need visibly different labels and data sources.
-
-A dashboard can look convincing while showing sample values. To avoid confusing a prototype with an operating service, demo jobs, simulated balances, and illustrative capacity figures need persistent labels. Live job counts, usage, provider payments, and GPU availability should only appear when they come from a defined and verifiable source.
-
-For each metric, the implementation should make clear what is measured, where it comes from, and when it was last updated. This is a transparency requirement, not a claim that production telemetry is already connected. Which metric would you want to trace from the dashboard back to its underlying record?
-
----
-
-## 10 — A queued request is not the same as a workload executing on multiple GPUs in parallel.
-
-An API may accept several requests while a worker processes them one at a time. That is different from having multiple workers execute GPU workloads concurrently. A useful status model should distinguish queued, running, completed, and failed jobs; capacity reporting should also distinguish configured workers from workers actually executing jobs.
-
-Parallel execution should only be claimed after concurrent workloads have been measured on separate available workers. Until then, queue depth and worker count are not evidence of parallel GPU throughput. For your workloads, which matters more: predictable queue behavior, lower latency, or measured parallel capacity?
