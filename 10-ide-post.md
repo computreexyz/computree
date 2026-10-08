@@ -1,107 +1,85 @@
-# 10 Ide Post — Computree
+# 10 Computree Discord Posts
 
-Bank ide konten berbahasa Indonesia. Setiap ide berisi hook, angle, format, dan CTA. Ini masih ide/draft, bukan klaim produk yang siap dipublikasikan.
-
-## Catatan status produk
-
-Landing page Computree sudah ada, tetapi API compute, worker GPU, integrasi provider, dan alokasi produksi belum dibuktikan berjalan. Gunakan kata seperti **rancangan**, **target MVP**, atau **sedang diuji** sampai ada bukti operasional. Jangan mengarang angka alokasi, harga, jumlah GPU, transaksi, SLA, atau ketersediaan provider.
+Each numbered section is a complete, standalone English message. Paste the heading and message together. Product and infrastructure capabilities are described as planned unless they have been verified.
 
 ---
 
-## 01 — GPU compute tanpa harus membeli hardware
+## 01 · What we're building
 
-- **Audiens:** developer, startup, dan tim produk.
-- **Hook:** “Akses GPU seharusnya tidak dimulai dengan membeli GPU.”
-- **Angle:** Bahas hambatan umum—biaya awal perangkat, kapasitas yang sulit diperkirakan, dan pengalaman berpindah antarprovider. Perkenalkan ide compute sebagai resource yang bisa diakses lewat infrastruktur, bukan janji penghematan.
-- **Format:** Carousel LinkedIn 4 slide: hambatan → dampak → pendekatan access layer → pertanyaan.
-- **CTA:** “Apa hambatan terbesar tim Anda saat membutuhkan GPU?”
-- **Batas klaim:** Jangan menyatakan Computree sudah menyediakan kapasitas atau lebih murah dari penyedia lain.
+Hey everyone — Computree is being designed as an access layer for NVIDIA GPU compute. The goal is to make network-acquired compute available through a programmable API, so applications can focus on what they want to build.
 
-## 02 — Computree bukan chatbot
+The API and provider flow are still being validated, so this isn't a live compute service yet. What would you like us to explain first?
 
-- **Audiens:** calon pengguna dan builder aplikasi AI.
-- **Hook:** “Computree bukan chatbot lain—ini rancangan access layer untuk compute GPU.”
-- **Angle:** Bedakan aplikasi yang dipakai pengguna dari infrastruktur yang menjalankan workload. Jelaskan peran API sebagai antarmuka, sementara aplikasi tetap menentukan pengalaman dan kegunaannya.
-- **Format:** Diagram berlapis: aplikasi → API Computree → infrastruktur compute.
-- **CTA:** “Aplikasi apa yang seharusnya bisa memakai compute lewat API?”
-- **Batas klaim:** Gambarkan sebagai konsep produk sampai alur API nyata berhasil diuji.
+---
 
-## 03 — Perjalanan satu request sampai kembali ke aplikasi
+## 02 · The problem we're exploring
 
-- **Audiens:** engineer dan orang yang ingin memahami arsitektur.
-- **Hook:** “Satu request bisa melewati lebih banyak daripada satu API call.”
-- **Angle:** Visualisasikan target alur: aplikasi → API Computree → job dan alokasi → requestor Golem → worker Qwen/Ollama → hasil kembali ke aplikasi.
-- **Format:** Diagram arsitektur atau thread singkat, satu langkah per panel.
-- **CTA:** “Bagian mana dari alur ini yang ingin Anda lihat dijelaskan lebih detail?”
-- **Batas klaim:** Labeli diagram sebagai alur yang direncanakan; jangan tampilkan seolah sudah berjalan di produksi.
+GPU compute can involve hardware decisions, provisioning, cloud accounts, and fragmented providers. We're exploring whether an access layer can make that workflow simpler—not claiming those trade-offs are solved yet.
 
-## 04 — Saldo token, alokasi compute, dan biaya provider bukan hal yang sama
+What's the biggest source of friction for your team: setup, availability, cost visibility, or something else?
 
-- **Audiens:** pemegang token dan pengguna produk compute.
-- **Hook:** “Saldo token, alokasi compute, dan biaya provider bukan hal yang sama.”
-- **Angle:** Jelaskan bahwa ketiganya punya satuan dan sumber data berbeda. Tunjukkan mengapa aturan eligibility, unit kredit, pemakaian, dan pembayaran perlu didefinisikan terpisah.
-- **Format:** Carousel edukasi dengan tiga kolom: saldo, alokasi, pembayaran.
-- **CTA:** “Data apa yang perlu terlihat agar penggunaan compute terasa transparan?”
-- **Batas klaim:** Jangan memberi threshold eligibility, rumus alokasi, nilai konversi, atau harga sebelum aturan resminya ditetapkan.
+---
 
-## 05 — Satu API untuk menghubungkan aplikasi
+## 03 · Not another chatbot
 
-- **Audiens:** developer aplikasi dan pengguna Open WebUI.
-- **Hook:** “Bagaimana kalau aplikasi tidak harus memilih provider GPU satu per satu?”
-- **Angle:** Perkenalkan tujuan API Computree dan gagasan memisahkan aplikasi dari adapter provider. Open WebUI direncanakan sebagai integrasi awal; aplikasi lain, termasuk LibreChat, perlu dites sebelum dukungannya diumumkan.
-- **Format:** Diagram aplikasi → API Computree → provider; atau post tanya-jawab teknis.
-- **CTA:** “Aplikasi mana yang paling berguna untuk diuji setelah Open WebUI?”
-- **Batas klaim:** Jangan mengatakan aplikasi sudah terhubung atau semua endpoint kompatibel sebelum pengujian berhasil.
+Computree isn't being designed as another AI chat interface. The focus is the infrastructure behind an app: API access, job handling, provider orchestration, and returning results to the caller.
 
-## 06 — Mengapa mulai dari satu adapter provider
+What would you want a compute-access product to do that your current setup doesn't?
 
-- **Audiens:** engineer infrastruktur dan builder jaringan compute.
-- **Hook:** “Kenapa mulai dengan satu provider sebelum membangun jaringan multi-provider?”
-- **Angle:** Bahas manfaat membuktikan satu alur end-to-end terlebih dahulu: kontrak API, lifecycle job, pengukuran pemakaian, dan penanganan kegagalan. Golem adalah kandidat integrasi awal dalam rencana, bukan klaim provider aktif.
-- **Format:** Carousel “satu jalur yang terbukti” dibanding diagram banyak integrasi yang belum diuji.
-- **CTA:** “Kriteria apa yang paling penting saat memilih provider compute?”
-- **Batas klaim:** Jangan menjanjikan jumlah provider, kapasitas, harga, atau ketersediaan GPU Golem.
+---
 
-## 07 — Qwen adalah model; Ollama adalah runtime
+## 04 · The request path we're working toward
 
-- **Audiens:** pengguna model open source dan engineer AI.
-- **Hook:** “Qwen adalah model; Ollama adalah runtime—keduanya berbeda.”
-- **Angle:** Terangkan perbedaan peran model dan runtime, lalu tunjukkan bagaimana keduanya dapat menjadi bagian dari worker pada rancangan sistem.
-- **Format:** Kartu istilah atau carousel: model → runtime → worker → API.
-- **CTA:** “Istilah infrastruktur AI apa lagi yang sering membingungkan?”
-- **Batas klaim:** Jangan mengklaim model produksi, ukuran model, spesifikasi GPU, atau runtime worker sudah diputuskan.
+The target MVP flow is:
 
-## 08 — Testnet bukan bukti GPU produksi
+`Open WebUI → Computree API → job/allocation → Golem requestor → GPU worker (Qwen + Ollama) → response`
 
-- **Audiens:** developer Web3 dan pembaca yang mengevaluasi klaim teknis.
-- **Hook:** “Lolos uji testnet bukan bukti GPU produksi sudah tersedia.”
-- **Angle:** Jelaskan perbedaan antara membuktikan sebagian alur requestor dan membuktikan workload GPU pada jaringan produksi. Tekankan bahwa klaim perlu didukung tes dan status provider yang aktual.
-- **Format:** Carousel “apa yang dibuktikan / apa yang belum dibuktikan”.
-- **CTA:** “Bukti teknis apa yang Anda harapkan sebelum percaya klaim compute GPU?”
-- **Batas klaim:** Rencana produk mencatat testnet Golem sebagai jalur CPU, bukan bukti GPU. Periksa dokumentasi Golem terkini sebelum menerbitkan detail teknis.
+This is a planned architecture, not a production integration yet. Which step should we unpack first?
 
-## 09 — Bedakan data demo dan data produksi
+---
 
-- **Audiens:** calon pengguna, komunitas, dan orang yang mengikuti proses pembangunan produk.
-- **Hook:** “Angka demo tidak boleh disamarkan sebagai data produksi.”
-- **Angle:** Ceritakan prinsip transparansi: label demo harus jelas, transaksi tidak boleh dibuat-buat, dan data live hanya ditampilkan jika ada sumber yang dapat diverifikasi.
-- **Format:** Post build-in-public dengan perbandingan contoh label “Demo” dan “Live”.
-- **CTA:** “Informasi apa yang harus bisa diverifikasi pada dashboard compute?”
-- **Batas klaim:** Jangan menyebut metrik demo sebagai penggunaan, pembayaran, atau kapasitas nyata.
+## 05 · Balance, allocation, and payment are different
 
-## 10 — Job dalam antrean belum tentu berjalan paralel
+The proposed access model keeps three things separate: $CTREE eligibility, compute allocation, and provider payments. Their units and sources of truth need to be defined independently; we don't have finalized thresholds or conversion figures to share yet.
 
-- **Audiens:** engineer, pengguna API, dan tim yang menjalankan workload.
-- **Hook:** “Beberapa job di antrean belum berarti beberapa GPU bekerja bersamaan.”
-- **Angle:** Bedakan penerimaan request paralel, antrean job, dan eksekusi GPU yang benar-benar simultan. Jelaskan mengapa status queued/running dan jumlah worker harus dilaporkan dengan jujur.
-- **Format:** Diagram dua keadaan: beberapa job menunggu satu worker vs beberapa worker aktif.
-- **CTA:** “Untuk workload Anda, mana yang lebih penting: waktu tunggu yang jelas atau eksekusi paralel?”
-- **Batas klaim:** Jangan mengiklankan parallel compute sebelum jumlah worker dan eksekusi bersamaan dibuktikan.
+What should a usage dashboard show to feel transparent?
 
-## Referensi untuk pengecekan sebelum publikasi
+---
 
-- [Rencana produk Computree](.local/conversation-workspace/files/fullplan.md)
-- [Golem: menjalankan model AI pada Golem Network](https://docs.golem.network/docs/creators/javascript/tutorials/AI-on-golem-network)
-- [Golem: testnet, mainnet, alamat, dan wallet](https://docs.golem.network/docs/golem/overview/testnet-mainnet)
-- [Open WebUI: koneksi OpenAI-compatible provider](https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/starting-with-openai-compatible/)
+## 06 · Which app should we test?
 
+Open WebUI is the first client planned for integration. LibreChat is also on our test list, but we won't call it supported until compatibility has been verified.
+
+Which app would be most useful for us to test next—and what workflow should that test cover?
+
+---
+
+## 07 · Why start with one provider?
+
+The MVP plan evaluates Golem as the first provider-adapter candidate. The goal is to prove one request path end to end before talking about a wider network. Provider availability, pricing, and production GPU execution still need verification.
+
+What evidence would you expect before trusting a provider integration?
+
+---
+
+## 08 · Qwen and Ollama do different jobs
+
+Quick stack distinction: Qwen is the model; Ollama is a runtime used to serve models. They sit at different layers of the proposed worker setup.
+
+Would a short diagram of `model → runtime → worker → API` be useful?
+
+---
+
+## 09 · Demo data isn't production evidence
+
+A mock dashboard, CPU response, or successful API request alone doesn't prove a production GPU job ran.
+
+We'll keep demo values labeled and share GPU availability only when it's backed by a verifiable run. What proof would you want to see in a build update?
+
+---
+
+## 10 · Queued isn't the same as parallel
+
+Several jobs in a queue don't mean several GPUs are running them at once. The design distinguishes `queued`, `running`, and genuinely parallel GPU execution.
+
+Which matters more for your workloads: a clear wait state or simultaneous workers?
