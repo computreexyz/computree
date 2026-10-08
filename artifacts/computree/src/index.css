@@ -213,12 +213,17 @@ svg,
 canvas,
 video,
 [data-protect-media] { -webkit-user-drag: none; -webkit-user-select: none; -webkit-touch-callout: none; user-select: none; }
-.hero-trust { position: relative; z-index: 1; display: flex; align-items: center; gap: 34px; min-height: 68px; padding-top: 12px; border-top: 1px solid #e0e4e7; }
-.hero-trust>.section-label { white-space: nowrap; color: #68727e; font-size: 9px; }
-.trust-items { display: flex; align-items: center; flex: 1; justify-content: center; gap: clamp(22px,6vw,72px); color: #313a44; font-size: 13px; font-weight: 800; letter-spacing: -.04em; }
-.trust-items span:nth-child(2) { font-size: 16px; font-weight: 700; }
-.trust-items span:last-child { color: #69727d; font-size: 11px; font-weight: 600; }
-.trust-note { font: 9px var(--app-font-mono); color: #8b949d; white-space: nowrap; }
+.hero-trust { position: relative; z-index: 1; display: grid; grid-template-columns: 190px minmax(0,1fr); align-items: center; gap: 28px; min-height: 104px; padding-block: 14px; border-top: 1px solid #e0e4e7; }
+.hero-trust>.section-label { color: #68727e; font-size: 9px; line-height: 1.6; }
+.trust-items { min-width: 0; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); align-items: center; gap: clamp(12px,2vw,28px); }
+.trust-brand { min-width: 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #252d36; font-size: clamp(11px,1vw,14px); font-weight: 800; letter-spacing: -.045em; white-space: nowrap; }
+.trust-brand img { display: block; flex: 0 0 auto; width: 34px; height: 34px; object-fit: contain; }
+.trust-brand.brand-nvidia img { width: 42px; height: 42px; }
+.trust-brand.brand-golem img { width: 48px; height: 38px; filter: brightness(0); }
+.trust-brand.brand-golem span { display: none; }
+.trust-brand.brand-qwen img,
+.trust-brand.brand-librechat img { width: 38px; height: 38px; }
+.trust-brand.brand-open-webui img { width: 37px; height: 37px; }
 .section-intro { max-width: 630px; }
 .section-intro .section-label { margin-bottom: 17px; }
 .section-intro .section-title { margin-bottom: 20px; }
@@ -530,10 +535,9 @@ video,
   .hero-background-art::before { background-position: 76% center; filter: blur(9px); opacity: .46; }
   .hero-background-art::after { background: linear-gradient(0deg,#f8f9fa 0%,rgba(248,249,250,.9) 10%,rgba(248,249,250,0) 32%),linear-gradient(90deg,#f8f9fa 0%,rgba(248,249,250,.99) 27%,rgba(248,249,250,.96) 48%,rgba(248,249,250,.84) 70%,rgba(248,249,250,.62) 100%); }
   .hero-art-wrap { height: min(84vw,340px); margin-top: 4px; }
-  .hero-trust { flex-wrap: wrap; gap: 8px 18px; padding-block: 15px; }
-  .hero-trust>.section-label { width: 100%; }
-  .trust-items { justify-content: flex-start; gap: 24px; }
-  .trust-note { margin-left: auto; }
+  .hero-trust { grid-template-columns: 1fr; gap: 13px; padding-block: 20px; }
+  .trust-items { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px 12px; }
+  .trust-brand { justify-content: flex-start; font-size: 11px; }
   .introduction-layout,.allocation-layout,.reset-layout,.api-layout,.nvidia-layout,.token-flow-layout,.expansion-layout,.model-layout { grid-template-columns: 1fr; gap: 34px; }
   .introduction-layout { gap: 15px; }
   .introduction-layout .section-title { margin-top: 16px; }
@@ -609,7 +613,7 @@ video,
   .footer-social { grid-column: auto; }
 }
 @media (max-width: 420px) {
-  .trust-items { width: 100%; gap: 18px; }
+  .trust-items { width: 100%; }
   .trust-note { margin-left: 0; }
   .hero-copy h1 { font-size: 44px; }
   .hero-actions { align-items: stretch; }

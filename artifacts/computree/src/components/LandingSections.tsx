@@ -40,6 +40,15 @@ function Artwork({ src, alt, className = '', loading = 'lazy' }: { src: string; 
 }
 
 export function Hero() {
+  const ecosystemLogos = [
+    { name: 'NVIDIA', src: '/brands/nvidia.svg', className: 'brand-nvidia' },
+    { name: 'Golem', src: '/brands/golem.svg', className: 'brand-golem' },
+    { name: 'Qwen', src: '/brands/qwen.svg', className: 'brand-qwen' },
+    { name: 'Ollama', src: '/brands/ollama.svg', className: 'brand-ollama' },
+    { name: 'Open WebUI', src: '/brands/open-webui.svg', className: 'brand-open-webui' },
+    { name: 'LibreChat', src: '/brands/librechat.svg', className: 'brand-librechat' },
+  ];
+
   return (
     <>
       <section className="hero" id="top">
@@ -64,8 +73,14 @@ export function Hero() {
         </div>
         <div className="container hero-trust">
           <span className="section-label">GPU INFRASTRUCTURE ACCESS</span>
-          <div className="trust-items"><span>NVIDIA GPU</span><span>Golem</span><span>Additional providers</span></div>
-          <span className="trust-note">Infrastructure ecosystem</span>
+          <div className="trust-items" aria-label="Supported infrastructure and application ecosystem">
+            {ecosystemLogos.map(({ name, src, className }) => (
+              <div className={`trust-brand ${className}`} key={name}>
+                <img src={src} alt="" aria-hidden="true" draggable={false} />
+                <span>{name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>
