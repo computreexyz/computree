@@ -15,3 +15,17 @@ storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/conversation:c30debef-
 storage_version_token = "1791432369077429"
 content_type = "text/markdown"
 source_uri = "file://fullplan.md"
+
+[[outputs]]
+id = "SLba38O5sElwTVqVN0d-e"
+uri = "file://10-ide-post.md"
+type = "text"
+title = "10 Ide Post — Computree"
+description = "Sepuluh ide konten berbahasa Indonesia dengan hook, angle, format, CTA, dan batas klaim produk."
+logical_id = "7e36bc88-85e8-42ce-9be0-838f035439a0"
+content_hash = "sha256:daaf8d47ce86167d1523e2c3fe88bf6ec8b9fa766c28afe6f9e1bf05cd3bc146"
+size = 8005
+mtime_ms = 1791443068622
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:779f8850-395f-4958-9055-13bd14386cd4/7e36bc88-85e8-42ce-9be0-838f035439a0/46cd8c28-4ae9-4fb9-8ec6-5cd671e5191a"
+storage_version_token = "1791443105514945"
+content_type = "text/markdown"
