@@ -1,85 +1,83 @@
-# 10 Computree Discord Posts
+# 10 Detailed Computree Discord Posts
 
-Each numbered section is a complete, standalone English message. Paste the heading and message together. Product and infrastructure capabilities are described as planned unless they have been verified.
-
----
-
-## 01 · What we're building
-
-Hey everyone — Computree is being designed as an access layer for NVIDIA GPU compute. The goal is to make network-acquired compute available through a programmable API, so applications can focus on what they want to build.
-
-The API and provider flow are still being validated, so this isn't a live compute service yet. What would you like us to explain first?
+Each numbered section is a complete, standalone English Discord message. The heading is part of the post. These are written for a technically informed community; planned components are explicitly distinguished from verified, live functionality.
 
 ---
 
-## 02 · The problem we're exploring
+## 01 — Computree is being designed as an access and orchestration layer for GPU compute, not as another AI chat application.
 
-GPU compute can involve hardware decisions, provisioning, cloud accounts, and fragmented providers. We're exploring whether an access layer can make that workflow simpler—not claiming those trade-offs are solved yet.
+Computree is intended to sit between an application and the infrastructure that executes its workload. The application would make a request through a programmable API; the access layer would handle the compute-side workflow, including eligibility checks, job state, provider interaction, and returning the result.
 
-What's the biggest source of friction for your team: setup, availability, cost visibility, or something else?
-
----
-
-## 03 · Not another chatbot
-
-Computree isn't being designed as another AI chat interface. The focus is the infrastructure behind an app: API access, job handling, provider orchestration, and returning results to the caller.
-
-What would you want a compute-access product to do that your current setup doesn't?
+That distinction matters: Computree is not the model itself, and it is not intended to replace the interface of an application such as Open WebUI. The API, provider path, and GPU worker are still being validated and should not be treated as a live production service. Which boundary would you want documented first: the client API, job lifecycle, or provider adapter?
 
 ---
 
-## 04 · The request path we're working toward
+## 02 — GPU access involves provisioning, workload operations, and usage accounting in addition to obtaining hardware.
 
-The target MVP flow is:
+Getting a GPU workload to run can involve more than finding a machine. A team may need to provision capacity, install and serve a model, manage credentials, handle failed jobs, understand utilization, and reconcile usage with provider charges. Those steps often live in separate systems, so the application team inherits infrastructure work before it can focus on its product.
 
-`Open WebUI → Computree API → job/allocation → Golem requestor → GPU worker (Qwen + Ollama) → response`
-
-This is a planned architecture, not a production integration yet. Which step should we unpack first?
+Computree is exploring whether an access layer can make that boundary clearer through one API and a defined job lifecycle. That is a product hypothesis, not a promise of lower prices or guaranteed capacity. Which part of this workflow creates the most operational overhead for your team?
 
 ---
 
-## 05 · Balance, allocation, and payment are different
+## 03 — The planned request lifecycle separates the application API from provider-specific GPU infrastructure.
 
-The proposed access model keeps three things separate: $CTREE eligibility, compute allocation, and provider payments. Their units and sources of truth need to be defined independently; we don't have finalized thresholds or conversion figures to share yet.
+The target MVP path is: an application submits a request to the Computree API; the service checks identity and eligibility, reserves the applicable allocation, creates a job, and sends it through a provider adapter to a worker. The worker runs the selected model and runtime, then the result and final job state return through the API.
 
-What should a usage dashboard show to feel transparent?
-
----
-
-## 06 · Which app should we test?
-
-Open WebUI is the first client planned for integration. LibreChat is also on our test list, but we won't call it supported until compatibility has been verified.
-
-Which app would be most useful for us to test next—and what workflow should that test cover?
+Each transition needs explicit behavior for timeouts, retries, cancellation, provider errors, and cleanup. A diagram that only shows “request in, response out” hides most of the reliability work. This is a planned flow, not a production-tested integration. Which transition should we specify first?
 
 ---
 
-## 07 · Why start with one provider?
+## 04 — Wallet eligibility, compute allocation, measured usage, and provider payment need separate records.
 
-The MVP plan evaluates Golem as the first provider-adapter candidate. The goal is to prove one request path end to end before talking about a wider network. Provider availability, pricing, and production GPU execution still need verification.
+The proposed access model includes several related but different concepts: whether an account is eligible, how much compute it may request, what a job actually consumes, and what is owed to the infrastructure provider. A token balance should not be presented as though it were a direct measure of GPU time or a settled provider payment.
 
-What evidence would you expect before trusting a provider integration?
-
----
-
-## 08 · Qwen and Ollama do different jobs
-
-Quick stack distinction: Qwen is the model; Ollama is a runtime used to serve models. They sit at different layers of the proposed worker setup.
-
-Would a short diagram of `model → runtime → worker → API` be useful?
+Before publishing thresholds or conversion figures, the units and sources of truth need to be defined. A useful job record would make it possible to trace an allocation from reservation through completion, failure, or release. No final eligibility formula, allocation amount, or price is being claimed here. What accounting detail would you require before trusting a compute usage dashboard?
 
 ---
 
-## 09 · Demo data isn't production evidence
+## 05 — OpenAI-compatible API support must be verified route by route and client by client.
 
-A mock dashboard, CPU response, or successful API request alone doesn't prove a production GPU job ran.
+An OpenAI-compatible interface is a useful integration target, but the label alone does not guarantee that every client or SDK will work. Compatibility depends on details such as model discovery, request fields, authentication, streaming behavior, error responses, and how interrupted or retried requests are handled.
 
-We'll keep demo values labeled and share GPU availability only when it's backed by a verifiable run. What proof would you want to see in a build update?
+Open WebUI is the first planned client integration. LibreChat and other clients should only be called supported after their actual workflows have been tested against the implemented API. The integration is not being presented as live yet. Which compatibility detail tends to break first in your setup: streaming, model selection, authentication, or error handling?
 
 ---
 
-## 10 · Queued isn't the same as parallel
+## 06 — The MVP plan starts by evaluating one Golem provider adapter before expanding to more providers.
 
-Several jobs in a queue don't mean several GPUs are running them at once. The design distinguishes `queued`, `running`, and genuinely parallel GPU execution.
+Starting with one adapter gives the team a way to validate the complete request lifecycle before adding more provider-specific paths. The adapter would need to cover request submission, worker status, result retrieval, failure handling, and cleanup while keeping provider-specific behavior behind the Computree API.
 
-Which matters more for your workloads: a clear wait state or simultaneous workers?
+Golem is the planned first candidate, not a claim that production GPU capacity is currently available through Computree. Provider availability, pricing, reliability, and GPU execution all require direct validation. What would you expect to see in a technical report before considering a provider integration credible?
+
+---
+
+## 07 — Qwen, Ollama, and Golem describe different layers of the proposed worker architecture.
+
+Qwen is the model family; Ollama is a runtime used to serve a model; Golem is the candidate provider network and requestor path in the current plan. These components are not interchangeable: the model defines what is being run, the runtime loads and serves it, and the provider supplies the execution environment.
+
+A production worker still needs a specified model version, runtime configuration, hardware profile, and reproducible deployment process. GPU memory requirements, startup time, throughput, and concurrent-request behavior need to be measured before making performance claims. Which part of this stack would you want benchmarked first?
+
+---
+
+## 08 — A successful API response does not prove that a production GPU workload executed.
+
+An HTTP health check can prove that a server responded. An API request can prove that a route accepted input. A CPU test can prove part of the job flow. None of those results, by themselves, prove that a production GPU worker ran the requested workload.
+
+Before claiming GPU availability, a build report should identify what was actually tested and provide verifiable job evidence: the job state, execution source, timestamps, and measured resource usage where available. Demo responses and mock dashboard values should not be presented as GPU runs. What minimum evidence would you expect in a public infrastructure test?
+
+---
+
+## 09 — Demo dashboards and production telemetry need visibly different labels and data sources.
+
+A dashboard can look convincing while showing sample values. To avoid confusing a prototype with an operating service, demo jobs, simulated balances, and illustrative capacity figures need persistent labels. Live job counts, usage, provider payments, and GPU availability should only appear when they come from a defined and verifiable source.
+
+For each metric, the implementation should make clear what is measured, where it comes from, and when it was last updated. This is a transparency requirement, not a claim that production telemetry is already connected. Which metric would you want to trace from the dashboard back to its underlying record?
+
+---
+
+## 10 — A queued request is not the same as a workload executing on multiple GPUs in parallel.
+
+An API may accept several requests while a worker processes them one at a time. That is different from having multiple workers execute GPU workloads concurrently. A useful status model should distinguish queued, running, completed, and failed jobs; capacity reporting should also distinguish configured workers from workers actually executing jobs.
+
+Parallel execution should only be claimed after concurrent workloads have been measured on separate available workers. Until then, queue depth and worker count are not evidence of parallel GPU throughput. For your workloads, which matters more: predictable queue behavior, lower latency, or measured parallel capacity?
