@@ -1,0 +1,1282 @@
+BUILD THE COMPLETE COMPUTREE LANDING PAGE
+
+Build a premium, production-quality landing page for Computree, a GPU compute access infrastructure project with token $CTREE.
+
+The website must feel like a serious AI infrastructure / GPU infrastructure company, not a crypto token landing page.
+
+The visual quality should be comparable to premium infrastructure companies such as NVIDIA, CoreWeave, Vercel, Stripe, and high-end AI infrastructure startups.
+
+Do NOT make it look like:
+
+* a meme coin website
+* a generic Web3 landing page
+* a chatbot website
+* a generic SaaS template
+* a cyberpunk website
+* a gaming website
+* a futuristic neon crypto website
+
+The product is:
+
+Computree gives users access to NVIDIA GPU compute through a programmable API.
+
+Computree acquires GPU compute capacity from supported infrastructure providers and makes that capacity available to eligible users.
+
+Eligible $CTREE holders receive a daily compute allocation based on their eligible token balance. The allocation refreshes every 24 hours.
+
+The hero must sell GPU compute first.
+
+Do NOT make the hero headline about holding $CTREE.
+
+$CTREE should be introduced naturally after the user understands the product.
+
+⸻
+
+1. TECHNICAL REQUIREMENTS
+
+Use the existing project stack if one already exists.
+
+If starting from scratch, use:
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* component-based architecture
+* responsive design
+* clean reusable components
+* semantic HTML
+* accessible navigation
+* smooth scrolling
+* subtle animation
+* optimized images
+* no unnecessary dependencies
+
+The website must work perfectly on:
+
+* desktop
+* laptop
+* tablet
+* mobile
+
+Do not create one giant component.
+
+Create reusable components such as:
+
+Navbar
+Hero
+InfrastructureIntro
+ComputeFlow
+CTREEAllocation
+DailyReset
+ApplicationSection
+InfrastructureSection
+ProviderNetwork
+TransparencySection
+WorkloadSection
+FinalCTA
+Footer
+
+Create a central design system for:
+
+* typography
+* spacing
+* buttons
+* cards
+* borders
+* shadows
+* backgrounds
+* animations
+* responsive breakpoints
+
+⸻
+
+2. DESIGN DIRECTION
+
+Overall visual language:
+
+Premium GPU infrastructure.
+
+Primary colors:
+
+* near-black
+* white
+* soft gray
+* very subtle cool gray
+* restrained electric blue accent
+
+Do not use rainbow gradients.
+
+Do not use neon green.
+
+Do not use purple crypto gradients.
+
+Do not use excessive glassmorphism.
+
+Do not use giant glowing blobs.
+
+Do not use generic 3D crypto coins.
+
+Use:
+
+* thin technical lines
+* precise geometry
+* subtle grid systems
+* sophisticated whitespace
+* sharp typography
+* premium cards
+* restrained borders
+* subtle shadows
+* high-quality 3D infrastructure artwork
+* abstract compute topology
+* tree / branch / circuit visual language
+
+The website should feel expensive and engineered.
+
+⸻
+
+3. BRAND VISUAL LANGUAGE
+
+Computree’s visual identity is based on the combination of:
+
+TREE + COMPUTE + GPU INFRASTRUCTURE
+
+The tree is NOT a literal environmental tree.
+
+It represents:
+
+* compute nodes
+* infrastructure branches
+* distributed GPU capacity
+* workload routing
+* compute topology
+* network growth
+
+Create a sophisticated abstract visual language where:
+
+* tree branches resemble circuit traces
+* leaves can become compute nodes
+* roots resemble infrastructure connections
+* branches connect GPU modules
+* GPU modules resemble industrial hardware
+* multiple nodes form a distributed compute network
+
+The artwork should look like technical infrastructure art.
+
+Avoid cartoon trees.
+
+Avoid obvious forest imagery.
+
+Avoid leaves floating around randomly.
+
+⸻
+
+4. CUSTOM GRAPHIC ART
+
+IMPORTANT:
+
+Do NOT use random stock photography.
+
+Do NOT use Unsplash images.
+
+Do NOT use generic AI artwork from random URLs.
+
+Create custom visual assets specifically for Computree.
+
+If an image-generation capability/API is available in the environment, use it to create the artwork.
+
+Otherwise create sophisticated SVG/CSS/WebGL-style graphics programmatically.
+
+Every major visual should have a dedicated asset.
+
+Create the following assets:
+
+Asset 01: Hero Compute Tree
+
+A large premium 3D abstract structure combining:
+
+* tree topology
+* GPU modules
+* circuit branches
+* server infrastructure
+* compute nodes
+
+The tree should look like a massive computational structure.
+
+Black / graphite / metallic hardware.
+
+White background.
+
+Very subtle blue accent lighting.
+
+No text inside the artwork.
+
+No logos inside the artwork.
+
+No NVIDIA logo generated into the artwork.
+
+The visual should sit on the right side of the hero.
+
+⸻
+
+Asset 02: GPU Infrastructure
+
+Create a premium visualization of stacked NVIDIA-style GPU server hardware.
+
+Do not generate fake NVIDIA logos.
+
+Use generic GPU/server hardware forms unless an official licensed logo asset is available.
+
+Show:
+
+* GPU modules
+* server racks
+* cooling structures
+* compute hardware
+* subtle technical details
+
+Use this visual for the infrastructure/problem section.
+
+⸻
+
+Asset 03: Compute Network
+
+Create an abstract network visualization showing:
+
+multiple GPU compute nodes connected through a central Computree topology.
+
+Use:
+
+* nodes
+* lines
+* GPU modules
+* routing paths
+* subtle world map geometry
+
+This should communicate distributed infrastructure.
+
+⸻
+
+Asset 04: Treasury → Compute Acquisition → Provider → GPU
+
+Create four premium 3D objects:
+
+1. Treasury
+2. Compute acquisition
+3. Provider network
+4. GPU infrastructure
+
+Connect them visually with arrows / flow lines.
+
+Do not make them cartoon icons.
+
+They should feel like technical infrastructure objects.
+
+⸻
+
+Asset 05: Provider Network Map
+
+Create a sophisticated world map visualization.
+
+Place compute provider nodes across:
+
+North America
+Europe
+Asia
+Other regions
+
+Do not imply real physical provider locations unless the provider data is actually configured.
+
+The visual is conceptual infrastructure topology.
+
+⸻
+
+Asset 06: Final CTA Artwork
+
+Create a dark abstract landscape made from:
+
+* compute nodes
+* circuit traces
+* GPU structures
+* tree topology
+
+The artwork should feel like a gigantic computational forest.
+
+Keep it extremely subtle so the CTA typography remains dominant.
+
+⸻
+
+5. NAVBAR
+
+Create a premium sticky navbar.
+
+Left:
+
+Computree logo
+
+Use an abstract tree/compute logo.
+
+Do not use text-only branding.
+
+Navigation:
+
+Product
+How It Works
+Infrastructure
+Developers
+$CTREE
+Resources
+
+Right:
+
+Access GPU Compute →
+
+Navbar behavior:
+
+* transparent over hero initially
+* transitions to white / dark translucent background when scrolling
+* subtle bottom border
+* smooth transitions
+* mobile hamburger menu
+* mobile menu should feel premium, not generic
+
+Do not put a giant “BUY $CTREE” button in the navbar.
+
+The primary action is compute access.
+
+⸻
+
+6. HERO
+
+The hero must be full viewport height.
+
+Layout:
+
+LEFT:
+headline and copy.
+
+RIGHT:
+large custom Computree compute-tree artwork.
+
+Small brand label:
+
+COMPUTREE
+
+Headline:
+
+TURN GPU CAPACITY INTO A RESOURCE YOU CAN USE.
+
+Description:
+
+Computree is an access layer for NVIDIA GPU compute.
+
+It acquires GPU capacity from the infrastructure market and makes that capacity available through a programmable API.
+
+Eligible $CTREE holders receive a daily allocation of compute, refreshed every 24 hours, and can use it across supported applications and workloads.
+
+Buttons:
+
+Access GPU Compute →
+
+Explore Infrastructure →
+
+Do NOT put $CTREE in the main headline.
+
+Do NOT start the hero with “Hold $CTREE”.
+
+The hero must communicate:
+
+GPU infrastructure
+NVIDIA GPU compute
+API access
+real compute capacity
+
+⸻
+
+7. HERO MICRO-TRUST STRIP
+
+Under the hero artwork, create a subtle infrastructure strip.
+
+Text:
+
+GPU INFRASTRUCTURE ACCESS
+
+Then visual references for:
+
+NVIDIA GPU
+Golem
+Additional providers
+
+Important:
+
+Do not claim a provider is officially integrated unless the backend actually supports it.
+
+Use “Infrastructure ecosystem” style wording where appropriate.
+
+⸻
+
+8. PROBLEM SECTION
+
+Dark / light transition.
+
+Small label:
+
+THE PROBLEM
+
+Headline:
+
+GPU COMPUTE IS EXPENSIVE AND COMPLEX.
+
+Body:
+
+Accessing NVIDIA GPU infrastructure usually means purchasing hardware, managing cloud accounts, provisioning machines, dealing with fragmented providers, and continuously managing capacity.
+
+Computree abstracts that complexity into a single compute access layer.
+
+Create a large premium GPU server visual on the right.
+
+On the far right, show four technical pain points:
+
+HIGH HARDWARE COST
+
+COMPLEX INFRASTRUCTURE
+
+LIMITED AVAILABILITY
+
+MANUAL PROVISIONING
+
+FRAGMENTED PROVIDERS
+
+Use subtle line icons.
+
+⸻
+
+9. SOLUTION SECTION
+
+Headline:
+
+ACCESS THE HARDWARE WITHOUT OWNING IT.
+
+Body:
+
+Computree acquires GPU capacity from supported infrastructure providers and makes that capacity available through a single API.
+
+Create a horizontal visual flow:
+
+YOUR APPLICATION
+        ↓
+COMPUTREE
+        ↓
+NVIDIA GPU INFRASTRUCTURE
+        ↓
+RESULT
+
+Each stage should have a sophisticated custom icon/3D object.
+
+Use animation:
+
+The connection line should subtly animate from left to right.
+
+⸻
+
+10. $CTREE ALLOCATION SECTION
+
+This is the first major section where the token becomes prominent.
+
+Use a dark background.
+
+Small label:
+
+$CTREE
+
+Headline:
+
+YOUR $CTREE BALANCE BECOMES COMPUTE ACCESS.
+
+Body:
+
+Eligible $CTREE holders receive a daily compute allocation based on their qualifying token balance.
+
+The allocation determines how much compute the account can consume during the current 24-hour cycle.
+
+Show a premium dashboard card.
+
+Example:
+
+YOUR COMPUTE
+DAILY ALLOCATION
+1,000
+CREDITS
+USED
+347
+REMAINING
+653
+RESET
+11:42:18
+
+Add a circular usage visualization.
+
+Use subtle blue accent.
+
+Do not make this look like a crypto staking dashboard.
+
+It should look like an enterprise compute dashboard.
+
+⸻
+
+11. DAILY RESET SECTION
+
+Headline:
+
+A FRESH COMPUTE ALLOCATION EVERY 24 HOURS.
+
+Body:
+
+Your eligible $CTREE balance determines your daily compute allocation.
+
+Use the allocation throughout the day.
+
+At the end of the 24-hour cycle, the allocation refreshes.
+
+Create a large timeline:
+
+ALLOCATION
+     ↓
+COMPUTE USAGE
+     ↓
+24 HOURS
+     ↓
+REFRESH
+     ↓
+NEW ALLOCATION
+
+Add a live-looking countdown UI.
+
+The countdown can be mocked for the visual layer, but clearly architect the component so real backend data can replace it later.
+
+⸻
+
+12. APPLICATIONS SECTION
+
+Headline:
+
+USE COMPUTE THROUGH THE APPLICATIONS YOU ALREADY USE.
+
+Body:
+
+Computree provides a programmable API that compatible applications can connect to without managing the underlying GPU infrastructure.
+
+Create three premium cards:
+
+Open WebUI
+
+Connect an external AI interface and use supported models through Computree.
+
+LibreChat
+
+Access supported workloads through an OpenAI-compatible interface.
+
+Your Application
+
+Integrate Computree directly using the API.
+
+Each card needs:
+
+* icon
+* title
+* description
+* subtle hover animation
+* “Learn More →”
+
+Do not invent official partnerships.
+
+These are compatibility examples unless integrations actually exist.
+
+⸻
+
+13. API SECTION
+
+Create a premium developer-focused section.
+
+Headline:
+
+ONE API FOR GPU COMPUTE.
+
+Show:
+
+https://api.computree.ai/v1
+
+Create a dark code panel.
+
+Show example API structure:
+
+POST /v1/chat/completions
+Authorization: Bearer ct_live_xxxxx
+Content-Type: application/json
+
+Then:
+
+{
+  "model": "qwen",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello"
+    }
+  ]
+}
+
+Do not expose real credentials.
+
+Add subtle animated request flow:
+
+APPLICATION → API → COMPUTE → RESPONSE
+
+⸻
+
+14. INFRASTRUCTURE SECTION
+
+Dark section.
+
+Small label:
+
+INFRASTRUCTURE
+
+Headline:
+
+THE NETWORK ACQUIRES THE COMPUTE.
+
+Body:
+
+Computree separates compute acquisition from compute consumption.
+
+The network can acquire GPU capacity from supported infrastructure providers and compute networks.
+
+The initial infrastructure layer can use decentralized compute infrastructure such as Golem, while additional GPU providers can be integrated over time.
+
+Create a large visual:
+
+TREASURY
+   ↓
+COMPUTE ACQUISITION
+   ↓
+PROVIDER NETWORK
+   ↓
+NVIDIA GPU
+   ↓
+COMPUTREE
+   ↓
+USER
+
+Each object should have a custom 3D visual.
+
+⸻
+
+15. NVIDIA GPU SECTION
+
+Headline:
+
+NVIDIA GPU INFRASTRUCTURE.
+
+Body:
+
+NVIDIA GPUs form the primary hardware layer for supported accelerated workloads.
+
+Computree does not require users to purchase or operate those machines.
+
+Instead, the network can acquire capacity from infrastructure providers operating NVIDIA GPU environments.
+
+Create a premium GPU hardware visual.
+
+Important:
+
+Do not falsely imply that Computree directly buys hardware from NVIDIA.
+
+Use language such as:
+
+“NVIDIA GPU infrastructure”
+
+“NVIDIA GPU-backed capacity”
+
+“GPU infrastructure providers”
+
+Do not write:
+
+“Computree buys GPUs from NVIDIA”
+
+unless a real commercial relationship exists.
+
+⸻
+
+16. MULTI-PROVIDER SECTION
+
+Headline:
+
+ONE ACCESS LAYER. MULTIPLE INFRASTRUCTURE SOURCES.
+
+Body:
+
+Computree is designed so the public API does not depend on a single infrastructure provider.
+
+Additional GPU providers can be integrated according to availability, pricing, geography, hardware, and workload requirements.
+
+Create a world map.
+
+Around the map, show conceptual provider cards:
+
+Golem
+CoreWeave
+Lambda
+Nebius
+Crusoe
+Other Providers
+
+Important:
+
+Do not claim all of these are currently integrated.
+
+Label the visual:
+
+SUPPORTED AND POTENTIAL INFRASTRUCTURE SOURCES
+
+or dynamically render only verified providers from backend configuration.
+
+⸻
+
+17. TRANSPARENCY SECTION
+
+Light background.
+
+Headline:
+
+KNOW WHAT YOUR COMPUTE IS DOING.
+
+Body:
+
+GPU compute should not disappear behind an opaque credit number.
+
+Computree tracks workload activity across the infrastructure layer.
+
+Create a realistic dashboard.
+
+Columns:
+
+JOB ID
+MODEL
+GPU
+DURATION
+USAGE
+STATUS
+
+Example rows:
+
+job_82f…
+Qwen
+A100
+2m 14s
+12 credits
+Completed
+
+job_71a…
+Llama
+H100
+5m 41s
+28 credits
+Completed
+
+job_90c…
+SDXL
+H100
+12m 03s
+64 credits
+Running
+
+Important:
+
+These are visual mock records only.
+
+Do not connect fake data to production.
+
+Create the UI architecture so real API data can replace them.
+
+⸻
+
+18. TREASURY / COMPUTE PURCHASE SECTION
+
+Headline:
+
+FOLLOW THE COMPUTE.
+
+Body:
+
+Computree connects infrastructure funding with compute capacity and user consumption.
+
+Show three dashboard cards:
+
+TREASURY
+
+Assets available for infrastructure acquisition.
+
+COMPUTE PURCHASES
+
+Compute capacity acquired from providers.
+
+USAGE
+
+Compute consumed across workloads.
+
+Add a transaction-style table:
+
+DATE
+ASSET
+AMOUNT
+NETWORK
+PURPOSE
+TX
+
+Do not fabricate transaction hashes.
+
+Use placeholder states such as:
+
+“Awaiting live transaction data”
+
+until real data is connected.
+
+⸻
+
+19. WORKLOAD SECTION
+
+Headline:
+
+BUILT FOR GPU-INTENSIVE WORKLOADS.
+
+Create five cards:
+
+AI INFERENCE
+
+Run supported open models through GPU-backed infrastructure.
+
+MODEL WORKLOADS
+
+Execute custom model workloads.
+
+RENDERING
+
+Use GPU capacity for supported rendering pipelines.
+
+SIMULATION
+
+Run compute-intensive GPU workloads.
+
+DEVELOPER WORKLOADS
+
+Build applications that require accelerated computing.
+
+Use technical monochrome icons.
+
+Do not overclaim supported workloads until backend implementations exist.
+
+⸻
+
+20. ARCHITECTURE SECTION
+
+Headline:
+
+COMPUTE IS THE PRODUCT.
+
+Create a large architectural diagram:
+
+$CTREE
+   ↓
+ELIGIBILITY
+   ↓
+DAILY ALLOCATION
+   ↓
+COMPUTREE API
+   ↓
+AUTHENTICATION
+   ↓
+USAGE METERING
+   ↓
+WORKLOAD ORCHESTRATION
+   ↓
+GPU PROVIDER
+   ↓
+NVIDIA GPU
+   ↓
+RESULT
+
+Animate the data flow subtly.
+
+This should be one of the strongest visual sections of the website.
+
+⸻
+
+21. FUTURE EXPANSION SECTION
+
+Headline:
+
+DESIGNED TO EXPAND WITH GPU DEMAND.
+
+Body:
+
+As demand for accelerated computing grows, Computree can expand the infrastructure available to its users.
+
+Additional providers.
+
+Additional GPU capacity.
+
+Additional workloads.
+
+Additional applications.
+
+The user does not need to change how they connect.
+
+Create a global network visualization with GPU nodes.
+
+⸻
+
+22. FINAL CTA
+
+Use a dark full-width section.
+
+Use the custom dark Computree compute-tree artwork.
+
+Headline:
+
+COMPUTE IS THE PRODUCT.
+
+Body:
+
+Access NVIDIA GPU-backed compute through a programmable API.
+
+Your $CTREE balance determines your daily allocation.
+
+The network acquires the infrastructure.
+
+Your application decides what to build with it.
+
+Buttons:
+
+Access GPU Compute →
+
+Read the Documentation →
+
+The artwork should occupy the background without reducing text readability.
+
+⸻
+
+23. FOOTER
+
+Premium multi-column footer.
+
+Left:
+
+Computree logo
+
+GPU compute access infrastructure.
+
+Navigation:
+
+PRODUCT
+
+How It Works
+Compute
+Infrastructure
+Dashboard
+
+DEVELOPERS
+
+Documentation
+API Reference
+Examples
+GitHub
+
+NETWORK
+
+$CTREE
+Treasury
+Providers
+Compute
+
+RESOURCES
+
+Status
+FAQ
+Terms
+Privacy
+
+Social:
+
+X
+Discord
+GitHub
+
+Bottom:
+
+© 2026 Computree. All rights reserved.
+
+⸻
+
+24. ANIMATION SYSTEM
+
+Animations must be sophisticated and subtle.
+
+Use:
+
+* fade-up on scroll
+* slight parallax
+* animated circuit lines
+* GPU node pulses
+* number counters
+* dashboard transitions
+* API request animation
+* network node animation
+* smooth section transitions
+* navbar transformation on scroll
+
+Do NOT use:
+
+* spinning crypto coins
+* excessive bouncing
+* aggressive zoom effects
+* flashy neon effects
+* random particle explosions
+* overused gradient blobs
+
+Animation should feel like infrastructure telemetry.
+
+⸻
+
+25. RESPONSIVE DESIGN
+
+Desktop:
+
+Use large editorial layouts.
+
+Hero:
+
+50/50 or 45/55 layout.
+
+Large typography.
+
+Large infrastructure artwork.
+
+Tablet:
+
+Reduce artwork scale.
+
+Stack some diagrams.
+
+Mobile:
+
+Hero becomes vertical.
+
+Artwork appears below text.
+
+Navigation becomes hamburger.
+
+Horizontal diagrams become vertical flows.
+
+Dashboard cards become stacked.
+
+Tables become horizontally scrollable or responsive cards.
+
+Typography must remain readable.
+
+Never allow horizontal overflow.
+
+⸻
+
+26. PERFORMANCE
+
+Optimize all generated graphics.
+
+Use:
+
+* WebP / AVIF where appropriate
+* SVG for icons
+* lazy loading
+* responsive image sizes
+* CSS animations instead of expensive JS where possible
+
+Do not load enormous 10MB images.
+
+Do not add heavy libraries unless necessary.
+
+⸻
+
+27. ICONS
+
+Use SVG icons.
+
+Do not use emoji.
+
+Do not use random icon libraries with inconsistent visual styles.
+
+All icons should share the same technical visual language.
+
+Create custom icons for:
+
+GPU
+API
+Treasury
+Compute
+Provider
+Network
+Usage
+Jobs
+Allocation
+Reset
+
+⸻
+
+28. LOGO
+
+Create a custom Computree logo.
+
+Concept:
+
+TREE + COMPUTE.
+
+The logo should be an abstract geometric tree where branches resemble circuit traces.
+
+No text inside the symbol.
+
+The logo must work:
+
+* black on white
+* white on black
+* small navbar
+* large hero
+* favicon
+* dashboard
+
+Create several SVG variations and select the strongest one.
+
+Do not use a generic tree emoji or stock icon.
+
+⸻
+
+29. IMPORTANT CONTENT RULES
+
+Never write generic crypto marketing phrases such as:
+
+“Revolutionizing Web3”
+
+“Powering the future”
+
+“The future of AI”
+
+“Unlock limitless potential”
+
+“Next-generation decentralized AI”
+
+“Community-powered revolution”
+
+Do not make unsupported claims.
+
+Do not invent NVIDIA partnerships.
+
+Do not claim specific GPU availability unless backend data confirms it.
+
+Do not fabricate treasury transactions.
+
+Do not fabricate provider relationships.
+
+Do not fabricate compute usage.
+
+Where real data is unavailable, build the UI with clearly separated mock/demo data and make the data layer replaceable.
+
+⸻
+
+30. PRODUCT LANGUAGE
+
+Always prefer:
+
+“GPU compute”
+
+“NVIDIA GPU infrastructure”
+
+“GPU capacity”
+
+“compute allocation”
+
+“compute infrastructure”
+
+“programmable API”
+
+“compute provider”
+
+“workload”
+
+“GPU-backed compute”
+
+“daily allocation”
+
+“$CTREE”
+
+Avoid:
+
+“token utility”
+
+“crypto-powered AI”
+
+“decentralized AI revolution”
+
+“AI coin”
+
+“Web3 compute token”
+
+The product is infrastructure.
+
+$CTREE is the access mechanism.
+
+⸻
+
+31. FINAL QUALITY BAR
+
+Do not stop after creating the hero.
+
+Build the entire page from navbar through footer.
+
+Every section must feel intentionally designed.
+
+Every section needs a strong visual hierarchy.
+
+Do not repeat the same card layout 10 times.
+
+Alternate:
+
+* light sections
+* dark sections
+* full-width visual sections
+* editorial layouts
+* diagrams
+* dashboards
+* infrastructure visualizations
+
+The final website should feel like a real funded GPU infrastructure startup preparing for public launch.
+
+It should look expensive.
+
+It should look technically credible.
+
+It should make the user understand within the first 10 seconds:
+
+Computree provides access to NVIDIA GPU compute.
+
+Then within the next 20 seconds:
+
+$CTREE determines the user’s daily compute allocation.
+
+Then:
+
+Computree acquires the underlying compute capacity from infrastructure providers and exposes it through an API.
+
+That is the core story.
+
+BUILD THE COMPLETE EXPERIENCE NOW.
+Do not return a design proposal.
+
+Implement the actual page, components, responsive behavior, animations, custom graphics, and asset system directly in the project.

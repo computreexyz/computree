@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Computree"
+description = "A premium GPU compute access landing page for Computree, explaining its API, daily $CTREE allocation, provider infrastructure, workload transparency, and developer access."
+version = "1.0.0"
+id = "artifacts/computree"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19650
+
+[services.development]
+run = "pnpm --filter @workspace/computree run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/computree", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/computree/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19650"
+BASE_PATH = "/"

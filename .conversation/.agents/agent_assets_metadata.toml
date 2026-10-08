@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "4easLr7mL1EJ5gRdoo9qb"
+uri = "file://fullplan.md"
+type = "text"
+title = "Computree — Full Plan"
+description = "Rencana implementasi lengkap: arsitektur, tahapan MVP, risiko, keputusan yang belum dikunci, dan kriteria selesai."
+logical_id = "8dbe7a2c-164a-4838-a7e5-e6f4c5e09d78"
+content_hash = "sha256:d9e61e036f79d0ac7f7b76c63d435a039f19b60e101058cd8b27b69cbba13895"
+size = 27036
+mtime_ms = 1791432360040
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/conversation:c30debef-d616-48c6-bd41-31b625ff5177/8dbe7a2c-164a-4838-a7e5-e6f4c5e09d78/67e42df5-0044-4fd4-a7be-a84c8dfd29fd"
+storage_version_token = "1791432369077429"
+content_type = "text/markdown"
