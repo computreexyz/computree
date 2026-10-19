@@ -56,6 +56,15 @@ export default defineConfig({
         '..',
         'attached_assets',
       ),
+      // Optional peer of @stripe/crypto (via @privy-io/react-auth); unused
+      // fiat on-ramp code path, stubbed so the dep optimizer can run.
+      '@stripe/stripe-js': path.resolve(
+        import.meta.dirname,
+        'src',
+        'app',
+        'stubs',
+        'stripe-js.ts',
+      ),
     },
     dedupe: ['react', 'react-dom'],
   },

@@ -1,4 +1,7 @@
+import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
+import { Link } from 'wouter';
+import { AcquisitionFlowSim, AmbientFlow, ExpansionSim, GpuCardSim, HeroTreeSim, NetworkTopologySim, ServerRackSim, TerminalType } from '@/components/AnimatedVisuals';
 
 type IconName = 'application' | 'tree' | 'gpu' | 'result' | 'allocation' | 'clock' | 'api' | 'provider' | 'treasury' | 'network' | 'job' | 'model' | 'render' | 'simulation' | 'developer' | 'route';
 
@@ -35,10 +38,6 @@ function SectionIntro({ label, title, body, id, dark = false }: { label?: string
   );
 }
 
-function Artwork({ src, alt, className = '', loading = 'lazy' }: { src: string; alt: string; className?: string; loading?: 'eager' | 'lazy' }) {
-  return <img className={`art ${className}`} src={src} alt={alt} loading={loading} draggable={false} />;
-}
-
 export function Hero() {
   const ecosystemLogos = [
     { name: 'NVIDIA', src: '/brands/nvidia.svg', className: 'brand-nvidia' },
@@ -62,13 +61,12 @@ export function Hero() {
             <p>It acquires GPU capacity from the infrastructure market and makes that capacity available through a programmable API.</p>
             <p>Eligible $CTREE holders receive a daily allocation of compute, refreshed every 24 hours, and can use it across supported applications and workloads.</p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#access" data-testid="link-hero-access">Access GPU Compute <span aria-hidden="true">→</span></a>
+              <Link className="button button-dark" href="/app" data-testid="link-hero-access">Access GPU Compute <span aria-hidden="true">→</span></Link>
               <a className="button button-outline" href="#infrastructure" data-testid="link-hero-infrastructure">Explore Infrastructure <span aria-hidden="true">↗</span></a>
             </div>
           </div>
           <div className="hero-art-wrap">
-            <Artwork src="/hero-tree-supplied.webp" alt="A sculptural computational tree made from circuit branches and GPU infrastructure modules" className="hero-art" loading="eager" />
-            <svg className="hero-art-lines" viewBox="0 0 500 500" aria-hidden="true"><path d="M42 115h64v70h60m235 73h-72v78h-86" /><circle cx="106" cy="115" r="3" /><circle cx="329" cy="336" r="3" /></svg>
+            <HeroTreeSim />
           </div>
         </div>
         <div className="container hero-trust">
@@ -88,15 +86,38 @@ export function Hero() {
 }
 
 export function IntroductionSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const enforcePlay = () => {
+      void video.play().catch(() => {});
+    };
+    video.addEventListener('pause', enforcePlay);
+    enforcePlay();
+    return () => video.removeEventListener('pause', enforcePlay);
+  }, []);
+
   return (
     <section className="section introduction-section" id="introduction">
-      <div className="container introduction-layout">
-        <div><div className="section-label eyebrow">THE COMPUTE ACCESS LAYER</div><h2 className="section-title">GPU COMPUTE IS BECOMING INFRASTRUCTURE.</h2></div>
-        <div className="introduction-copy">
-          <p className="lead">The demand for accelerated computing is growing faster than most users can provision it.</p>
-          <p>GPU hardware is expensive. Cloud infrastructure is fragmented. Capacity changes constantly.</p>
-          <p>Computree abstracts that complexity into a single compute access layer.</p>
-          <div className="intro-contrasts"><p><span>01</span>Instead of owning the machine, you access the capacity.</p><p><span>02</span>Instead of managing the infrastructure, you use the API.</p><p><span>03</span>Instead of paying for an individual GPU fleet, Computree acquires capacity from the infrastructure market and distributes access through the network.</p></div>
+      <div className="container">
+        <div className="section-label eyebrow">THE COMPUTE ACCESS LAYER</div>
+        <h2 className="sr-only">GPU COMPUTE IS BECOMING INFRASTRUCTURE.</h2>
+        <div className="intro-video-frame">
+          <video
+            ref={videoRef}
+            className="intro-video"
+            src="/gpu-compute-loop.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+            aria-label="GPU compute becomes one API — animated visualization"
+          />
         </div>
       </div>
     </section>
@@ -115,7 +136,7 @@ export function InfrastructureIntro() {
           <p className="problem-solution">Computree abstracts that complexity into a single compute access layer.</p>
         </div>
         <div className="hardware-frame">
-          <Artwork src="/gpu-hardware.webp" alt="Generic graphite GPU compute server hardware with detailed cooling fins" />
+          <ServerRackSim />
           <span className="hardware-tag mono">COMPUTE / INFRASTRUCTURE LAYER</span>
         </div>
         <div className="pain-points">
@@ -228,7 +249,7 @@ export function ApiSection() {
         <div className="api-copy"><div className="section-label eyebrow">ONE API FOR GPU COMPUTE.</div><h2 className="section-title">COMPUTE THROUGH ONE API.</h2><p className="lead">Your compute allocation is not restricted to a proprietary interface.</p><p className="lead">Computree exposes a programmable API that applications can connect to directly.</p><p className="lead">Compatible applications can use the same infrastructure without needing to understand the underlying GPU provider.</p><a className="api-address mono" href="#api" data-testid="link-api-reference">https://api.computree.ai/v1 <span aria-hidden="true">↗</span></a><p className="api-flow-copy">The application sends a request.<br />Computree validates the account and available allocation.<br />The workload is routed to available infrastructure.<br />The result is returned to the application.</p></div>
         <div className="api-panel" id="api">
           <div className="code-window-bar"><span className="code-dots"><i /><i /><i /></span><span className="mono">REQUEST EXAMPLE</span><span className="code-method">POST</span></div>
-          <div className="code-body"><div className="code-line"><span className="line-number">01</span><span><b>POST</b> /v1/chat/completions</span></div><div className="code-line"><span className="line-number">02</span><span>Authorization: Bearer <em>ct_live_xxxxx</em></span></div><div className="code-line"><span className="line-number">03</span><span>Content-Type: application/json</span></div><div className="code-spacer" /><div className="code-line"><span className="line-number">04</span><span>{'{'}</span></div><div className="code-line"><span className="line-number">05</span><span>&nbsp; "model": <em>"qwen"</em>,</span></div><div className="code-line"><span className="line-number">06</span><span>&nbsp; "messages": [</span></div><div className="code-line"><span className="line-number">07</span><span>&nbsp;&nbsp;&nbsp; {'{'}</span></div><div className="code-line"><span className="line-number">08</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "role": <em>"user"</em>,</span></div><div className="code-line"><span className="line-number">09</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "content": <em>"Hello"</em></span></div><div className="code-line"><span className="line-number">10</span><span>&nbsp;&nbsp;&nbsp; {'}'}</span></div><div className="code-line"><span className="line-number">11</span><span>&nbsp; ]</span></div><div className="code-line"><span className="line-number">12</span><span>{'}'}</span></div></div>
+          <TerminalType />
           <div className="request-flow">{['APPLICATION', 'API', 'COMPUTE', 'RESPONSE'].map((step, i) => <span key={step}>{step}{i < 3 && <i aria-hidden="true">→</i>}</span>)}</div>
           <div className="example-note">Example request structure. Credential shown is not real.</div>
         </div>
@@ -250,7 +271,7 @@ export function InfrastructureSection() {
     <section className="section dark-section infrastructure-section" id="infrastructure">
       <div className="container">
         <div className="infra-header"><SectionIntro label="INFRASTRUCTURE" title="THE NETWORK ACQUIRES THE COMPUTE." body={<>Computree separates compute acquisition from compute consumption.<br /><br />The network can acquire GPU capacity from supported infrastructure providers and compute networks.<br /><br />The initial infrastructure layer can use decentralized compute infrastructure such as Golem, while additional GPU providers can be integrated over time.<br /><br />This allows Computree to expand its available capacity without requiring users to establish and manage individual infrastructure accounts.</>} dark /><a className="button button-outline-light" href="#providers">Explore Infrastructure <span aria-hidden="true">→</span></a></div>
-        <Artwork src="/acquisition-flow.webp" alt="Four technical infrastructure objects representing treasury, compute acquisition, provider network, and GPU infrastructure" className="infra-art" />
+        <div className="infra-art"><AcquisitionFlowSim /></div>
         <div className="infra-layer-flow">{layers.map(([name, desc, icon], index) => <div className="infra-layer" key={name}><div className="infra-layer-icon"><Icon name={icon} /></div><span className="section-label">{name}</span><p>{desc}</p>{index < layers.length - 1 && <span className="infra-arrow" aria-hidden="true">→</span>}</div>)}</div>
         <p className="infra-caveat">Infrastructure visualization. Provider and capacity availability depends on configuration.</p>
       </div>
@@ -262,7 +283,7 @@ export function NvidiaSection() {
   return (
     <section className="section nvidia-section" id="hardware">
       <div className="container nvidia-layout">
-        <div className="nvidia-art"><Artwork src="/gpu-hardware.webp" alt="Generic GPU server hardware and cooling structures" /><span className="hardware-tag mono">GPU INFRASTRUCTURE / HARDWARE LAYER</span></div>
+        <div className="nvidia-art"><GpuCardSim /><span className="hardware-tag mono">GPU INFRASTRUCTURE / HARDWARE LAYER</span></div>
         <div><div className="section-label eyebrow">GPU INFRASTRUCTURE</div><h2 className="section-title">NVIDIA GPU INFRASTRUCTURE.</h2><p className="lead">NVIDIA GPUs form the primary hardware layer for supported accelerated workloads.</p><p className="lead">Computree does not require users to own or operate those machines.</p><p className="lead">Instead, the network can acquire capacity from infrastructure providers that operate NVIDIA GPU environments.</p><p className="lead">The provider layer can evolve over time.</p><p className="lead">The Computree API remains consistent.</p></div>
       </div>
     </section>
@@ -275,7 +296,7 @@ export function ProviderNetwork() {
     <section className="section provider-section soft-section" id="providers">
       <div className="container">
         <div className="provider-head"><SectionIntro title="ONE ACCESS LAYER. MULTIPLE INFRASTRUCTURE SOURCES." body={<>Computree is designed so the public API does not depend on a single infrastructure provider.<br /><br />A provider can supply compute capacity without becoming the product itself.<br /><br />This creates a modular infrastructure layer where additional GPU providers can be added according to availability, pricing, geography, hardware and workload requirements.<br /><br />The user sees one system.<br /><br />Computree manages the underlying infrastructure.</>} /><div className="source-disclaimer">SUPPORTED AND POTENTIAL INFRASTRUCTURE SOURCES</div></div>
-        <div className="provider-visual"><Artwork src="/provider-network.webp" alt="Conceptual world map topology visualizing distributed GPU compute nodes and connections" /><div className="map-center"><span className="map-logo"><img src="/computree-logo-black.png" alt="" /></span><span>COMPUTREE</span></div><span className="map-caption mono">CONCEPTUAL INFRASTRUCTURE TOPOLOGY</span></div>
+        <div className="provider-visual"><NetworkTopologySim /><span className="map-caption mono">CONCEPTUAL INFRASTRUCTURE TOPOLOGY</span></div>
         <div className="provider-tags">{sources.map((name) => <div key={name}><span className="provider-node" />{name}<span className="provider-kind">POTENTIAL</span></div>)}</div>
       </div>
     </section>
@@ -334,7 +355,7 @@ export function ArchitectureSection() {
   const layers = ['$CTREE', 'ELIGIBILITY', 'DAILY ALLOCATION', 'COMPUTREE API', 'AUTHENTICATION', 'USAGE METERING', 'WORKLOAD ORCHESTRATION', 'GPU PROVIDER', 'NVIDIA GPU', 'RESULT'];
   return (
     <section className="section architecture-section dark-section" id="architecture">
-      <img className="architecture-network-art" src="/compute-network.webp" alt="" aria-hidden="true" loading="lazy" />
+      <AmbientFlow className="architecture-network-art" />
       <div className="container">
         <div className="architecture-heading"><SectionIntro title="COMPUTE IS THE PRODUCT." body={<>Computree is not built around selling another AI interface.<br /><br />The product is access to computing infrastructure.<br /><br />The API is the interface.<br /><br />The GPU is the underlying resource.<br /><br />The network acquires the capacity.<br /><br />$CTREE determines access.<br /><br />Users decide what to build with it.</>} dark /></div>
         <div className="architecture-flow">{layers.map((layer, index) => <div className={`architecture-layer${index === 0 || index === 9 ? ' architecture-highlight' : ''}`} key={layer}><span className="architecture-index mono">0{index + 1}</span><span>{layer}</span>{index < layers.length - 1 && <span className="architecture-down" aria-hidden="true">↓</span>}</div>)}</div>
@@ -355,7 +376,7 @@ export function TokenFlowSection() {
 export function ExpansionSection() {
   return (
     <section className="section expansion-section soft-section" id="expansion">
-      <div className="container expansion-layout"><div><SectionIntro title="DESIGNED TO EXPAND WITH GPU DEMAND." body={<>As demand for accelerated computing grows, Computree can expand the infrastructure available to its users.<br /><br />Additional providers.<br /><br />Additional GPU capacity.<br /><br />Additional workloads.<br /><br />Additional applications.<br /><br />The user does not need to change how they connect.<br /><br />They continue using the same API and allocation system.</>} /><a className="text-link" href="#infrastructure" data-testid="link-expansion-infrastructure">Explore Infrastructure <span aria-hidden="true">→</span></a></div><div className="expansion-art"><Artwork src="/provider-network.webp" alt="Conceptual global GPU infrastructure topology with connected compute nodes" /><div className="expansion-overlay"><span className="section-label">ONE API</span><span className="mono">CONCEPTUAL NETWORK VISUALIZATION</span></div></div></div>
+      <div className="container expansion-layout"><div><SectionIntro title="DESIGNED TO EXPAND WITH GPU DEMAND." body={<>As demand for accelerated computing grows, Computree can expand the infrastructure available to its users.<br /><br />Additional providers.<br /><br />Additional GPU capacity.<br /><br />Additional workloads.<br /><br />Additional applications.<br /><br />The user does not need to change how they connect.<br /><br />They continue using the same API and allocation system.</>} /><a className="text-link" href="#infrastructure" data-testid="link-expansion-infrastructure">Explore Infrastructure <span aria-hidden="true">→</span></a></div><div className="expansion-art"><ExpansionSim /><div className="expansion-overlay"><span className="section-label">ONE API</span><span className="mono">CONCEPTUAL NETWORK VISUALIZATION</span></div></div></div>
     </section>
   );
 }
@@ -375,9 +396,9 @@ export function ModelSection() {
 export function FinalCTA() {
   return (
     <section className="final-cta dark-section" id="access">
-      <Artwork src="/dark-compute-landscape.webp" alt="" className="cta-art" />
+      <AmbientFlow className="cta-art" />
       <div className="cta-overlay" />
-      <div className="container cta-content"><div className="section-label eyebrow">COMPUTREE</div><h2 className="section-title">COMPUTE IS THE PRODUCT.</h2><h3 className="cta-secondary-title">ACCESS GPU COMPUTE.</h3><p>Access NVIDIA GPU-backed compute through a programmable API.</p><p>Your $CTREE balance determines your daily allocation.</p><p>The network acquires the infrastructure.</p><p>Your application decides what to build with it.</p><p>Computree turns GPU capacity into a resource that applications can access through one programmable interface.</p><p>Eligible $CTREE holders receive daily compute allocation.</p><p>Infrastructure is acquired by the network.</p><p>Workloads run on supported GPU environments.</p><p>Your application receives the result.</p><div className="cta-buttons"><a className="button button-light" href="#api">Access GPU Compute <span aria-hidden="true">→</span></a><a className="button button-outline-light" href="#api">Read the Documentation <span aria-hidden="true">→</span></a></div></div>
+      <div className="container cta-content"><div className="section-label eyebrow">COMPUTREE</div><h2 className="section-title">COMPUTE IS THE PRODUCT.</h2><h3 className="cta-secondary-title">ACCESS GPU COMPUTE.</h3><p>Access NVIDIA GPU-backed compute through a programmable API.</p><p>Your $CTREE balance determines your daily allocation.</p><p>The network acquires the infrastructure.</p><p>Your application decides what to build with it.</p><p>Computree turns GPU capacity into a resource that applications can access through one programmable interface.</p><p>Eligible $CTREE holders receive daily compute allocation.</p><p>Infrastructure is acquired by the network.</p><p>Workloads run on supported GPU environments.</p><p>Your application receives the result.</p><div className="cta-buttons"><Link className="button button-light" href="/app">Access GPU Compute <span aria-hidden="true">→</span></Link><a className="button button-outline-light" href="#api">Read the Documentation <span aria-hidden="true">→</span></a></div></div>
     </section>
   );
 }

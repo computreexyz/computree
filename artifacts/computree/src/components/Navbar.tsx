@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'wouter';
 import { ComputreeLogo } from './ComputreeLogo';
 
 const navigation = [
@@ -45,9 +46,9 @@ export function Navbar() {
             </a>
           ))}
         </nav>
-        <a className="button button-dark nav-cta" href="#access" data-testid="link-access-compute">
+        <Link className="button button-dark nav-cta" href="/app" data-testid="link-access-compute">
           Access GPU Compute <span aria-hidden="true">→</span>
-        </a>
+        </Link>
         <button
           className="menu-toggle"
           aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
@@ -65,7 +66,7 @@ export function Navbar() {
             <span className="mobile-nav-index">0{index + 1}</span>{item.label}<span aria-hidden="true">↗</span>
           </a>
         ))}
-        <a className="button button-dark mobile-nav-action" href="#access" onClick={close} data-testid="link-mobile-access">Access GPU Compute <span aria-hidden="true">→</span></a>
+        <Link className="button button-dark mobile-nav-action" href="/app" onClick={close} data-testid="link-mobile-access">Access GPU Compute <span aria-hidden="true">→</span></Link>
       </nav>
     </header>
   );
