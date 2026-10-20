@@ -109,6 +109,26 @@ function mapJob(job: ApiJob): ComputeJob {
 
 /* ------------------------------ fetchers ------------------------------- */
 
+export interface MeResponse {
+  account: { id: string; privyDid: string; walletAddress: string | null };
+  eligibility: { eligible: boolean; balance: number; asset: string; staked: number };
+  chain: { id: number; name: string; testnet: boolean };
+}
+
+async function fetchMe(getAccessToken?: AccessTokenGetter): Promise<MeResponse> {
+  return apiFetch<MeResponse>('/api/me', { getAccessToken });
+}
+
+export function useMe() {
+  const { getAccessToken } = usePrivy();
+  return useQuery({
+    queryKey: ['app', 'me'],
+    queryFn: () => fetchMe(getAccessToken),
+    staleTime: 30_000,
+    retry: queryRetry,
+  });
+}
+
 async function fetchJobs(getAccessToken?: AccessTokenGetter): Promise<ComputeJob[]> {
   const jobs = await apiFetch<ApiJob[]>('/api/jobs', { getAccessToken });
   return jobs.map(mapJob);
@@ -237,6 +257,63 @@ export function usePlaygroundCompletion() {
         onResponse,
       });
     },
+  });
+}
+
+/* --------------------------- images ------------------------------------ */
+
+export interface ImageGenerateRequest {
+  prompt: string;
+  model?: string;
+  count?: 1 | 2;
+}
+
+export interface ImageGenerateResponse {
+  images: string[];
+  text?: string;
+  model: string;
+  creditsUsed: number;
+  remaining: number;
+}
+
+export function useImageGeneration() {
+  const { getAccessToken } = usePrivy();
+  return useMutation({
+    mutationFn: (body: ImageGenerateRequest) =>
+      apiFetch<ImageGenerateResponse>('/api/images/generate', {
+        method: 'POST',
+        body,
+        getAccessToken,
+      }),
+  });
+}
+
+/* --------------------------- workloads --------------------------------- */
+
+export interface EmbeddingsRequest {
+  model?: string;
+  input: string[];
+}
+
+export interface EmbeddingsResponse {
+  model: string;
+  dimensions: number;
+  count: number;
+  tokensUsed: number;
+  creditsUsed: number;
+  remaining: number;
+  preview: number[];
+}
+
+export function useEmbeddings() {
+  const { getAccessToken } = usePrivy();
+  return useMutation({
+    mutationFn: (body: EmbeddingsRequest) =>
+      apiFetch<EmbeddingsResponse>('/api/workloads/embeddings', {
+        method: 'POST',
+        body,
+        getAccessToken,
+      }),
   });
 }
 

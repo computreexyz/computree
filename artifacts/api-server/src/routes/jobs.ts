@@ -36,6 +36,9 @@ router.get("/", async (req, res, next) => {
     if (typeof req.query.gpu === "string" && req.query.gpu) {
       conditions.push(eq(jobsTable.gpu, req.query.gpu));
     }
+    if (typeof req.query.provider === "string" && req.query.provider) {
+      conditions.push(eq(jobsTable.provider, req.query.provider));
+    }
     const limitRaw = Number(req.query.limit ?? 50);
     const limit = Number.isFinite(limitRaw)
       ? Math.min(Math.max(1, Math.floor(limitRaw)), 200)

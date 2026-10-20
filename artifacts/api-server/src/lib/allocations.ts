@@ -9,11 +9,16 @@ export const DAILY_TOTAL = 1000;
 export async function ensureAllocation(
   accountId: string,
   cycleDate: string = utcToday(),
+  total: number = DAILY_TOTAL,
 ): Promise<Allocation> {
   await db
     .insert(allocationsTable)
-    .values({ accountId, cycleDate, total: DAILY_TOTAL, used: 0 })
-    .onConflictDoNothing();
+    .values({ accountId, cycleDate, total, used: 0 })
+    .onConflictDoUpdate({
+      target: [allocationsTable.accountId, allocationsTable.cycleDate],
+      // Eligibility can change intraday — keep the row's total in sync.
+      set: { total },
+    });
   const [allocation] = await db
     .select()
     .from(allocationsTable)

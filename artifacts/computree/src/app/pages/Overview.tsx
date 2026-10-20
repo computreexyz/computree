@@ -16,7 +16,7 @@ import { RelativeTime, StatusPill } from '../components/StatusPill';
 import { formatCountdown, nextUtcMidnight } from '../components/StatPanel';
 import { useChartInk } from '../components/useIsDark';
 import { MOCK_PROVIDERS, MODEL_LABELS } from '../mock/data';
-import { useAllocation, useHourlyUsage, useJobs, useWeekUsage } from '../mock/hooks';
+import { useAllocation, useHourlyUsage, useJobs, useMe, useWeekUsage } from '../mock/hooks';
 
 /* ------------------------------ header ------------------------------ */
 
@@ -42,10 +42,12 @@ function OverviewHeader() {
 
 function AllocationHero() {
   const { data } = useAllocation();
-  const used = data?.used ?? 653;
-  const total = data?.total ?? 1000;
+  const { data: me } = useMe();
+  const used = data?.used ?? 0;
+  const total = data?.total ?? 0;
   const remaining = total - used;
-  const pct = Math.min(100, (used / total) * 100);
+  const pct = total > 0 ? Math.min(100, (used / total) * 100) : 0;
+  const staked = me?.eligibility.balance ?? 0;
 
   return (
     <section className="app-panel app-panel-hero app-card-dark app-enter" data-testid="card-allocation-hero">
@@ -66,6 +68,11 @@ function AllocationHero() {
             <span className="app-meta">{used.toLocaleString('en-US')} CR used · {pct.toFixed(0)}%</span>
             <span className="app-meta">of {total.toLocaleString('en-US')} CR daily allocation</span>
           </div>
+          {total === 0 ? (
+            <div className="mono" style={{ marginTop: 14, fontSize: 9, letterSpacing: '.06em', color: '#a8c9ee' }} data-testid="note-stake-to-unlock">
+              STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET TO UNLOCK YOUR DAILY ALLOCATION
+            </div>
+          ) : null}
         </div>
         <div className="ov-hero-side">
           <div>
@@ -78,7 +85,7 @@ function AllocationHero() {
           </div>
           <div>
             <span className="app-meta">Source</span>
-            <b className="mono">$CTREE balance</b>
+            <b className="mono" data-testid="text-staked-source">{staked.toLocaleString('en-US')} NVDA staked</b>
           </div>
         </div>
       </div>

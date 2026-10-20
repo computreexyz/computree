@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { FeatureBanner } from '../components/FeatureBanner';
 import { PlaygroundArt } from '../components/AppVisuals';
+import { AllocationCard } from '../components/AllocationCard';
 import { Panel } from '../components/StatusPill';
 import {
   useAllocation,
@@ -25,12 +26,14 @@ const MODEL_OPTIONS: Array<{ value: string; label: string }> = [
   { value: 'anthropic/claude-sonnet-4.5', label: 'Claude Sonnet 4.5' },
 ];
 
-const PRESETS = [
-  'Summarize this',
-  'Translate to Indonesian',
-  'Code review',
-  'Explain simply',
-  'Write unit tests',
+const PRESETS: Array<{ label: string; insert: string }> = [
+  { label: 'Summarize this', insert: 'Summarize this' },
+  { label: 'Translate to Indonesian', insert: 'Translate to Indonesian' },
+  { label: 'Code review', insert: 'Code review' },
+  { label: 'Smart contract audit', insert: 'Audit this smart contract for vulnerabilities and explain the risks:\n\n' },
+  { label: 'Coding assistant', insert: 'You are a senior engineer. Help me with:\n\n' },
+  { label: 'AI agent planner', insert: 'Act as an autonomous agent. Break this goal into executable steps with tools:\n\n' },
+  { label: 'Explain simply', insert: 'Explain simply' },
 ];
 
 /* ------------------------------- types --------------------------------- */
@@ -181,42 +184,16 @@ function SettingsCard({
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {PRESETS.map((preset) => (
               <button
-                key={preset}
+                key={preset.label}
                 className="app-filter-chip"
-                onClick={() => onPreset(preset)}
-                data-testid={`chip-preset-${preset.toLowerCase().replace(/\s+/g, '-')}`}
+                onClick={() => onPreset(preset.insert)}
+                data-testid={`chip-preset-${preset.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
-                {preset}
+                {preset.label}
               </button>
             ))}
           </div>
         </div>
-      </div>
-    </Panel>
-  );
-}
-
-/* --------------------------- allocation card --------------------------- */
-
-function AllocationCard() {
-  const { data } = useAllocation();
-  const used = data?.used ?? 0;
-  const total = data?.total ?? 1000;
-  const pct = Math.min(100, (used / total) * 100);
-  return (
-    <Panel title="Allocation" flush={false}>
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-        <span className="app-big app-big-sm" style={{ fontVariantNumeric: 'tabular-nums' }} data-testid="text-playground-remaining">
-          {(total - used).toLocaleString('en-US')} CR
-        </span>
-        <span className="app-meta">remaining</span>
-      </div>
-      <div className="app-progress" style={{ marginTop: 12 }} role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
-        <i style={{ width: `${pct}%` }} />
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-        <span className="app-meta">{used.toLocaleString('en-US')} used</span>
-        <span className="app-meta">of {total.toLocaleString('en-US')} CR daily</span>
       </div>
     </Panel>
   );
@@ -310,11 +287,12 @@ export default function Playground() {
     if (el) el.scrollTop = el.scrollHeight;
   }, [turns, sending]);
 
-  const exhausted = allocation !== undefined && allocation.used >= allocation.total;
+  const noAllocation = allocation !== undefined && allocation.total === 0;
+  const exhausted = allocation !== undefined && !noAllocation && allocation.used >= allocation.total;
 
   const send = useCallback(async () => {
     const text = input.trim();
-    if (!text || sending || exhausted) return;
+    if (!text || sending || exhausted || noAllocation) return;
     setError(null);
     setInput('');
     setSending(true);
@@ -386,7 +364,7 @@ export default function Playground() {
       setError(replies.length > 0 ? `One model failed: ${firstError}` : firstError);
     }
     setSending(false);
-  }, [input, sending, exhausted, turns, compare, model, system, temperature, completion, queryClient]);
+  }, [input, sending, exhausted, noAllocation, turns, compare, model, system, temperature, completion, queryClient]);
 
   const applyPreset = useCallback((preset: string) => {
     setInput((prev) => (prev.trim() ? `${preset}:\n\n${prev}` : `${preset} `));
@@ -470,6 +448,11 @@ export default function Playground() {
             {exhausted ? (
               <div className="app-meta">DAILY ALLOCATION EXHAUSTED · RESETS AT 00:00 UTC</div>
             ) : null}
+            {noAllocation ? (
+              <div className="mono" style={{ fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }} data-testid="note-stake-to-play">
+                STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET TO USE THE PLAYGROUND
+              </div>
+            ) : null}
 
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
               <textarea
@@ -489,7 +472,7 @@ export default function Playground() {
                 className="button button-dark"
                 style={{ minHeight: 42, flex: '0 0 auto' }}
                 onClick={() => void send()}
-                disabled={!input.trim() || sending || exhausted}
+                disabled={!input.trim() || sending || exhausted || noAllocation}
                 data-testid="button-send-prompt"
               >
                 <SendHorizontal size={13} /> Send

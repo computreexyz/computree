@@ -27,9 +27,9 @@ function ConnectScreen() {
         <div className="section-label eyebrow" style={{ marginTop: 26 }}>COMPUTREE APP</div>
         <h1>CONNECT YOUR WALLET.</h1>
         <p className="mono" style={{ fontSize: 10, lineHeight: 1.9, letterSpacing: '.04em', color: 'var(--asub)', maxWidth: 420 }}>
-          ELIGIBLE $CTREE HOLDERS RECEIVE A DAILY COMPUTE ALLOCATION.
+          STAKE SUPPORTED TOKENIZED ASSETS TO UNLOCK DAILY GPU COMPUTE.
           <br />
-          CONNECT A WALLET TO VERIFY YOUR BALANCE AND UNLOCK YOUR ALLOCATION.
+          CONNECT A WALLET TO VERIFY YOUR STAKE AND UNLOCK YOUR ALLOCATION.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 26, flexWrap: 'wrap' }}>
           <button className="button button-dark" onClick={login} data-testid="button-connect-wallet">

@@ -16,7 +16,7 @@ export function getAccount(req: Request): Account {
 
 let privy: PrivyClient | null = null;
 
-function getPrivy(): PrivyClient {
+export function getPrivy(): PrivyClient {
   if (!privy) {
     const appId = process.env.PRIVY_APP_ID;
     const appSecret = process.env.PRIVY_APP_SECRET;

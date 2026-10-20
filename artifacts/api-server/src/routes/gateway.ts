@@ -2,6 +2,7 @@ import { Router, type IRouter } from "express";
 import { and, eq, isNull, sql } from "drizzle-orm";
 import { z } from "zod";
 import {
+  accountsTable,
   allocationsTable,
   apiKeysTable,
   jobsTable,
@@ -11,6 +12,7 @@ import {
 import { db } from "../lib/db";
 import { logger } from "../lib/logger";
 import { ensureAllocation } from "../lib/allocations";
+import { getEligibility } from "../lib/eligibility";
 import {
   creditsForUsage,
   newJobId,
@@ -73,8 +75,31 @@ router.post("/chat/completions", async (req, res, next) => {
     }
     model = parsed.data.model;
 
+    const [account] = await db
+      .select()
+      .from(accountsTable)
+      .where(eq(accountsTable.id, key.accountId))
+      .limit(1);
+    if (!account) {
+      res.status(401).json({ error: "api key has no associated account" });
+      return;
+    }
+    const eligibility = await getEligibility(account, req);
+    if (!eligibility.eligible) {
+      res.status(429).json({
+        error:
+          "No daily allocation — stake ≥ 1,000 of a supported tokenized asset to unlock compute",
+        code: "INELIGIBLE",
+      });
+      return;
+    }
+
     const cycleDate = utcToday();
-    const allocation = await ensureAllocation(key.accountId, cycleDate);
+    const allocation = await ensureAllocation(
+      key.accountId,
+      cycleDate,
+      eligibility.eligible ? 1000 : 0,
+    );
     if (allocation.used >= allocation.total) {
       res.status(429).json({ error: "daily allocation exhausted" });
       return;

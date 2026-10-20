@@ -56,10 +56,9 @@ export function Hero() {
         <div className="container hero-content">
           <div className="hero-copy reveal">
             <div className="section-label eyebrow">COMPUTREE</div>
-            <h1 className="display">TURN GPU CAPACITY INTO A RESOURCE YOU CAN USE.</h1>
-            <p>Computree is an access layer for NVIDIA GPU compute.</p>
-            <p>It acquires GPU capacity from the infrastructure market and makes that capacity available through a programmable API.</p>
-            <p>Eligible $CTREE holders receive a daily allocation of compute, refreshed every 24 hours, and can use it across supported applications and workloads.</p>
+            <h1 className="display">Put Tokenized Stock to Work on GPU Compute</h1>
+            <p>Computree brings tokenized assets and GPU infrastructure into a programmable system where supported assets can connect with real computing capacity, giving developers an API-based way to access GPU resources.</p>
+            <p>Users who stake supported tokenized assets receive a daily allocation of compute, refreshed every 24 hours, and can use it across supported applications and workloads.</p>
             <div className="hero-actions">
               <Link className="button button-dark" href="/app" data-testid="link-hero-access">Access GPU Compute <span aria-hidden="true">→</span></Link>
               <a className="button button-outline" href="#infrastructure" data-testid="link-hero-infrastructure">Explore Infrastructure <span aria-hidden="true">↗</span></a>
@@ -175,12 +174,12 @@ export function CTREEAllocation() {
     <section className="section dark-section allocation-section" id="ctree">
       <div className="container allocation-layout">
         <div className="allocation-copy">
-          <div className="section-label eyebrow">$CTREE</div>
-          <div className="allocation-promise">YOUR $CTREE BALANCE BECOMES COMPUTE ACCESS.</div>
-          <h2 className="section-title">$CTREE DETERMINES YOUR COMPUTE ALLOCATION.</h2>
-          <p className="lead">$CTREE is the access mechanism for the Computree network.</p>
-          <p className="lead">Eligible holders receive compute allocation based on their qualifying token balance.</p>
-          <p className="lead">The more eligible $CTREE associated with your account, the greater your available daily allocation.</p>
+          <div className="section-label eyebrow">STAKING</div>
+          <div className="allocation-promise">YOUR STAKE BECOMES COMPUTE ACCESS.</div>
+          <h2 className="section-title">STAKING UNLOCKS YOUR DAILY COMPUTE ALLOCATION.</h2>
+          <p className="lead">Stake supported tokenized assets such as tokenized NVDA.</p>
+          <p className="lead">Your qualifying staked balance determines your daily allocation.</p>
+          <p className="lead">The more you stake, the greater your available daily allocation.</p>
           <p className="lead">Your allocation can be consumed across supported workloads and applications.</p>
           <p className="lead">It is not ownership of a specific machine.</p>
           <p className="lead">It is access to compute capacity acquired by the network.</p>
@@ -211,7 +210,7 @@ export function DailyReset() {
   return (
     <section className="section reset-section" id="compute">
       <div className="container reset-layout">
-        <div><div className="section-label eyebrow">A FRESH COMPUTE ALLOCATION EVERY 24 HOURS.</div><SectionIntro title="YOUR ALLOCATION REFRESHES EVERY 24 HOURS." body={<>Computree is designed around a recurring compute allocation rather than a traditional cloud subscription.<br /><br />At the beginning of each cycle, your eligible $CTREE balance determines your available allocation.<br /><br />Use your compute throughout the day.<br /><br />Your remaining allocation expires at the end of the cycle.<br /><br />The next cycle begins with a fresh allocation.</>} /></div>
+        <div><div className="section-label eyebrow">A FRESH COMPUTE ALLOCATION EVERY 24 HOURS.</div><SectionIntro title="YOUR ALLOCATION REFRESHES EVERY 24 HOURS." body={<>Computree is designed around a recurring compute allocation rather than a traditional cloud subscription.<br /><br />At the beginning of each cycle, your staked balance of supported tokenized assets determines your available allocation.<br /><br />Use your compute throughout the day.<br /><br />Your remaining allocation expires at the end of the cycle.<br /><br />The next cycle begins with a fresh allocation.</>} /></div>
         <div className="reset-diagram">
           <div className="reset-diagram-head"><span className="section-label">DAILY COMPUTE</span><span className="demo-badge">DEMO DATA</span></div>
           <div className="timeline">
@@ -352,12 +351,12 @@ export function WorkloadSection() {
 }
 
 export function ArchitectureSection() {
-  const layers = ['$CTREE', 'ELIGIBILITY', 'DAILY ALLOCATION', 'COMPUTREE API', 'AUTHENTICATION', 'USAGE METERING', 'WORKLOAD ORCHESTRATION', 'GPU PROVIDER', 'NVIDIA GPU', 'RESULT'];
+  const layers = ['STAKED ASSETS', 'ELIGIBILITY', 'DAILY ALLOCATION', 'COMPUTREE API', 'AUTHENTICATION', 'USAGE METERING', 'WORKLOAD ORCHESTRATION', 'GPU PROVIDER', 'NVIDIA GPU', 'RESULT'];
   return (
     <section className="section architecture-section dark-section" id="architecture">
       <AmbientFlow className="architecture-network-art" />
       <div className="container">
-        <div className="architecture-heading"><SectionIntro title="COMPUTE IS THE PRODUCT." body={<>Computree is not built around selling another AI interface.<br /><br />The product is access to computing infrastructure.<br /><br />The API is the interface.<br /><br />The GPU is the underlying resource.<br /><br />The network acquires the capacity.<br /><br />$CTREE determines access.<br /><br />Users decide what to build with it.</>} dark /></div>
+        <div className="architecture-heading"><SectionIntro title="COMPUTE IS THE PRODUCT." body={<>Computree is not built around selling another AI interface.<br /><br />The product is access to computing infrastructure.<br /><br />The API is the interface.<br /><br />The GPU is the underlying resource.<br /><br />The network acquires the capacity.<br /><br />Staked tokenized assets determine access.<br /><br />Users decide what to build with it.</>} dark /></div>
         <div className="architecture-flow">{layers.map((layer, index) => <div className={`architecture-layer${index === 0 || index === 9 ? ' architecture-highlight' : ''}`} key={layer}><span className="architecture-index mono">0{index + 1}</span><span>{layer}</span>{index < layers.length - 1 && <span className="architecture-down" aria-hidden="true">↓</span>}</div>)}</div>
       </div>
     </section>
@@ -365,10 +364,10 @@ export function ArchitectureSection() {
 }
 
 export function TokenFlowSection() {
-  const steps = ['$CTREE', 'COMPUTE ALLOCATION', 'COMPUTREE API', 'GPU INFRASTRUCTURE', 'NVIDIA GPU', 'WORKLOAD', 'RESULT'];
+  const steps = ['STAKED ASSETS', 'COMPUTE ALLOCATION', 'COMPUTREE API', 'GPU INFRASTRUCTURE', 'NVIDIA GPU', 'WORKLOAD', 'RESULT'];
   return (
     <section className="section token-flow-section" id="token-flow">
-      <div className="container token-flow-layout"><div><SectionIntro title="FROM TOKEN ACCESS TO PHYSICAL COMPUTE." body={<>A qualifying $CTREE balance gives an account access to a measurable amount of daily compute.<br /><br />That compute is backed by infrastructure acquired by the network.<br /><br />The workload executes on GPU infrastructure.<br /><br />The result returns to the application.<br /><br />The entire process can be represented in one flow:</>} /></div><div className="token-flow">{steps.map((step, index) => <div className="token-flow-step" key={step}><span className="token-step-index mono">0{index + 1}</span><span>{step}</span>{index < steps.length - 1 && <span aria-hidden="true">↓</span>}</div>)}</div></div>
+      <div className="container token-flow-layout"><div><SectionIntro title="FROM TOKEN ACCESS TO PHYSICAL COMPUTE." body={<>A qualifying stake of supported tokenized assets gives an account access to a measurable amount of daily compute.<br /><br />That compute is backed by infrastructure acquired by the network.<br /><br />The workload executes on GPU infrastructure.<br /><br />The result returns to the application.<br /><br />The entire process can be represented in one flow:</>} /></div><div className="token-flow">{steps.map((step, index) => <div className="token-flow-step" key={step}><span className="token-step-index mono">0{index + 1}</span><span>{step}</span>{index < steps.length - 1 && <span aria-hidden="true">↓</span>}</div>)}</div></div>
     </section>
   );
 }
@@ -383,7 +382,7 @@ export function ExpansionSection() {
 
 export function ModelSection() {
   const rows = [
-    ['$CTREE', 'Determines eligibility and compute allocation.', 'allocation'],
+    ['STAKED ASSETS', 'Determines eligibility and compute allocation.', 'allocation'],
     ['COMPUTREE', 'Provides the access and orchestration layer.', 'tree'],
     ['GPU PROVIDERS', 'Supply computing capacity.', 'provider'],
     ['NVIDIA GPUs', 'Execute accelerated workloads.', 'gpu'],
@@ -398,7 +397,7 @@ export function FinalCTA() {
     <section className="final-cta dark-section" id="access">
       <AmbientFlow className="cta-art" />
       <div className="cta-overlay" />
-      <div className="container cta-content"><div className="section-label eyebrow">COMPUTREE</div><h2 className="section-title">COMPUTE IS THE PRODUCT.</h2><h3 className="cta-secondary-title">ACCESS GPU COMPUTE.</h3><p>Access NVIDIA GPU-backed compute through a programmable API.</p><p>Your $CTREE balance determines your daily allocation.</p><p>The network acquires the infrastructure.</p><p>Your application decides what to build with it.</p><p>Computree turns GPU capacity into a resource that applications can access through one programmable interface.</p><p>Eligible $CTREE holders receive daily compute allocation.</p><p>Infrastructure is acquired by the network.</p><p>Workloads run on supported GPU environments.</p><p>Your application receives the result.</p><div className="cta-buttons"><Link className="button button-light" href="/app">Access GPU Compute <span aria-hidden="true">→</span></Link><a className="button button-outline-light" href="#api">Read the Documentation <span aria-hidden="true">→</span></a></div></div>
+      <div className="container cta-content"><div className="section-label eyebrow">COMPUTREE</div><h2 className="section-title">COMPUTE IS THE PRODUCT.</h2><h3 className="cta-secondary-title">ACCESS GPU COMPUTE.</h3><p>Access NVIDIA GPU-backed compute through a programmable API.</p><p>Your staked balance of supported tokenized assets determines your daily allocation.</p><p>The network acquires the infrastructure.</p><p>Your application decides what to build with it.</p><p>Computree turns GPU capacity into a resource that applications can access through one programmable interface.</p><p>Stake supported tokenized assets such as tokenized NVDA to receive a daily compute allocation.</p><p>Infrastructure is acquired by the network.</p><p>Workloads run on supported GPU environments.</p><p>Your application receives the result.</p><div className="cta-buttons"><Link className="button button-light" href="/app">Access GPU Compute <span aria-hidden="true">→</span></Link><a className="button button-outline-light" href="#api">Read the Documentation <span aria-hidden="true">→</span></a></div></div>
     </section>
   );
 }

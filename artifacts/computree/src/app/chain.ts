@@ -1,25 +1,23 @@
 import { defineChain } from 'viem';
 
 /**
- * Robinhood Chain (Arbitrum Orbit L2) — home of $CTREE.
+ * Robinhood Chain (Arbitrum Orbit L2) — home of staked tokenized assets.
  *
- * NOTE: these are the public testnet parameters as announced; confirm
- * against the official Robinhood Chain docs before mainnet launch.
+ * NOTE: these are the official mainnet parameters as announced.
  */
 export const robinhoodChain = defineChain({
-  id: 46630,
-  name: 'Robinhood Chain Testnet',
+  id: 4663,
+  name: 'Robinhood Chain',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
-    default: { http: ['https://rpc.testnet.chain.robinhood.com'] },
+    default: { http: ['https://rpc.mainnet.chain.robinhood.com'] },
   },
   blockExplorers: {
     default: {
-      name: 'Robinhood Chain Explorer',
-      url: 'https://explorer.testnet.chain.robinhood.com',
+      name: 'Blockscout',
+      url: 'https://robinhoodchain.blockscout.com',
     },
   },
-  testnet: true,
 });
 
 export const EXPLORER_TX_URL = (tx: string) =>

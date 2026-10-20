@@ -3,7 +3,7 @@ import { ComputreeLogo } from './ComputreeLogo';
 const groups = [
   { title: 'PRODUCT', links: [['How It Works', '#how-it-works'], ['Compute', '#compute'], ['Infrastructure', '#infrastructure'], ['Dashboard', '#transparency']] },
   { title: 'DEVELOPERS', links: [['Documentation', '#api'], ['API Reference', '#api'], ['Examples', '#applications'], ['GitHub', '#api']] },
-  { title: 'NETWORK', links: [['$CTREE', '#ctree'], ['Treasury', '#treasury'], ['Providers', '#providers'], ['Compute', '#compute']] },
+  { title: 'NETWORK', links: [['Staking', '#ctree'], ['Treasury', '#treasury'], ['Providers', '#providers'], ['Compute', '#compute']] },
   { title: 'RESOURCES', links: [['Status', '#resources'], ['FAQ', '#resources'], ['Terms', '#resources'], ['Privacy', '#resources']] },
 ];
 

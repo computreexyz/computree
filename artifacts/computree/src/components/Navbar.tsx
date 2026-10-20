@@ -7,7 +7,7 @@ const navigation = [
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Infrastructure', href: '#infrastructure' },
   { label: 'Developers', href: '#developers' },
-  { label: '$CTREE', href: '#ctree' },
+  { label: 'Staking', href: '#ctree' },
   { label: 'Resources', href: '#resources' },
 ];
 

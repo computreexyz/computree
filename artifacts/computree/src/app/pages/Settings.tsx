@@ -7,7 +7,7 @@ import { ControlBoardArt, KeyAccessArt } from '../components/AppVisuals';
 import { robinhoodChain } from '../chain';
 import { Panel } from '../components/StatusPill';
 import { KEYS_STORAGE, MOCK_WALLET } from '../mock/data';
-import { DEMO_STORAGE, useDemoMode } from '../mock/hooks';
+import { DEMO_STORAGE, useDemoMode, useMe } from '../mock/hooks';
 
 const REDUCED_MOTION_STORAGE = 'ctree_reduced_motion';
 
@@ -41,7 +41,11 @@ function Toggle({ on, onChange, testId }: { on: boolean; onChange: (on: boolean)
 function WalletSection() {
   const { user, authenticated, logout } = usePrivy();
   const [demo, setDemo] = useDemoMode();
+  const { data: me } = useMe();
   const address = user?.wallet?.address ?? (demo ? MOCK_WALLET.address : null);
+  const eligibility = me?.eligibility;
+  const balance = eligibility?.balance ?? 0;
+  const eligible = eligibility?.eligible ?? false;
 
   const disconnect = () => {
     if (authenticated) logout();
@@ -60,13 +64,17 @@ function WalletSection() {
         <SettingRow label="Network" hint={`${robinhoodChain.name} · Chain ID ${robinhoodChain.id}`}>
           <span className="mono" style={{ fontSize: 10 }}>{MOCK_WALLET.network.toUpperCase()}</span>
         </SettingRow>
-        <SettingRow label="$CTREE qualifying balance">
-          <span className="mono" style={{ fontSize: 10, fontVariantNumeric: 'tabular-nums' }}>
-            {MOCK_WALLET.balanceCtree.toLocaleString('en-US')} CTREE
+        <SettingRow label="Staked balance (tokenized NVDA)">
+          <span className="mono" style={{ fontSize: 10, fontVariantNumeric: 'tabular-nums' }} data-testid="text-staked-balance">
+            {balance.toLocaleString('en-US')} tokenized NVDA
           </span>
         </SettingRow>
-        <SettingRow label="Eligibility" hint="MIN 1,000 CTREE FOR DAILY ALLOCATION">
-          <span className="status-pill">ELIGIBLE</span>
+        <SettingRow label="Eligibility" hint="STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET">
+          {eligible ? (
+            <span className="status-pill" data-testid="pill-eligible">ELIGIBLE</span>
+          ) : (
+            <span className="status-pill status-queued" data-testid="pill-not-eligible">NOT ELIGIBLE · STAKE ≥ 1,000 NVDA</span>
+          )}
         </SettingRow>
         <div style={{ paddingTop: 14 }}>
           <button className="button button-outline" style={{ minHeight: 36 }} onClick={disconnect} data-testid="button-disconnect">

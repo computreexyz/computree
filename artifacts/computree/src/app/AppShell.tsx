@@ -16,7 +16,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Toaster } from '@/components/ui/sonner';
 import { CountdownChip } from './components/StatPanel';
-import { useDemoMode } from './mock/hooks';
+import { useDemoMode, useMe } from './mock/hooks';
 import { MOCK_WALLET } from './mock/data';
 import { APP_NAV_ITEMS, MOBILE_PRIMARY_PATHS } from './nav-items';
 import { CURL_SNIPPET } from './snippets';
@@ -51,6 +51,7 @@ function useRailCollapsed(): [boolean, () => void] {
 function WalletChip() {
   const { user } = usePrivy();
   const [demo] = useDemoMode();
+  const { data: me } = useMe();
   if (demo && !user) {
     return (
       <span className="app-chip" data-testid="chip-wallet">
@@ -60,12 +61,13 @@ function WalletChip() {
     );
   }
   const address = user?.wallet?.address ?? MOCK_WALLET.address;
+  const staked = me?.eligibility.balance;
   return (
     <span className="app-chip" data-testid="chip-wallet" title={address}>
       <Wallet size={12} />
       <span>{truncateAddress(address)}</span>
       <span className="app-chip-num app-hide-mobile" style={{ color: 'var(--asub)' }}>
-        {MOCK_WALLET.balanceCtree.toLocaleString('en-US')} CTREE
+        {staked !== undefined ? `${staked.toLocaleString('en-US')} NVDA` : `${MOCK_WALLET.balanceCtree.toLocaleString('en-US')} NVDA`}
       </span>
       {demo ? <span className="app-demo-badge">DEMO</span> : null}
     </span>

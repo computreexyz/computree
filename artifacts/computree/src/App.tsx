@@ -30,6 +30,7 @@ import { AppShell } from '@/app/AppShell';
 import { robinhoodChain } from '@/app/chain';
 import { RequireAuth } from '@/app/RequireAuth';
 import Compute from '@/app/pages/Compute';
+import Images from '@/app/pages/Images';
 import Jobs from '@/app/pages/Jobs';
 import Keys from '@/app/pages/Keys';
 import Network from '@/app/pages/Network';
@@ -37,6 +38,7 @@ import Overview from '@/app/pages/Overview';
 import Playground from '@/app/pages/Playground';
 import Settings from '@/app/pages/Settings';
 import Treasury from '@/app/pages/Treasury';
+import Workloads from '@/app/pages/Workloads';
 
 try {
   if (localStorage.getItem('ctree_reduced_motion') === '1') {
@@ -108,6 +110,8 @@ function AppArea() {
           <Route path="/app" component={Overview} />
           <Route path="/app/compute" component={Compute} />
           <Route path="/app/playground" component={Playground} />
+          <Route path="/app/images" component={Images} />
+          <Route path="/app/workloads" component={Workloads} />
           <Route path="/app/jobs" component={Jobs} />
           <Route path="/app/keys" component={Keys} />
           <Route path="/app/network" component={Network} />

@@ -335,6 +335,64 @@ export function PlaygroundArt({ dark = false }: { dark?: boolean }) {
   );
 }
 
+export function ImagesArt({ dark = false }: { dark?: boolean }) {
+  const panel = dark ? '#23272e' : PANEL;
+  const edge = dark ? '#4a525c' : LINE;
+  const frame = dark ? '#2b3038' : '#fff';
+  const glyph = dark ? '#8f99a4' : MID;
+  const inkStroke = dark ? '#f2f4f6' : INK;
+  return (
+    <svg viewBox="0 0 220 120" role="img" aria-label="Image generation" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%' }}>
+      <g className="fb-float" style={{ animationDuration: '5.2s' }}>
+        <rect x="26" y="20" width="88" height="66" rx="5" fill={frame} stroke={edge} strokeWidth="1.4" />
+        <rect x="26" y="20" width="88" height="66" rx="5" fill="none" stroke={edge} strokeWidth="1.4" />
+        <circle cx="46" cy="38" r="6" fill={BLUE_SOFT} className="fb-led" style={{ animationDelay: '.5s' }} />
+        <path d="M34 74 L56 52 L70 64 L84 46 L106 74 Z" fill={panel} stroke={glyph} strokeWidth="1.3" strokeLinejoin="round" />
+      </g>
+      <g className="fb-vault-spin" style={{ transformOrigin: '158px 44px', animationDuration: '18s' }}>
+        {[0, 60, 120, 180, 240, 300].map((a) => (
+          <line key={a} x1={158 + 10 * Math.cos((a * Math.PI) / 180)} y1={44 + 10 * Math.sin((a * Math.PI) / 180)} x2={158 + 17 * Math.cos((a * Math.PI) / 180)} y2={44 + 17 * Math.sin((a * Math.PI) / 180)} stroke={a % 120 === 0 ? BLUE : glyph} strokeWidth="2" strokeLinecap="round" />
+        ))}
+        <circle cx="158" cy="44" r="4.5" fill="none" stroke={inkStroke} strokeWidth="2" />
+      </g>
+      <rect x="130" y="72" width="66" height="26" rx="4" fill={panel} stroke={edge} strokeWidth="1.3" />
+      {[0, 1, 2].map((i) => (
+        <rect key={i} className="fb-typeline" x="138" y={79 + i * 6} width={i === 1 ? 34 : 48 - i * 10} height="3.4" rx="1.7" fill={i === 0 ? BLUE_SOFT : glyph} style={{ animationDelay: `${i * 0.7}s` }} />
+      ))}
+      <path className="fb-flow" d="M118 60 C130 56 138 52 144 48" fill="none" stroke={edge} strokeWidth="1.1" style={{ animationDuration: '7s' }} />
+      <circle className="fb-signal" r="2" fill={BLUE} style={{ offsetPath: "path('M118 60 C130 56 138 52 144 48')", animationDuration: '4s' } as CSSProperties} />
+    </svg>
+  );
+}
+
+export function WorkloadsArt({ dark = false }: { dark?: boolean }) {
+  const panel = dark ? '#23272e' : PANEL;
+  const edge = dark ? '#4a525c' : LINE;
+  const bar = dark ? '#8f99a4' : LINE;
+  const barInk = dark ? '#f2f4f6' : INK;
+  const label = dark ? '#8f99a4' : MID;
+  return (
+    <svg viewBox="0 0 220 120" role="img" aria-label="Model workloads" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%' }}>
+      {[0, 1, 2].map((row) => (
+        <g key={row} opacity={1 - row * 0.18}>
+          <rect x="34" y={26 + row * 24} width="118" height="17" rx="3" fill={panel} stroke={edge} strokeWidth="1.2" />
+          {Array.from({ length: 8 }, (_, i) => (
+            <rect key={i} className="fb-typeline" x={42 + i * 13} y={32 + row * 24} width="8" height="5" rx="1.5" fill={i % 3 === row % 3 ? BLUE_SOFT : bar} style={{ animationDelay: `${(row * 8 + i) * 0.22}s` }} />
+          ))}
+        </g>
+      ))}
+      {[0, 1, 2, 3].map((i) => (
+        <rect key={i} x={164 + (i % 2) * 16} y={34 + Math.floor(i / 2) * 16} width="11" height="11" rx="2" fill={i === 1 ? BLUE : panel} stroke={edge} strokeWidth="1.1" className={i === 1 ? 'fb-led' : undefined} />
+      ))}
+      <path className="fb-flow" d="M40 98 H180" fill="none" stroke={edge} strokeWidth="1.1" style={{ animationDuration: '8s' }} />
+      <circle className="fb-signal" r="2" fill={BLUE} style={{ offsetPath: "path('M40 98 H180')", animationDuration: '5.5s' } as CSSProperties} />
+      <rect x="40" y="88" width="26" height="6" rx="2" fill={barInk} opacity="0.85" />
+      <rect x="72" y="88" width="14" height="6" rx="2" fill={BLUE} className="fb-led" style={{ animationDelay: '.8s' }} />
+      <text x="176" y="112" textAnchor="end" fontSize="6" fontFamily="var(--app-font-mono), monospace" letterSpacing="1.2" fill={label}>VECTORS</text>
+    </svg>
+  );
+}
+
 export function AcquisitionArt() {
   return (
     <svg viewBox="0 0 220 120" role="img" aria-label="Compute acquisition" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%' }}>

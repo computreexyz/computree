@@ -890,8 +890,10 @@ html[data-reduced-motion='true'] *, html[data-reduced-motion='true'] *::before, 
 .fb-toggle-b { animation-delay: -3s; }
 @keyframes fb-toggle-op { 0%,42%,100% { opacity: 1; } 50%,92% { opacity: .45; } }
 @media (max-width: 767px) {
-  .fb { grid-template-columns: 1fr; gap: 10px; padding: 16px; }
-  .fb-art-frame { min-height: 100px; }
+  .fb { display: flex; flex-direction: column; gap: 12px; padding: 16px; max-width: 100%; }
+  .fb-copy { max-width: 100%; }
+  .fb-sub { overflow-wrap: break-word; }
+  .fb-art-frame { min-height: 120px; }
 }
 
 /* Card-embedded right-side visuals (global card rule) */
@@ -968,3 +970,6 @@ html[data-reduced-motion='true'] *, html[data-reduced-motion='true'] *::before, 
 .pg-pre { margin: 0; padding: 10px 12px; background: var(--abg); border: 1px solid var(--aline); border-radius: var(--aradius-sm); font: 400 10.5px/1.6 var(--app-font-mono); color: var(--asub); overflow: auto; max-height: 220px; white-space: pre; }
 .pg-slider { width: 100%; accent-color: var(--aink); }
 .pg-collapse-head { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; }
+
+.app-panel { min-width: 0; }
+.table-wrap { min-width: 0; }
