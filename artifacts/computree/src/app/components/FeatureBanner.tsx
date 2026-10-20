@@ -8,6 +8,7 @@ import {
   PipelineArt2,
   PlaygroundArt,
   ServerRackArt,
+  StakingArt,
   VaultArt,
   WorkloadsArt,
 } from './AppVisuals';
@@ -17,7 +18,7 @@ import { MOCK_PROVIDERS } from '../mock/data';
 /* Top feature banner — flat 2D identity per page                      */
 /* ------------------------------------------------------------------ */
 
-type BannerFeature = 'overview' | 'compute' | 'playground' | 'images' | 'workloads' | 'jobs' | 'keys' | 'network' | 'treasury' | 'settings';
+type BannerFeature = 'overview' | 'compute' | 'stake' | 'playground' | 'images' | 'workloads' | 'jobs' | 'keys' | 'network' | 'treasury' | 'settings';
 
 const ART: Record<BannerFeature, (dark: boolean) => ReactNode> = {
   overview: () => (
@@ -26,6 +27,7 @@ const ART: Record<BannerFeature, (dark: boolean) => ReactNode> = {
     </g>
   ),
   compute: (dark) => <GpuCardArt dark={dark} />,
+  stake: (dark) => <StakingArt dark={dark} />,
   playground: (dark) => <PlaygroundArt dark={dark} />,
   images: (dark) => <ImagesArt dark={dark} />,
   workloads: (dark) => <WorkloadsArt dark={dark} />,
@@ -36,7 +38,7 @@ const ART: Record<BannerFeature, (dark: boolean) => ReactNode> = {
   settings: (dark) => <ControlBoardArt dark={dark} />,
 };
 
-const DARK_FEATURES: ReadonlySet<BannerFeature> = new Set(['compute', 'playground', 'images', 'workloads', 'jobs', 'keys', 'network', 'treasury', 'settings']);
+const DARK_FEATURES: ReadonlySet<BannerFeature> = new Set(['compute', 'stake', 'playground', 'images', 'workloads', 'jobs', 'keys', 'network', 'treasury', 'settings']);
 
 export function FeatureBanner({
   feature,

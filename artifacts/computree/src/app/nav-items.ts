@@ -7,6 +7,7 @@ import {
   Landmark,
   LayoutDashboard,
   ListChecks,
+  Lock,
   Network,
   Settings,
   type LucideIcon,
@@ -21,6 +22,7 @@ export interface AppNavItem {
 
 export const APP_NAV_ITEMS: AppNavItem[] = [
   { path: '/app', label: 'Overview', pageLabel: 'Overview', icon: LayoutDashboard },
+  { path: '/app/stake', label: 'Stake', pageLabel: 'Stake', icon: Lock },
   { path: '/app/compute', label: 'Compute', pageLabel: 'Compute', icon: Cpu },
   { path: '/app/playground', label: 'Playground', pageLabel: 'Playground', icon: FlaskConical },
   { path: '/app/images', label: 'Images', pageLabel: 'Images', icon: ImageIcon },
@@ -33,4 +35,4 @@ export const APP_NAV_ITEMS: AppNavItem[] = [
 ];
 
 /** Items shown directly in the mobile bottom bar (max 4 + More). */
-export const MOBILE_PRIMARY_PATHS = ['/app', '/app/compute', '/app/playground', '/app/images'];
+export const MOBILE_PRIMARY_PATHS = ['/app', '/app/stake', '/app/playground', '/app/images'];

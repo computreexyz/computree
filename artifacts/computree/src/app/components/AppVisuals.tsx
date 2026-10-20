@@ -80,6 +80,7 @@ const LINE = '#c9cfd6';
 const PANEL = '#f4f6f8';
 const BLUE = '#4489e5';
 const BLUE_SOFT = '#a8c9ee';
+const NVDA_GREEN = '#76B900';
 
 function Fans({ cx, cy, r, dark = false, reverse = false }: { cx: number; cy: number; r: number; dark?: boolean; reverse?: boolean }) {
   const bladeFill = dark ? '#e8ecf0' : INK;
@@ -349,6 +350,35 @@ export function PlaygroundArt({ dark = false }: { dark?: boolean }) {
       <text x="166" y="94" fontSize="6" fontFamily="var(--app-font-mono), monospace" letterSpacing="1" fill={line}>READY</text>
       <path className="fb-flow" d="M100 36 C118 36 130 40 144 44" fill="none" stroke={edge} strokeWidth="1.1" style={{ animationDuration: '7s' }} />
       <circle className="fb-signal" r="2" fill={BLUE} style={{ offsetPath: "path('M100 36 C118 36 130 40 144 44')", animationDuration: '4.5s' } as CSSProperties} />
+    </svg>
+  );
+}
+
+export function StakingArt({ dark = false }: { dark?: boolean }) {
+  const panel = dark ? '#23272e' : PANEL;
+  const edge = dark ? '#4a525c' : LINE;
+  const body = dark ? '#2b3038' : '#fff';
+  const glyph = dark ? '#8f99a4' : MID;
+  const inkStroke = dark ? '#f2f4f6' : INK;
+  return (
+    <svg viewBox="0 0 220 120" role="img" aria-label="Staking vault" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%' }}>
+      <g className="fb-float" style={{ animationDuration: '5.4s' }}>
+        <rect x="56" y="46" width="76" height="56" rx="7" fill={body} stroke={edge} strokeWidth="1.5" />
+        <path d="M72 46 v-8 a22 22 0 0 1 44 0 v8" fill="none" stroke={inkStroke} strokeWidth="4" strokeLinecap="round" />
+        <circle cx="94" cy="72" r="8" fill="none" stroke={NVDA_GREEN} strokeWidth="3" />
+        <path d="M94 76 v10" stroke={NVDA_GREEN} strokeWidth="3.4" strokeLinecap="round" />
+      </g>
+      <circle cx="94" cy="74" r="30" fill="none" stroke={NVDA_GREEN} strokeWidth="1.2" strokeDasharray="4 12" className="fb-flow" style={{ animationDuration: '9s' }} />
+      {[0, 1, 2].map((i) => (
+        <g key={i} opacity={1 - i * 0.22}>
+          <rect x={148} y={34 + i * 22} width="46" height="15" rx="3" fill={panel} stroke={edge} strokeWidth="1.2" />
+          <rect className="fb-typeline" x={155} y={39 + i * 22} width={i === 0 ? 30 : 22 - i * 4} height="4.4" rx="2.2" fill={i === 0 ? NVDA_GREEN : glyph} style={{ animationDelay: `${i * 0.6}s` }} />
+        </g>
+      ))}
+      <path className="fb-flow" d="M30 88 H52" fill="none" stroke={edge} strokeWidth="1.1" style={{ animationDuration: '7s' }} />
+      <circle className="fb-signal" r="2" fill={NVDA_GREEN} style={{ offsetPath: "path('M30 88 H52')", animationDuration: '4s' } as CSSProperties} />
+      <text x="30" y="102" fontSize="6" fontFamily="var(--app-font-mono), monospace" letterSpacing="1.2" fill={glyph}>STAKE → ALLOCATE</text>
+      <circle cx="140" cy="96" r="2.2" fill={NVDA_GREEN} className="fb-led" style={{ animationDelay: '.5s' }} />
     </svg>
   );
 }
