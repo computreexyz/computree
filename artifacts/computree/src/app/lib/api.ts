@@ -19,6 +19,8 @@ export interface ApiFetchOptions {
   method?: 'GET' | 'POST' | 'DELETE';
   body?: unknown;
   getAccessToken?: AccessTokenGetter;
+  /** Called with the raw Response before status handling (for header inspection). */
+  onResponse?: (res: Response) => void;
 }
 
 export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
@@ -44,6 +46,8 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
   } catch {
     throw new ApiError(0, `API unreachable at ${API_BASE_URL}`);
   }
+
+  options.onResponse?.(res);
 
   if (!res.ok) {
     let message = `Request failed (${res.status})`;

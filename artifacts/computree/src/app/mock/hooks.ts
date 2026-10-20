@@ -201,6 +201,45 @@ export function useTreasury() {
   });
 }
 
+/* --------------------------- playground -------------------------------- */
+
+export interface PlaygroundChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface PlaygroundRequest {
+  model: string;
+  system?: string;
+  temperature?: number;
+  messages: PlaygroundChatMessage[];
+}
+
+export interface PlaygroundCompletion {
+  content: string;
+  model: string;
+  usage: { promptTokens: number; completionTokens: number };
+  creditsUsed: number;
+  remaining: number;
+}
+
+export function usePlaygroundCompletion() {
+  const { getAccessToken } = usePrivy();
+  return useMutation({
+    mutationFn: (
+      input: PlaygroundRequest & { onResponse?: (res: Response) => void },
+    ) => {
+      const { onResponse, ...body } = input;
+      return apiFetch<PlaygroundCompletion>('/api/playground/completions', {
+        method: 'POST',
+        body,
+        getAccessToken,
+        onResponse,
+      });
+    },
+  });
+}
+
 /* --------------------------- API keys (server) -------------------------- */
 
 export function useApiKeys() {

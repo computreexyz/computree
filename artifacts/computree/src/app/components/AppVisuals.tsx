@@ -301,6 +301,40 @@ export function ControlBoardArt({ dark = false }: { dark?: boolean }) {
   );
 }
 
+export function PlaygroundArt({ dark = false }: { dark?: boolean }) {
+  const panel = dark ? '#23272e' : PANEL;
+  const edge = dark ? '#4a525c' : LINE;
+  const head = dark ? '#2b3038' : '#e8ecf0';
+  const dot = dark ? '#5b6672' : MID;
+  const bubble = dark ? '#2b3038' : '#fff';
+  const line = dark ? '#8f99a4' : MID;
+  return (
+    <svg viewBox="0 0 220 120" role="img" aria-label="Prompt playground" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%' }}>
+      <g className="fb-float" style={{ animationDuration: '5s' }}>
+        <rect x="18" y="22" width="78" height="28" rx="8" fill={bubble} stroke={edge} strokeWidth="1.3" />
+        <rect className="fb-typeline" x="27" y="32" width="50" height="4" rx="2" fill={line} />
+        <rect className="fb-typeline" x="27" y="40" width="32" height="4" rx="2" fill={BLUE_SOFT} style={{ animationDelay: '.7s' }} />
+      </g>
+      <g className="fb-float" style={{ animationDuration: '5.6s', animationDelay: '-2.4s' }}>
+        <rect x="46" y="62" width="86" height="30" rx="8" fill={panel} stroke={edge} strokeWidth="1.3" />
+        <rect className="fb-typeline" x="55" y="72" width="60" height="4" rx="2" fill={BLUE_SOFT} style={{ animationDelay: '1.1s' }} />
+        <rect className="fb-typeline" x="55" y="80" width="40" height="4" rx="2" fill={line} style={{ animationDelay: '1.9s' }} />
+      </g>
+      <rect x="148" y="20" width="56" height="78" rx="5" fill={panel} stroke={edge} strokeWidth="1.4" />
+      <rect x="148" y="20" width="56" height="13" rx="5" fill={head} />
+      <circle cx="156" cy="26.5" r="1.7" fill={dot} />
+      <circle cx="162.5" cy="26.5" r="1.7" fill={dot} />
+      {[0, 1, 2, 3].map((i) => (
+        <rect key={i} className="fb-typeline" x="156" y={42 + i * 11} width={i === 2 ? 20 : 36 - i * 5} height="4" rx="2" fill={i === 2 ? BLUE : line} style={{ animationDelay: `${i * 0.6}s` }} />
+      ))}
+      <rect x="156" y="88" width="5" height="7" fill={BLUE} className="fb-led" />
+      <text x="166" y="94" fontSize="6" fontFamily="var(--app-font-mono), monospace" letterSpacing="1" fill={line}>READY</text>
+      <path className="fb-flow" d="M100 36 C118 36 130 40 144 44" fill="none" stroke={edge} strokeWidth="1.1" style={{ animationDuration: '7s' }} />
+      <circle className="fb-signal" r="2" fill={BLUE} style={{ offsetPath: "path('M100 36 C118 36 130 40 144 44')", animationDuration: '4.5s' } as CSSProperties} />
+    </svg>
+  );
+}
+
 export function AcquisitionArt() {
   return (
     <svg viewBox="0 0 220 120" role="img" aria-label="Compute acquisition" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%' }}>

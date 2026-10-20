@@ -34,6 +34,7 @@ import Jobs from '@/app/pages/Jobs';
 import Keys from '@/app/pages/Keys';
 import Network from '@/app/pages/Network';
 import Overview from '@/app/pages/Overview';
+import Playground from '@/app/pages/Playground';
 import Settings from '@/app/pages/Settings';
 import Treasury from '@/app/pages/Treasury';
 
@@ -106,6 +107,7 @@ function AppArea() {
         <Switch>
           <Route path="/app" component={Overview} />
           <Route path="/app/compute" component={Compute} />
+          <Route path="/app/playground" component={Playground} />
           <Route path="/app/jobs" component={Jobs} />
           <Route path="/app/keys" component={Keys} />
           <Route path="/app/network" component={Network} />

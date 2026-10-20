@@ -7,6 +7,7 @@ import keysRouter from "./keys";
 import providersRouter from "./providers";
 import treasuryRouter from "./treasury";
 import usageRouter from "./usage";
+import playgroundRouter from "./playground";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use("/keys", keysRouter);
 router.use("/providers", providersRouter);
 router.use("/treasury", treasuryRouter);
 router.use("/usage", usageRouter);
+router.use("/playground", playgroundRouter);
 
 export default router;
