@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Play } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { FeatureBanner } from '../components/FeatureBanner';
+import { ModelSelect, type ModelOption } from '../components/ModelSelect';
 import { WorkloadsArt } from '../components/AppVisuals';
 import { AllocationCard } from '../components/AllocationCard';
 import { Panel } from '../components/StatusPill';
@@ -11,10 +12,10 @@ import {
   type EmbeddingsResponse,
 } from '../mock/hooks';
 
-const MODEL_OPTIONS: Array<{ value: string; label: string }> = [
-  { value: 'openai/text-embedding-3-small', label: 'Text Embedding 3 Small' },
-  { value: 'openai/text-embedding-3-large', label: 'Text Embedding 3 Large' },
-  { value: 'qwen/qwen3-embedding-8b', label: 'Qwen 3 Embedding 8B' },
+const MODEL_OPTIONS: ModelOption[] = [
+  { value: 'openai/text-embedding-3-small', label: 'Text Embedding 3 Small', logo: '/brands/openai.svg' },
+  { value: 'openai/text-embedding-3-large', label: 'Text Embedding 3 Large', logo: '/brands/openai.svg' },
+  { value: 'qwen/qwen3-embedding-8b', label: 'Qwen 3 Embedding 8B', logo: '/brands/qwen.svg' },
 ];
 
 const MAX_INPUTS = 8;
@@ -88,18 +89,7 @@ export default function Workloads() {
           <div style={{ display: 'grid', gap: 14 }}>
             <div>
               <div className="app-meta" style={{ marginBottom: 7 }}>MODEL</div>
-              <select
-                className="pg-select"
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                data-testid="select-embedding-model"
-              >
-                {MODEL_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label} — {option.value}
-                  </option>
-                ))}
-              </select>
+              <ModelSelect options={MODEL_OPTIONS} value={model} onChange={setModel} testId="select-embedding-model" />
             </div>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 7 }}>

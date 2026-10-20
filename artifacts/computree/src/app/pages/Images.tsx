@@ -4,6 +4,7 @@ import { Download, ExternalLink, Sparkles } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { apiFetch } from '../lib/api';
 import { FeatureBanner } from '../components/FeatureBanner';
+import { ModelSelect, type ModelOption } from '../components/ModelSelect';
 import { ImagesArt } from '../components/AppVisuals';
 import { AllocationCard } from '../components/AllocationCard';
 import { Panel, RelativeTime } from '../components/StatusPill';
@@ -13,10 +14,10 @@ import {
   type ImageGenerateResponse,
 } from '../mock/hooks';
 
-const MODEL_OPTIONS: Array<{ value: string; label: string }> = [
-  { value: 'google/gemini-2.5-flash-image', label: 'Gemini 2.5 Flash Image' },
-  { value: 'openai/gpt-5-image-mini', label: 'GPT-5 Image Mini' },
-  { value: 'bytedance/seedream-4.0', label: 'Seedream 4.0' },
+const MODEL_OPTIONS: ModelOption[] = [
+  { value: 'google/gemini-2.5-flash-image', label: 'Gemini 2.5 Flash Image', logo: '/brands/googlegemini.svg' },
+  { value: 'openai/gpt-5-image-mini', label: 'GPT-5 Image Mini', logo: '/brands/openai.svg' },
+  { value: 'bytedance/seedream-4.0', label: 'Seedream 4.0', logo: '/brands/bytedance.svg' },
 ];
 
 const CREDITS_PER_IMAGE = 10;
@@ -119,18 +120,7 @@ export default function Images() {
           <div style={{ display: 'grid', gap: 14 }}>
             <div>
               <div className="app-meta" style={{ marginBottom: 7 }}>MODEL</div>
-              <select
-                className="pg-select"
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                data-testid="select-image-model"
-              >
-                {MODEL_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label} — {option.value}
-                  </option>
-                ))}
-              </select>
+              <ModelSelect options={MODEL_OPTIONS} value={model} onChange={setModel} testId="select-image-model" />
             </div>
             <div>
               <div className="app-meta" style={{ marginBottom: 7 }}>PROMPT</div>

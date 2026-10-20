@@ -3,6 +3,7 @@ import { ChevronDown, Copy, SendHorizontal } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { FeatureBanner } from '../components/FeatureBanner';
+import { ModelSelect, type ModelOption } from '../components/ModelSelect';
 import { PlaygroundArt } from '../components/AppVisuals';
 import { AllocationCard } from '../components/AllocationCard';
 import { Panel } from '../components/StatusPill';
@@ -17,13 +18,13 @@ import { API_BASE } from '../snippets';
 
 /* ------------------------------ options -------------------------------- */
 
-const MODEL_OPTIONS: Array<{ value: string; label: string }> = [
-  { value: 'openrouter/auto', label: 'Auto (router picks)' },
-  { value: 'qwen/qwen3-32b', label: 'Qwen 3 32B' },
-  { value: 'meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B' },
-  { value: 'deepseek/deepseek-chat-v3.1', label: 'DeepSeek Chat v3.1' },
-  { value: 'openai/gpt-4o-mini', label: 'GPT-4o mini' },
-  { value: 'anthropic/claude-sonnet-4.5', label: 'Claude Sonnet 4.5' },
+const MODEL_OPTIONS: ModelOption[] = [
+  { value: 'openrouter/auto', label: 'Auto (router picks)', mark: 'sparkles' },
+  { value: 'qwen/qwen3-32b', label: 'Qwen 3 32B', logo: '/brands/qwen.svg' },
+  { value: 'meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B', logo: '/brands/meta.svg' },
+  { value: 'deepseek/deepseek-chat-v3.1', label: 'DeepSeek Chat v3.1', logo: '/brands/deepseek.svg' },
+  { value: 'openai/gpt-4o-mini', label: 'GPT-4o mini', logo: '/brands/openai.svg' },
+  { value: 'anthropic/claude-sonnet-4.5', label: 'Claude Sonnet 4.5', logo: '/brands/anthropic.svg' },
 ];
 
 const PRESETS: Array<{ label: string; insert: string }> = [
@@ -123,18 +124,7 @@ function SettingsCard({
       <div style={{ display: 'grid', gap: 14 }}>
         <div>
           <div className="app-meta" style={{ marginBottom: 7 }}>MODEL</div>
-          <select
-            className="pg-select"
-            value={model}
-            onChange={(e) => onModel(e.target.value)}
-            data-testid="select-playground-model"
-          >
-            {MODEL_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label} — {option.value}
-              </option>
-            ))}
-          </select>
+          <ModelSelect options={MODEL_OPTIONS} value={model} onChange={onModel} testId="select-playground-model" />
         </div>
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 7 }}>
