@@ -8,6 +8,7 @@ import {
 } from "@workspace/db/schema";
 import { getAccount, requireAuth } from "../lib/auth";
 import { db } from "../lib/db";
+import { redactUpstreamText, upstreamModel } from "../lib/upstream";
 import { ensureAllocation } from "../lib/allocations";
 import { getEligibility } from "../lib/eligibility";
 import { creditsForUsage, newJobId, utcToday } from "../lib/metering";
@@ -84,7 +85,7 @@ router.post("/completions", async (req, res, next) => {
         "X-Title": "Computree",
       },
       body: JSON.stringify({
-        model: parsed.data.model,
+        model: upstreamModel(parsed.data.model),
         messages,
         temperature: parsed.data.temperature,
         stream: false,
@@ -103,10 +104,10 @@ router.post("/completions", async (req, res, next) => {
       try {
         const parsedErr = JSON.parse(errBody) as { error?: { message?: string } };
         if (typeof parsedErr?.error?.message === "string") {
-          message = parsedErr.error.message;
+          message = redactUpstreamText(parsedErr.error.message);
         }
       } catch {
-        if (errBody) message = errBody.slice(0, 500);
+        if (errBody) message = redactUpstreamText(errBody.slice(0, 500));
       }
       await db.insert(jobsTable).values({
         id: newJobId(),
@@ -147,7 +148,7 @@ router.post("/completions", async (req, res, next) => {
       id: newJobId(),
       accountId: account.id,
       apiKeyId: null,
-      model,
+      model: data.model ?? model,
       gpu: "H100",
       provider: "playground",
       status: "completed",

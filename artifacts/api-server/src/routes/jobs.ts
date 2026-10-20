@@ -14,7 +14,7 @@ function shapeJob(job: Job) {
     model: job.model,
     gpu: job.gpu,
     status: job.status,
-    provider: job.provider ?? "openrouter",
+    provider: job.provider ?? "inference",
     durationSec: job.durationSec ?? 0,
     credits: job.credits ? parseFloat(job.credits) : 0,
     startedAt: (job.startedAt ?? job.createdAt).getTime(),

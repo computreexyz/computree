@@ -19,7 +19,7 @@ import { API_BASE } from '../snippets';
 /* ------------------------------ options -------------------------------- */
 
 const MODEL_OPTIONS: ModelOption[] = [
-  { value: 'openrouter/auto', label: 'Auto (router picks)', mark: 'sparkles' },
+  { value: 'auto', label: 'Auto (router picks)', mark: 'sparkles' },
   { value: 'qwen/qwen3-32b', label: 'Qwen 3 32B', logo: '/brands/qwen.svg' },
   { value: 'meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B', logo: '/brands/meta.svg' },
   { value: 'deepseek/deepseek-chat-v3.1', label: 'DeepSeek Chat v3.1', logo: '/brands/deepseek.svg' },
@@ -297,7 +297,7 @@ export default function Playground() {
       .slice(-19);
     const messages: PlaygroundChatMessage[] = [...history, { role: 'user', content: text }];
 
-    const targets = compare && model !== 'openrouter/auto' ? [model, 'openrouter/auto'] : [model];
+    const targets = compare && model !== 'auto' ? [model, 'auto'] : [model];
     const exchanges: Exchange[] = [];
     const replies: AssistantReply[] = [];
     let firstError: string | null = null;

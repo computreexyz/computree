@@ -10,6 +10,7 @@ import {
   type ApiKey,
 } from "@workspace/db/schema";
 import { db } from "../lib/db";
+import { redactUpstreamText, upstreamModel } from "../lib/upstream";
 import { logger } from "../lib/logger";
 import { ensureAllocation } from "../lib/allocations";
 import { getEligibility } from "../lib/eligibility";
@@ -106,7 +107,7 @@ router.post("/chat/completions", async (req, res, next) => {
     }
 
     // Streaming is not metered yet — always request a non-streaming response.
-    const payload = { ...parsed.data, stream: false };
+    const payload = { ...parsed.data, model: upstreamModel(parsed.data.model), stream: false };
 
     const upstream = await fetch(OPENROUTER_URL, {
       method: "POST",
@@ -132,9 +133,9 @@ router.post("/chat/completions", async (req, res, next) => {
       try {
         parsedErr = JSON.parse(errBody);
         const m = (parsedErr as { error?: { message?: string } })?.error?.message;
-        if (typeof m === "string") message = m;
+        if (typeof m === "string") message = redactUpstreamText(m);
       } catch {
-        if (errBody) message = errBody.slice(0, 500);
+        if (errBody) message = redactUpstreamText(errBody.slice(0, 500));
       }
       await db.insert(jobsTable).values({
         id: newJobId(),
@@ -142,7 +143,7 @@ router.post("/chat/completions", async (req, res, next) => {
         apiKeyId: key.id,
         model,
         gpu: "H100",
-        provider: "openrouter",
+        provider: "inference",
         status: "failed",
         durationSec,
         error: message,
@@ -154,12 +155,14 @@ router.post("/chat/completions", async (req, res, next) => {
     }
 
     const data = (await upstream.json()) as {
+      model?: string;
       usage?: {
         prompt_tokens?: number;
         completion_tokens?: number;
       };
     };
     const credits = creditsForUsage(data.usage);
+    const jobModel = data.model ?? model;
 
     const [updated] = await db
       .update(allocationsTable)
@@ -176,9 +179,9 @@ router.post("/chat/completions", async (req, res, next) => {
       id: newJobId(),
       accountId: key.accountId,
       apiKeyId: key.id,
-      model,
+      model: jobModel,
       gpu: "H100",
-      provider: "openrouter",
+      provider: "inference",
       status: "completed",
       durationSec,
       credits: String(credits),
@@ -217,9 +220,9 @@ router.post("/chat/completions", async (req, res, next) => {
           apiKeyId: key.id,
           model,
           gpu: "H100",
-          provider: "openrouter",
+          provider: "inference",
           status: "failed",
-          error: err instanceof Error ? err.message : String(err),
+          error: err instanceof Error ? redactUpstreamText(err.message) : String(err),
           startedAt,
           completedAt: new Date(),
         });

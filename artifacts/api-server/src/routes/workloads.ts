@@ -8,6 +8,7 @@ import {
 } from "@workspace/db/schema";
 import { getAccount, requireAuth } from "../lib/auth";
 import { db } from "../lib/db";
+import { redactUpstreamText } from "../lib/upstream";
 import { ensureAllocation } from "../lib/allocations";
 import { getEligibility } from "../lib/eligibility";
 import { newJobId, utcToday } from "../lib/metering";
@@ -89,9 +90,9 @@ router.post("/embeddings", async (req, res, next) => {
       let message = `upstream error ${upstream.status}`;
       try {
         const parsedErr = JSON.parse(errBody) as { error?: { message?: string } };
-        if (typeof parsedErr?.error?.message === "string") message = parsedErr.error.message;
+        if (typeof parsedErr?.error?.message === "string") message = redactUpstreamText(parsedErr.error.message);
       } catch {
-        if (errBody) message = errBody.slice(0, 500);
+        if (errBody) message = redactUpstreamText(errBody.slice(0, 500));
       }
       await db.insert(jobsTable).values({
         id: newJobId(),
