@@ -1,12 +1,38 @@
 import type { Request } from "express";
+import {
+  createPublicClient,
+  defineChain,
+  http,
+  type Address,
+  type PublicClient,
+} from "viem";
 import type { Account } from "@workspace/db/schema";
 import { getPrivy } from "./auth";
 import { logger } from "./logger";
 
 const RPC_URL = "https://rpc.mainnet.chain.robinhood.com";
-const BALANCE_OF_SELECTOR = "0x70a08231";
 const ELIGIBILITY_THRESHOLD = 1000;
 const STAKE_ASSET_LABEL = "tokenized NVDA";
+
+const robinhoodChain = defineChain({
+  id: 4663,
+  name: "Robinhood Chain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: { default: { http: [RPC_URL] } },
+  blockExplorers: {
+    default: { name: "Blockscout", url: "https://robinhoodchain.blockscout.com" },
+  },
+});
+
+const stakingAbi = [
+  {
+    type: "function",
+    name: "stakedBalanceOf",
+    stateMutability: "view",
+    inputs: [{ name: "account", type: "address" }],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+] as const;
 
 export interface Eligibility {
   eligible: boolean;
@@ -48,43 +74,34 @@ export async function getWalletAddress(
   return fetchPrivyWallet(account.privyDid);
 }
 
-/** Staked tokenized-asset balance (whole units, floored to 2 decimals). 0 until staking is live. */
-export async function getAssetBalance(address: string): Promise<number> {
-  const token = process.env.STAKE_TOKEN_ADDRESS;
-  if (!token) return 0;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 6_000);
-  try {
-    const res = await fetch(RPC_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: 1,
-        method: "eth_call",
-        params: [
-          {
-            to: token,
-            data: BALANCE_OF_SELECTOR + address.slice(2).toLowerCase().padStart(64, "0"),
-          },
-          "latest",
-        ],
-      }),
-      signal: controller.signal,
+let chainClient: PublicClient | null = null;
+
+function getChainClient(): PublicClient {
+  if (!chainClient) {
+    chainClient = createPublicClient({
+      chain: robinhoodChain,
+      transport: http(RPC_URL, { timeout: 6_000 }),
     });
-    const data = (await res.json()) as { result?: string; error?: { message?: string } };
-    if (data.error || typeof data.result !== "string") {
-      throw new Error(data.error?.message ?? "malformed eth_call response");
-    }
-    if (data.result === "0x" || data.result === "0x0") return 0;
-    const wei = BigInt(data.result);
-    const hundredths = (wei * 100n) / 10n ** 18n;
+  }
+  return chainClient;
+}
+
+/** Staked balance in the ComputreeStaking vault (whole units, floored to 2 decimals). */
+export async function getStakedBalance(address: string): Promise<number> {
+  const vault = process.env.STAKE_VAULT_ADDRESS;
+  if (!vault) return 0;
+  try {
+    const raw = await getChainClient().readContract({
+      address: vault as Address,
+      abi: stakingAbi,
+      functionName: "stakedBalanceOf",
+      args: [address as Address],
+    });
+    const hundredths = (raw * 100n) / 10n ** 18n;
     return Number(hundredths) / 100;
   } catch (err) {
     logger.warn({ err, address }, "staked balance lookup failed, treating as 0");
     return 0;
-  } finally {
-    clearTimeout(timer);
   }
 }
 
@@ -106,5 +123,5 @@ export async function getEligibility(account: Account, req: Request): Promise<El
   }
   const address = await getWalletAddress(account, req);
   if (!address) return eligibilityOf(0);
-  return eligibilityOf(await getAssetBalance(address));
+  return eligibilityOf(await getStakedBalance(address));
 }

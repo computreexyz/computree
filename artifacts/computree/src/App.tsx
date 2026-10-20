@@ -38,6 +38,7 @@ import Network from '@/app/pages/Network';
 import Overview from '@/app/pages/Overview';
 import Playground from '@/app/pages/Playground';
 import Settings from '@/app/pages/Settings';
+import Stake from '@/app/pages/Stake';
 import Treasury from '@/app/pages/Treasury';
 import Workloads from '@/app/pages/Workloads';
 
@@ -109,6 +110,7 @@ function AppArea() {
       <AppShell>
         <Switch>
           <Route path="/app" component={Overview} />
+          <Route path="/app/stake" component={Stake} />
           <Route path="/app/compute" component={Compute} />
           <Route path="/app/playground" component={Playground} />
           <Route path="/app/images" component={Images} />
