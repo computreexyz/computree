@@ -15,7 +15,7 @@ import { FeatureBanner } from '../components/FeatureBanner';
 import { RelativeTime, StatusPill } from '../components/StatusPill';
 import { formatCountdown, nextUtcMidnight } from '../components/StatPanel';
 import { useChartInk } from '../components/useIsDark';
-import { FEED_SEED, makeFeedJob, MOCK_PROVIDERS, MODEL_LABELS, type ComputeJob } from '../mock/data';
+import { MOCK_PROVIDERS, MODEL_LABELS } from '../mock/data';
 import { useAllocation, useHourlyUsage, useJobs, useWeekUsage } from '../mock/hooks';
 
 /* ------------------------------ header ------------------------------ */
@@ -242,22 +242,22 @@ function UsageChart() {
 /* --------------------------- recent jobs ---------------------------- */
 
 function RecentJobs() {
-  const [feed, setFeed] = useState<ComputeJob[]>(FEED_SEED);
-  const tickRef = useRef(100);
+  const { data: jobs } = useJobs(5000);
+  const feed = (jobs ?? []).slice(0, 5);
+
+  // Track ids already shown so the enter animation only plays for arrivals
+  // after the first paint.
+  const seenRef = useRef<Set<string> | null>(null);
+  if (seenRef.current === null && feed.length > 0) {
+    seenRef.current = new Set(feed.map((job) => job.id));
+  }
+  const seen = seenRef.current ?? new Set<string>();
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      tickRef.current += 1;
-      setFeed((prev) => {
-        const incoming = makeFeedJob(tickRef.current);
-        const displaced = prev.map((job, index) =>
-          index === 0 && job.status === 'running' ? { ...job, status: 'completed' as const } : job,
-        );
-        return [incoming, ...displaced].slice(0, 5);
-      });
-    }, 4000);
-    return () => window.clearInterval(timer);
-  }, []);
+    if (seenRef.current === null) seenRef.current = new Set();
+    const current = seenRef.current;
+    feed.forEach((job) => current.add(job.id));
+  }, [feed]);
 
   return (
     <section className="app-panel app-enter app-enter-d3" data-testid="card-recent-jobs">
@@ -280,8 +280,8 @@ function RecentJobs() {
             </tr>
           </thead>
           <tbody>
-            {feed.map((job, index) => (
-              <tr key={job.id} className={index === 0 ? 'app-row-enter' : undefined}>
+            {feed.map((job) => (
+              <tr key={job.id} className={seen.has(job.id) ? undefined : 'app-row-enter'}>
                 <td>
                   <div className="app-tjob-id">{job.id.slice(0, 12)}</div>
                   <div className="app-tjob-model" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><ModelMark model={job.model} size={13} />{MODEL_LABELS[job.model]}</div>

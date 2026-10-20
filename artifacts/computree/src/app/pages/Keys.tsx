@@ -19,7 +19,7 @@ import { AppIcon } from '../components/AppArt';
 import { KeyAccessArt } from '../components/AppVisuals';
 import { Panel, RelativeTime } from '../components/StatusPill';
 import { TypedLines } from '../components/TypedLines';
-import { generateApiKeySecret, maskApiKey, type ApiKey } from '../mock/data';
+import { type ApiKey } from '../mock/data';
 import { useApiKeys } from '../mock/hooks';
 import { CURL_TYPED_LINES, JS_SNIPPET, PYTHON_SNIPPET } from '../snippets';
 
@@ -95,21 +95,22 @@ export default function Keys() {
     return () => window.removeEventListener('ctree:create-key', open);
   }, []);
 
-  const createKey = useCallback(() => {
-    const secret = generateApiKeySecret();
-    const now = Date.now();
-    addKey({
-      id: `key_${secret.slice(8, 14)}`,
-      name: name.trim() || 'untitled-key',
-      masked: maskApiKey(secret),
-      createdAt: now,
-      lastUsedAt: now,
-      usagePct: 0,
-    });
-    setName('');
-    setCreateOpen(false);
-    setRevealed(secret);
-  }, [addKey, name]);
+  const [creating, setCreating] = useState(false);
+
+  const createKey = useCallback(async () => {
+    if (creating) return;
+    setCreating(true);
+    try {
+      const created = await addKey(name.trim() || 'untitled-key');
+      setName('');
+      setCreateOpen(false);
+      setRevealed(created.secret);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to create key');
+    } finally {
+      setCreating(false);
+    }
+  }, [addKey, name, creating]);
 
   const copy = useCallback((text: string, label: string) => {
     navigator.clipboard

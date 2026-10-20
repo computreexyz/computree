@@ -1,7 +1,13 @@
-import express, { type Express } from "express";
+import express, {
+  type Express,
+  type NextFunction,
+  type Request,
+  type Response,
+} from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import router from "./routes";
+import gatewayRouter from "./routes/gateway";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
@@ -25,10 +31,21 @@ app.use(
     },
   }),
 );
-app.use(cors());
+app.use(cors({ origin: process.env.CORS_ORIGIN ?? "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
+app.use("/v1", gatewayRouter);
+
+app.use((_req, res) => {
+  res.status(404).json({ error: "not found" });
+});
+
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  logger.error({ err }, "unhandled error");
+  if (res.headersSent) return;
+  res.status(500).json({ error: "internal server error" });
+});
 
 export default app;

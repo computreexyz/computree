@@ -13,7 +13,8 @@ export function StatusPill({ status }: { status: JobStatus }) {
   );
 }
 
-export function RelativeTime({ ts }: { ts: number }) {
+export function RelativeTime({ ts }: { ts: number | null }) {
+  if (ts === null) return <>never</>;
   return <>{formatDistanceToNow(ts, { addSuffix: true })}</>;
 }
 

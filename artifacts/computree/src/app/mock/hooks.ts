@@ -1,141 +1,266 @@
-import { useQuery } from '@tanstack/react-query';
-import { useCallback, useState, useSyncExternalStore } from 'react';
-import {
-  KEYS_STORAGE,
-  MOCK_ALLOCATION,
-  MOCK_HOURLY_USAGE,
-  MOCK_JOBS,
-  MOCK_PROVIDERS,
-  MOCK_TRANSACTIONS,
-  MOCK_TREASURY_STATS,
-  MOCK_WEEK_USAGE,
-  seedApiKeys,
-  type Allocation,
-  type ApiKey,
-  type ComputeJob,
-  type DayUsage,
-  type HourlyUsage,
-  type Provider,
-  type TreasuryTransaction,
+import { usePrivy } from '@privy-io/react-auth';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useSyncExternalStore } from 'react';
+import { apiFetch, ApiError, type AccessTokenGetter } from '../lib/api';
+import { DEMO_STORAGE, isDemoMode } from '../lib/demo';
+import type {
+  Allocation,
+  ApiKey,
+  ComputeJob,
+  DayUsage,
+  GpuClass,
+  HourlyUsage,
+  JobStatus,
+  ModelId,
+  Provider,
+  TreasuryTransaction,
 } from './data';
 
-/* Mock fetchers — replace these with real HTTP calls to the Computree   */
-/* API later; query keys and return shapes are the contract.             */
+/* Real fetchers against the Computree API — query keys and return shapes */
+/* are the contract the pages rely on.                                    */
 
-const delay = (ms = 240) => new Promise((r) => setTimeout(r, ms));
+/* ----------------------------- API wire types --------------------------- */
 
-async function fetchJobs(): Promise<ComputeJob[]> {
-  await delay();
-  return MOCK_JOBS;
+interface ApiJob {
+  id: string;
+  model: string;
+  gpu: string;
+  status: string;
+  provider: string;
+  durationSec: number;
+  credits: number;
+  startedAt: number;
+  tokensIn: number;
+  tokensOut: number;
+  error?: string;
 }
 
-async function fetchAllocation(): Promise<Allocation> {
-  await delay();
-  return MOCK_ALLOCATION;
+interface ApiKeyResponse {
+  id: string;
+  name: string;
+  masked: string;
+  createdAt: number;
+  lastUsedAt: number | null;
+  usagePct: number;
 }
 
-async function fetchHourlyUsage(): Promise<HourlyUsage[]> {
-  await delay();
-  return MOCK_HOURLY_USAGE;
+export interface CreatedApiKey extends ApiKey {
+  /** Full secret — returned by the API exactly once at creation time. */
+  secret: string;
 }
 
-async function fetchWeekUsage(): Promise<DayUsage[]> {
-  await delay();
-  return MOCK_WEEK_USAGE;
+interface TreasuryStats {
+  balanceUsd: number;
+  compute30dUsd: number;
+  activeGpuCapacity: number;
+  avgCostPerCr: number;
+  note?: string;
+}
+
+interface TreasuryResponse {
+  stats: TreasuryStats;
+  transactions: TreasuryTransaction[];
+}
+
+/* ------------------------------ mappers -------------------------------- */
+
+const MODEL_IDS: ModelId[] = ['qwen', 'llama', 'sdxl', 'whisper'];
+const GPU_CLASSES: GpuClass[] = ['A100', 'H100', 'L40S'];
+const JOB_STATUSES: JobStatus[] = ['queued', 'running', 'completed', 'failed'];
+
+function mapModel(slug: string): { model: ModelId; rawModel?: string } {
+  const lower = slug.toLowerCase();
+  const exact = MODEL_IDS.find((m) => m === lower);
+  if (exact) return { model: exact };
+  const contained = MODEL_IDS.find((m) => lower.includes(m));
+  if (contained) return { model: contained, rawModel: slug };
+  if (lower.includes('stable') || lower.includes('diffusion')) {
+    return { model: 'sdxl', rawModel: slug };
+  }
+  return { model: 'qwen', rawModel: slug };
+}
+
+function mapGpu(gpu: string): GpuClass {
+  const upper = gpu.toUpperCase();
+  return GPU_CLASSES.find((g) => g === upper) ?? 'H100';
+}
+
+function mapStatus(status: string): JobStatus {
+  const lower = status.toLowerCase();
+  return JOB_STATUSES.find((s) => s === lower) ?? 'queued';
+}
+
+function mapJob(job: ApiJob): ComputeJob {
+  return {
+    id: job.id,
+    ...mapModel(job.model),
+    gpu: mapGpu(job.gpu),
+    status: mapStatus(job.status),
+    provider: job.provider,
+    durationSec: job.durationSec,
+    credits: job.credits,
+    startedAt: job.startedAt,
+    latencyMs: 0,
+    queueMs: 0,
+    tokensIn: job.tokensIn,
+    tokensOut: job.tokensOut,
+  };
+}
+
+/* ------------------------------ fetchers ------------------------------- */
+
+async function fetchJobs(getAccessToken?: AccessTokenGetter): Promise<ComputeJob[]> {
+  const jobs = await apiFetch<ApiJob[]>('/api/jobs', { getAccessToken });
+  return jobs.map(mapJob);
+}
+
+async function fetchAllocation(getAccessToken?: AccessTokenGetter): Promise<Allocation> {
+  return apiFetch<Allocation>('/api/allocation', { getAccessToken });
+}
+
+async function fetchHourlyUsage(getAccessToken?: AccessTokenGetter): Promise<HourlyUsage[]> {
+  return apiFetch<HourlyUsage[]>('/api/usage/hourly', { getAccessToken });
+}
+
+async function fetchWeekUsage(getAccessToken?: AccessTokenGetter): Promise<DayUsage[]> {
+  return apiFetch<DayUsage[]>('/api/usage/week', { getAccessToken });
 }
 
 async function fetchProviders(): Promise<Provider[]> {
-  await delay();
-  return MOCK_PROVIDERS;
+  return apiFetch<Provider[]>('/api/providers');
 }
 
-async function fetchTreasury(): Promise<{
-  stats: typeof MOCK_TREASURY_STATS;
-  transactions: TreasuryTransaction[];
-}> {
-  await delay();
-  return { stats: MOCK_TREASURY_STATS, transactions: MOCK_TRANSACTIONS };
+async function fetchTreasury(): Promise<TreasuryResponse> {
+  return apiFetch<TreasuryResponse>('/api/treasury');
 }
 
-export function useJobs() {
-  return useQuery({ queryKey: ['app', 'jobs'], queryFn: fetchJobs, staleTime: 60_000 });
+/* Don't retry auth failures — surface the error state instead of looping. */
+function queryRetry(failureCount: number, error: unknown): boolean {
+  if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+    return false;
+  }
+  return failureCount < 2;
+}
+
+export function useJobs(refetchInterval?: number) {
+  const { getAccessToken } = usePrivy();
+  return useQuery({
+    queryKey: ['app', 'jobs'],
+    queryFn: () => fetchJobs(getAccessToken),
+    staleTime: 60_000,
+    retry: queryRetry,
+    ...(refetchInterval ? { refetchInterval } : {}),
+  });
 }
 
 export function useAllocation() {
-  return useQuery({ queryKey: ['app', 'allocation'], queryFn: fetchAllocation, staleTime: 60_000 });
+  const { getAccessToken } = usePrivy();
+  return useQuery({
+    queryKey: ['app', 'allocation'],
+    queryFn: () => fetchAllocation(getAccessToken),
+    staleTime: 60_000,
+    retry: queryRetry,
+  });
 }
 
 export function useHourlyUsage() {
-  return useQuery({ queryKey: ['app', 'usage', 'hourly'], queryFn: fetchHourlyUsage, staleTime: 60_000 });
+  const { getAccessToken } = usePrivy();
+  return useQuery({
+    queryKey: ['app', 'usage', 'hourly'],
+    queryFn: () => fetchHourlyUsage(getAccessToken),
+    staleTime: 60_000,
+    retry: queryRetry,
+  });
 }
 
 export function useWeekUsage() {
-  return useQuery({ queryKey: ['app', 'usage', 'week'], queryFn: fetchWeekUsage, staleTime: 60_000 });
+  const { getAccessToken } = usePrivy();
+  return useQuery({
+    queryKey: ['app', 'usage', 'week'],
+    queryFn: () => fetchWeekUsage(getAccessToken),
+    staleTime: 60_000,
+    retry: queryRetry,
+  });
 }
 
 export function useProviders() {
-  return useQuery({ queryKey: ['app', 'providers'], queryFn: fetchProviders, staleTime: 60_000 });
+  return useQuery({
+    queryKey: ['app', 'providers'],
+    queryFn: fetchProviders,
+    staleTime: 60_000,
+    retry: queryRetry,
+  });
 }
 
 export function useTreasury() {
-  return useQuery({ queryKey: ['app', 'treasury'], queryFn: fetchTreasury, staleTime: 60_000 });
+  return useQuery({
+    queryKey: ['app', 'treasury'],
+    queryFn: fetchTreasury,
+    staleTime: 60_000,
+    retry: queryRetry,
+  });
 }
 
-/* ------------------------- API keys (localStorage) --------------------- */
-
-function readStoredKeys(): ApiKey[] {
-  try {
-    const raw = localStorage.getItem(KEYS_STORAGE);
-    if (!raw) {
-      const seeded = seedApiKeys();
-      localStorage.setItem(KEYS_STORAGE, JSON.stringify(seeded));
-      return seeded;
-    }
-    const parsed = JSON.parse(raw) as ApiKey[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return seedApiKeys();
-  }
-}
+/* --------------------------- API keys (server) -------------------------- */
 
 export function useApiKeys() {
-  const [keys, setKeys] = useState<ApiKey[]>(readStoredKeys);
+  const { getAccessToken } = usePrivy();
+  const queryClient = useQueryClient();
 
-  const persist = useCallback((next: ApiKey[]) => {
-    setKeys(next);
-    try {
-      localStorage.setItem(KEYS_STORAGE, JSON.stringify(next));
-    } catch {
-      /* storage unavailable */
-    }
-  }, []);
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['app', 'keys'],
+    queryFn: () => apiFetch<ApiKeyResponse[]>('/api/keys', { getAccessToken }),
+    staleTime: 60_000,
+    retry: queryRetry,
+  });
+
+  const invalidateKeys = useCallback(
+    () => queryClient.invalidateQueries({ queryKey: ['app', 'keys'] }),
+    [queryClient],
+  );
+
+  const createMutation = useMutation({
+    mutationFn: (name: string) =>
+      apiFetch<ApiKeyResponse & { secret: string }>('/api/keys', {
+        method: 'POST',
+        body: { name },
+        getAccessToken,
+      }),
+    onSuccess: invalidateKeys,
+  });
+
+  const revokeMutation = useMutation({
+    mutationFn: (id: string) =>
+      apiFetch<{ id: string; revoked: boolean }>(`/api/keys/${id}`, {
+        method: 'DELETE',
+        getAccessToken,
+      }),
+    onSuccess: invalidateKeys,
+  });
 
   const addKey = useCallback(
-    (key: ApiKey) => persist([key, ...readStoredKeys()]),
-    [persist],
+    async (name: string): Promise<CreatedApiKey> => {
+      const { secret, ...key } = await createMutation.mutateAsync(name);
+      return { ...key, secret };
+    },
+    [createMutation],
   );
 
   const revokeKey = useCallback(
-    (id: string) => persist(readStoredKeys().filter((k) => k.id !== id)),
-    [persist],
+    (id: string) => {
+      revokeMutation.mutate(id);
+    },
+    [revokeMutation],
   );
 
-  return { keys, addKey, revokeKey };
+  return { keys: data ?? [], keysError: error, keysLoading: isLoading, addKey, revokeKey };
 }
 
 /* --------------------------- demo mode flag ---------------------------- */
 
-export const DEMO_STORAGE = 'ctree_demo';
+export { DEMO_STORAGE };
 
 const demoListeners = new Set<() => void>();
-
-function readDemo(): boolean {
-  try {
-    return localStorage.getItem(DEMO_STORAGE) === '1';
-  } catch {
-    return false;
-  }
-}
 
 function subscribeDemo(callback: () => void): () => void {
   demoListeners.add(callback);
@@ -157,6 +282,6 @@ export function setDemoMode(on: boolean) {
 }
 
 export function useDemoMode(): [boolean, (on: boolean) => void] {
-  const demo = useSyncExternalStore(subscribeDemo, readDemo, () => false);
+  const demo = useSyncExternalStore(subscribeDemo, isDemoMode, () => false);
   return [demo, setDemoMode];
 }

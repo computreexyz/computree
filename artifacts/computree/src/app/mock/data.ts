@@ -18,6 +18,8 @@ export type GpuClass = 'A100' | 'H100' | 'L40S';
 export interface ComputeJob {
   id: string;
   model: ModelId;
+  /** Original model slug from the API when it isn't one of the known ModelIds. */
+  rawModel?: string;
   gpu: GpuClass;
   status: JobStatus;
   provider: string;
@@ -35,7 +37,7 @@ export interface ApiKey {
   name: string;
   masked: string; // ct_live_9Kd3…Xy21
   createdAt: number;
-  lastUsedAt: number;
+  lastUsedAt: number | null;
   usagePct: number; // 0..100
 }
 

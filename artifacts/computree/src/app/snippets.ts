@@ -1,4 +1,4 @@
-export const API_BASE = 'https://api.computree.ai';
+export const API_BASE = 'https://api.computree.xyz';
 
 export const CURL_SNIPPET = `curl ${API_BASE}/v1/chat/completions \\
   -H "Authorization: Bearer ct_live_YOUR_KEY" \\
