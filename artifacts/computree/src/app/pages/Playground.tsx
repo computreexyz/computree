@@ -29,7 +29,7 @@ const MODEL_OPTIONS: ModelOption[] = [
 
 const PRESETS: Array<{ label: string; insert: string }> = [
   { label: 'Summarize this', insert: 'Summarize this' },
-  { label: 'Translate to Indonesian', insert: 'Translate to Indonesian' },
+  { label: 'Translate to Chinese', insert: 'Translate to Chinese' },
   { label: 'Code review', insert: 'Code review' },
   { label: 'Smart contract audit', insert: 'Audit this smart contract for vulnerabilities and explain the risks:\n\n' },
   { label: 'Coding assistant', insert: 'You are a senior engineer. Help me with:\n\n' },

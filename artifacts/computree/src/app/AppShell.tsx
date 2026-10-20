@@ -1,5 +1,6 @@
 import { usePrivy } from '@privy-io/react-auth';
-import { Copy, KeyRound, MoreHorizontal, PanelLeftClose, Wallet, BookOpen, Github } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { Copy, KeyRound, Moon, MoreHorizontal, PanelLeftClose, Sun, Wallet, BookOpen, Github } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { toast } from 'sonner';
@@ -72,6 +73,22 @@ function WalletChip() {
       </span>
       {demo ? <span className="app-demo-badge">DEMO</span> : null}
     </span>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const dark = theme === 'dark';
+  return (
+    <button
+      className="app-chip app-chip-btn"
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+      aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
+      title={dark ? 'Switch to light theme' : 'Switch to dark theme'}
+      data-testid="button-theme-toggle"
+    >
+      {dark ? <Sun size={13} /> : <Moon size={13} />}
+    </button>
   );
 }
 
@@ -230,9 +247,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <header className="app-topbar">
           <span className="app-topbar-page">{pageLabel}</span>
           <span className="app-topbar-spacer" />
-          <button className="app-chip app-chip-btn app-hide-mobile" onClick={() => setPaletteOpen(true)} aria-label="Open command palette">
-            <span>⌘K</span>
-          </button>
+          <ThemeToggle />
           <CountdownChip />
           <WalletChip />
         </header>

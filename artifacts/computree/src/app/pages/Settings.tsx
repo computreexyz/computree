@@ -1,5 +1,4 @@
 import { usePrivy } from '@privy-io/react-auth';
-import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { FeatureBanner } from '../components/FeatureBanner';
@@ -87,7 +86,6 @@ function WalletSection() {
 }
 
 function PreferencesSection() {
-  const { theme, setTheme } = useTheme();
   const [reducedMotion, setReducedMotion] = useState<boolean>(() => {
     try {
       return localStorage.getItem(REDUCED_MOTION_STORAGE) === '1';
@@ -109,9 +107,6 @@ function PreferencesSection() {
 
   return (
     <Panel title="Preferences" right={<span style={{ width: 110, height: 46 }} aria-hidden="true"><ControlBoardArt /></span>}>
-      <SettingRow label="Dark theme" hint="APPLIES TO THE APP AREA">
-        <Toggle on={theme === 'dark'} onChange={(on) => setTheme(on ? 'dark' : 'light')} testId="toggle-theme" />
-      </SettingRow>
       <SettingRow label="Reduce motion" hint="DISABLES ANIMATIONS APP-WIDE" >
         <Toggle on={reducedMotion} onChange={setReducedMotion} testId="toggle-reduced-motion" />
       </SettingRow>
