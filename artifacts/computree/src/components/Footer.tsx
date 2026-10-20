@@ -2,7 +2,7 @@ import { ComputreeLogo } from './ComputreeLogo';
 
 const groups = [
   { title: 'PRODUCT', links: [['How It Works', '#how-it-works'], ['Compute', '#compute'], ['Infrastructure', '#infrastructure'], ['Dashboard', '#transparency']] },
-  { title: 'DEVELOPERS', links: [['Documentation', '#api'], ['API Reference', '#api'], ['Examples', '#applications'], ['GitHub', '#api']] },
+  { title: 'DEVELOPERS', links: [['Documentation', '/docs'], ['API Reference', '/docs'], ['Examples', '#applications'], ['GitHub', 'https://github.com/computreexyz']] },
   { title: 'NETWORK', links: [['Staking', '#ctree'], ['Treasury', '#treasury'], ['Providers', '#providers'], ['Compute', '#compute']] },
   { title: 'RESOURCES', links: [['Status', '#resources'], ['FAQ', '#resources'], ['Terms', '#resources'], ['Privacy', '#resources']] },
 ];
@@ -25,7 +25,7 @@ export function Footer() {
           ))}
           <div className="footer-group footer-social">
             <h2>FOLLOW</h2>
-            <a href="#resources" data-testid="link-footer-x">X</a><a href="#resources" data-testid="link-footer-discord">Discord</a><a href="#api" data-testid="link-footer-github">GitHub</a>
+            <a href="https://x.com/computreexyz" target="_blank" rel="noreferrer" data-testid="link-footer-x">X</a><a href="#resources" data-testid="link-footer-discord">Discord</a><a href="https://github.com/computreexyz" target="_blank" rel="noreferrer" data-testid="link-footer-github">GitHub</a>
           </div>
         </div>
         <div className="footer-bottom">

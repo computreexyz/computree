@@ -29,6 +29,7 @@ import {
 import { AppShell } from '@/app/AppShell';
 import { robinhoodChain } from '@/app/chain';
 import { RequireAuth } from '@/app/RequireAuth';
+import Docs from '@/pages/docs';
 import Compute from '@/app/pages/Compute';
 import Images from '@/app/pages/Images';
 import Jobs from '@/app/pages/Jobs';
@@ -144,6 +145,7 @@ function App() {
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <Switch>
             <Route path="/" component={Landing} />
+            <Route path="/docs" component={Docs} />
             <Route path="/app">
               <AppArea />
             </Route>

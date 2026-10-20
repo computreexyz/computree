@@ -156,16 +156,16 @@ function Rail({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => voi
           );
         })}
       </nav>
-      <div className="app-rail-social" aria-label="Community links (coming soon)">
-        <span className="app-rail-social-link" role="link" aria-disabled="true" title="X — coming soon" data-testid="link-social-x">
+      <div className="app-rail-social" aria-label="Community links">
+        <a className="app-rail-social-link" href="https://x.com/computreexyz" target="_blank" rel="noreferrer" aria-label="X (Twitter)" data-testid="link-social-x">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2.6h3.1l-6.8 7.8 8 11h-6.3l-4.9-6.4-5.6 6.4H3.3l7.3-8.3L2.9 2.6h6.4l4.4 5.9 5.2-5.9Zm-1.1 16.9h1.7L8.6 4.4H6.8l11 15.1Z"/></svg>
-        </span>
-        <span className="app-rail-social-link" role="link" aria-disabled="true" title="Docs — coming soon" data-testid="link-social-docs">
+        </a>
+        <Link className="app-rail-social-link" href="/docs" aria-label="Documentation" data-testid="link-social-docs">
           <BookOpen size={14} strokeWidth={1.8} />
-        </span>
-        <span className="app-rail-social-link" role="link" aria-disabled="true" title="GitHub — coming soon" data-testid="link-social-github">
+        </Link>
+        <a className="app-rail-social-link" href="https://github.com/computreexyz" target="_blank" rel="noreferrer" aria-label="GitHub" data-testid="link-social-github">
           <Github size={14} strokeWidth={1.8} />
-        </span>
+        </a>
       </div>
       <button className="app-rail-collapse" onClick={onToggle} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}>
         <PanelLeftClose size={15} strokeWidth={1.8} />
