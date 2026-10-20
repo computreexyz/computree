@@ -28,9 +28,9 @@ function ConnectScreen() {
         <div className="section-label eyebrow" style={{ marginTop: 26 }}>COMPUTREE APP</div>
         <h1>CONNECT YOUR WALLET.</h1>
         <p className="mono" style={{ fontSize: 10, lineHeight: 1.9, letterSpacing: '.04em', color: 'var(--asub)', maxWidth: 420 }}>
-          STAKE SUPPORTED TOKENIZED ASSETS TO UNLOCK DAILY GPU COMPUTE.
+          EVERY CONNECTED WALLET RECEIVES A DAILY GPU COMPUTE ALLOCATION — NO MINIMUM STAKE.
           <br />
-          CONNECT A WALLET TO VERIFY YOUR STAKE AND UNLOCK YOUR ALLOCATION.
+          CONNECT A WALLET TO ACTIVATE YOUR ALLOCATION. STAKING TOKENIZED NVDA IS OPTIONAL.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
           <AssetMark asset="NVDA" size={22} />

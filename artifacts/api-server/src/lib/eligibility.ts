@@ -11,7 +11,6 @@ import { getPrivy } from "./auth";
 import { logger } from "./logger";
 
 const RPC_URL = "https://rpc.mainnet.chain.robinhood.com";
-const ELIGIBILITY_THRESHOLD = 1000;
 const STAKE_ASSET_LABEL = "tokenized NVDA";
 
 const robinhoodChain = defineChain({
@@ -106,8 +105,10 @@ export async function getStakedBalance(address: string): Promise<number> {
 }
 
 function eligibilityOf(balance: number): Eligibility {
+  // Every connected account receives the daily allocation — there is no
+  // minimum stake. The staked balance is still reported for display.
   return {
-    eligible: balance >= ELIGIBILITY_THRESHOLD,
+    eligible: true,
     balance,
     asset: STAKE_ASSET_LABEL,
     staked: balance,
@@ -119,7 +120,7 @@ export async function getEligibility(account: Account, req: Request): Promise<El
     // Demo/dev stays usable without a wallet; an explicit wallet header
     // opts into the real staked-balance check instead.
     const header = req.header("x-wallet-address");
-    if (!header) return eligibilityOf(12400);
+    if (!header) return eligibilityOf(0);
   }
   const address = await getWalletAddress(account, req);
   if (!address) return eligibilityOf(0);

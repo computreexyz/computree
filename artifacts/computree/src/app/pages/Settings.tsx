@@ -68,11 +68,11 @@ function WalletSection() {
             <AssetMark asset="NVDA" size={13} />{balance.toLocaleString('en-US')} tokenized NVDA
           </span>
         </SettingRow>
-        <SettingRow label="Eligibility" hint="STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET">
+        <SettingRow label="Daily allocation" hint="1,000 CR EVERY DAY · NO MINIMUM STAKE">
           {eligible ? (
-            <span className="status-pill" data-testid="pill-eligible">ELIGIBLE</span>
+            <span className="status-pill" data-testid="pill-eligible">ACTIVE</span>
           ) : (
-            <span className="status-pill status-queued" data-testid="pill-not-eligible">NOT ELIGIBLE · STAKE ≥ 1,000 NVDA</span>
+            <span className="mono" style={{ fontSize: 10, color: 'var(--ameta)' }}>—</span>
           )}
         </SettingRow>
         <div style={{ paddingTop: 14 }}>

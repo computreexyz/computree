@@ -438,11 +438,6 @@ export default function Playground() {
             {exhausted ? (
               <div className="app-meta">DAILY ALLOCATION EXHAUSTED · RESETS AT 00:00 UTC</div>
             ) : null}
-            {noAllocation ? (
-              <div className="mono" style={{ fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }} data-testid="note-stake-to-play">
-                STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET TO USE THE PLAYGROUND
-              </div>
-            ) : null}
 
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
               <textarea

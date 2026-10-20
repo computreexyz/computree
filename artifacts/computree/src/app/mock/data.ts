@@ -280,6 +280,5 @@ export function maskApiKey(secret: string): string {
 
 export const MOCK_WALLET = {
   address: '0x7f3a9c21d4e8b6f0a2c4e6d8b1f3a5c7e9d2b4f6',
-  balanceCtree: 12_400,
   network: 'Robinhood Chain Mainnet',
 };

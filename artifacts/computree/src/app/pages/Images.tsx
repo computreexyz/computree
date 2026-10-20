@@ -168,11 +168,6 @@ export default function Images() {
               </button>
             </div>
             <div className="app-meta">10 CR PER IMAGE · FALLBACK MODELS TRIED AUTOMATICALLY</div>
-            {noAllocation ? (
-              <div className="mono" style={{ fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }} data-testid="note-stake-to-generate">
-                STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET TO GENERATE IMAGES
-              </div>
-            ) : null}
             {error ? (
               <div className="pg-error" role="alert" data-testid="banner-image-error">
                 {error}

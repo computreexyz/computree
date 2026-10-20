@@ -68,11 +68,6 @@ function AllocationHero() {
             <span className="app-meta">{used.toLocaleString('en-US')} CR used · {pct.toFixed(0)}%</span>
             <span className="app-meta">of {total.toLocaleString('en-US')} CR daily allocation</span>
           </div>
-          {total === 0 ? (
-            <div className="mono" style={{ marginTop: 14, fontSize: 9, letterSpacing: '.06em', color: '#a8c9ee' }} data-testid="note-stake-to-unlock">
-              STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET TO UNLOCK YOUR DAILY ALLOCATION
-            </div>
-          ) : null}
         </div>
         <div className="ov-hero-side">
           <div>

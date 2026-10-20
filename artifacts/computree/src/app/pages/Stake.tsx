@@ -19,8 +19,6 @@ import { Panel } from '../components/StatusPill';
 import { useAllocation, useDemoMode } from '../mock/hooks';
 import {
   addressUrl,
-  ELIGIBILITY_THRESHOLD,
-  FAUCET_AMOUNT,
   parseNvdaAmount,
   readStakingPosition,
   STAKE_TOKEN_ADDRESS,
@@ -111,7 +109,6 @@ export default function Stake() {
 
   const staked = position?.stakedBalance ?? 0;
   const walletBalance = position?.walletBalance ?? 0;
-  const eligible = staked >= ELIGIBILITY_THRESHOLD;
 
   const [tx, setTx] = useState<TxStatus | null>(null);
   const [lastTx, setLastTx] = useState<{ label: string; hash: Hash } | null>(null);
@@ -162,22 +159,6 @@ export default function Stake() {
       }
     },
     [busy, getWalletClient, queryClient],
-  );
-
-  const claimFaucet = useCallback(
-    () =>
-      runAction('Faucet claim', [
-        {
-          step: 'faucet',
-          run: (client) =>
-            client.writeContract({
-              address: STAKE_TOKEN_ADDRESS,
-              abi: stakeTokenAbi,
-              functionName: 'faucet',
-            }),
-        },
-      ]),
-    [runAction],
   );
 
   const stake = useCallback(() => {
@@ -242,7 +223,7 @@ export default function Stake() {
       <FeatureBanner
         feature="stake"
         title="Stake"
-        meta="Stake tokenized NVDA to unlock your daily GPU allocation"
+        meta="Your daily GPU allocation is always active — staking tokenized NVDA is optional"
       />
 
       {readOnly ? (
@@ -266,13 +247,7 @@ export default function Stake() {
               <span style={{ font: '500 15px var(--afont)', color: 'var(--ameta)' }}>NVDA staked</span>
             </div>
             <div style={{ marginTop: 16 }}>
-              {eligible ? (
-                <span className="status-pill" data-testid="pill-eligible">ELIGIBLE</span>
-              ) : (
-                <span className="status-pill status-queued" data-testid="pill-not-eligible">
-                  NOT ELIGIBLE · STAKE ≥ {ELIGIBILITY_THRESHOLD.toLocaleString('en-US')} NVDA
-                </span>
-              )}
+              <span className="status-pill" data-testid="pill-eligible">ALLOCATION ACTIVE</span>
             </div>
           </div>
           <div className="ov-hero-side">
@@ -302,29 +277,6 @@ export default function Stake() {
       ) : null}
 
       <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', alignItems: 'start' }}>
-        {/* ---------------------------- faucet ----------------------------- */}
-        <Panel title="Get test NVDA" flush={false}>
-          <div style={{ display: 'grid', gap: 12 }}>
-            <p className="app-sub" style={{ margin: 0 }}>
-              Tokenized NVDA is a live mainnet deployment with a public faucet —{' '}
-              {FAUCET_AMOUNT.toLocaleString('en-US')} NVDA per call, straight to your wallet.
-            </p>
-            <AddressLink label="Token contract" address={STAKE_TOKEN_ADDRESS} />
-            <AddressLink label="Staking vault" address={STAKE_VAULT_ADDRESS} />
-            <div>
-              <button
-                className="button button-dark"
-                style={{ minHeight: 38 }}
-                onClick={() => void claimFaucet()}
-                disabled={readOnly || busy}
-                data-testid="button-claim-faucet"
-              >
-                {buttonLabel(`Claim ${FAUCET_AMOUNT.toLocaleString('en-US')} NVDA`, 'faucet')}
-              </button>
-            </div>
-          </div>
-        </Panel>
-
         {/* ----------------------------- stake ----------------------------- */}
         <Panel title="Stake" flush={false}>
           <div style={{ display: 'grid', gap: 12 }}>
@@ -389,8 +341,8 @@ export default function Stake() {
         <Panel title="How it works" flush={false}>
           <div style={{ display: 'grid', gap: 0 }}>
             {[
-              ['01', 'Stake tokenized NVDA', 'Tokens move into the staking vault — you can unstake any time.'],
-              ['02', 'Allocation unlocks automatically', `At ≥ ${ELIGIBILITY_THRESHOLD.toLocaleString('en-US')} NVDA staked, the daily 1,000 CR allocation activates.`],
+              ['01', 'Connect a wallet', 'A daily 1,000 CR allocation activates automatically for every connected wallet — no minimum stake.'],
+              ['02', 'Stake tokenized NVDA (optional)', 'Tokens move into the staking vault on Robinhood Chain mainnet — you can unstake any time.'],
               ['03', 'Spend credits anywhere', 'Playground, Images, Workloads, and the GPU API all draw from the same allocation.'],
             ].map(([num, title, body]) => (
               <div key={num} style={{ display: 'flex', gap: 14, padding: '10px 0', borderBottom: '1px solid var(--ahair)' }}>
@@ -402,8 +354,12 @@ export default function Stake() {
               </div>
             ))}
           </div>
-          <div className="mono" style={{ marginTop: 14, fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }}>
-            ELIGIBILITY IS READ FROM THE STAKING VAULT ON EVERY REQUEST
+          <div style={{ marginTop: 12, display: 'grid', gap: 2 }}>
+            <AddressLink label="Token contract" address={STAKE_TOKEN_ADDRESS} />
+            <AddressLink label="Staking vault" address={STAKE_VAULT_ADDRESS} />
+          </div>
+          <div className="mono" style={{ marginTop: 10, fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }}>
+            POSITION IS READ FROM THE STAKING VAULT ON EVERY REQUEST
           </div>
         </Panel>
       </div>

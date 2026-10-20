@@ -127,8 +127,7 @@ function Mono({ children }: { children: ReactNode }) {
 /* ----------------------------- diagrams ------------------------------ */
 
 const CHART_FLOW = `flowchart LR
-  A["Stake supported assets"] --> B["Verify on Robinhood Chain"]
-  B --> C["Daily allocation: 1,000 CR"]
+  A["Connect wallet"] --> C["Daily allocation: 1,000 CR"]
   C --> D["Use compute"]
   D --> D1["Playground"]
   D --> D2["Images"]
@@ -139,17 +138,18 @@ const CHART_FLOW = `flowchart LR
   D3 --> E
   D4 --> E
   E --> F["Reset 00:00 UTC"]
-  F --> C`;
+  F --> C
+  S["Stake tokenized NVDA (optional)"] -.-> A`;
 
 const CHART_STAKING = `sequenceDiagram
   actor U as User
   participant C as Computree API
   participant R as Robinhood Chain
   U->>C: Connect wallet or call API
-  C->>R: eth_call balanceOf wallet
-  R-->>C: staked balance
-  C->>C: eligible when balance >= 1,000
-  C-->>U: eligibility plus daily allocation`;
+  C->>R: eth_call stakedBalanceOf wallet
+  R-->>C: staked balance (informational)
+  C->>C: allocation active for every account
+  C-->>U: daily allocation plus staked position`;
 
 const CHART_ALLOCATION = `stateDiagram-v2
   [*] --> Allocated: 00:00 UTC
@@ -168,9 +168,9 @@ const CHART_LIFECYCLE = `sequenceDiagram
   participant I as Inference Infrastructure
   participant M as Metering
   CL->>G: POST /v1/chat/completions with ct_live_ key
-  G->>A: verify key, eligibility, allocation
-  A-->>G: eligible, remaining credits
-  Note over G,A: 429 when ineligible or exhausted
+  G->>A: verify key and allocation
+  A-->>G: remaining credits
+  Note over G,A: 429 when exhausted
   G->>I: forward request
   I-->>G: completion plus token usage
   G->>M: credits = ceil tokens / 100
@@ -203,7 +203,7 @@ export default function Docs() {
               Everything about the Computree compute access layer.
             </h1>
             <p className="lead" style={{ marginTop: 20, maxWidth: 560 }}>
-              How staking tokenized assets unlocks daily GPU compute, and how to use it through the
+              How every connected wallet gets daily GPU compute, and how to use it through the
               Playground, Images, Workloads, and the GPU API.
             </p>
             <div style={{ display: 'flex', gap: 8, marginTop: 24, flexWrap: 'wrap' }}>
@@ -228,9 +228,9 @@ export default function Docs() {
               <Section id="overview" label="OVERVIEW" title="What Computree is">
                 <p>
                   Computree is a compute access layer connecting <b>tokenized assets</b> with{' '}
-                  <b>GPU infrastructure</b>. Users stake supported tokenized assets — tokenized NVDA
-                  is the first — and receive a daily GPU compute allocation they can spend through
-                  one programmable API.
+                  <b>GPU infrastructure</b>. Every connected wallet receives a daily GPU compute
+                  allocation it can spend through one programmable API — staking supported tokenized
+                  assets, with tokenized NVDA as the first, is optional and recorded on-chain.
                 </p>
                 <p>
                   The product is access to computing infrastructure, not another AI interface. The
@@ -250,23 +250,24 @@ export default function Docs() {
                 </ul>
               </Section>
 
-              <Section id="how-it-works" label="HOW IT WORKS" title="From stake to compute">
+              <Section id="how-it-works" label="HOW IT WORKS" title="From wallet to compute">
                 <p>
-                  The flow is deliberately simple: stake, verify, allocate, use, meter, reset. Every
+                  The flow is deliberately simple: connect, allocate, use, meter, reset. Every
                   cycle lasts 24 hours and every credit is accounted for.
                 </p>
                 <MermaidBlock chart={CHART_FLOW} ready={mermaidReady} />
                 <ul>
                   <li>
-                    <b>Stake supported assets</b> — hold a qualifying staked position of a supported
-                    tokenized asset in your wallet.
+                    <b>Connect a wallet</b> — sign in with any wallet on Robinhood Chain. No
+                    minimum balance or stake is required.
                   </li>
                   <li>
-                    <b>Verify on Robinhood Chain</b> — the backend reads your staked balance directly
-                    from the chain at request time.
+                    <b>Daily allocation</b> — every account receives 1,000 credits (CR) every day,
+                    automatically.
                   </li>
                   <li>
-                    <b>Daily allocation</b> — a qualifying stake grants 1,000 credits (CR) every day.
+                    <b>Optional staking</b> — stake tokenized NVDA into the on-chain vault any time;
+                    your position is read directly from the chain and displayed in the app.
                   </li>
                   <li>
                     <b>Use compute</b> — spend credits in the Playground, Images, Workloads, or
@@ -281,24 +282,24 @@ export default function Docs() {
                 </ul>
               </Section>
 
-              <Section id="staking" label="STAKING" title="Staking &amp; eligibility">
+              <Section id="staking" label="STAKING" title="Staking &amp; allocation">
                 <p>
-                  Eligibility is determined by your <b>staked balance of supported tokenized
-                  assets</b> on Robinhood Chain. Tokenized NVDA is the first supported asset; the
-                  supported set can expand over time without changing how you connect.
+                  Every connected account on Robinhood Chain receives the daily allocation —{' '}
+                  <b>there is no minimum stake</b>. Staking <b>tokenized NVDA</b> into the
+                  on-chain vault is optional: it records a long-term position on mainnet that the
+                  app reads and displays directly from the chain.
                 </p>
                 <ul>
                   <li>
-                    A staked balance of <b>≥ 1,000</b> of a supported tokenized asset unlocks the
-                    daily allocation.
+                    The daily <b>1,000 CR</b> allocation is active for every account, staked or not.
                   </li>
                   <li>
-                    Below the threshold, your daily allocation is <b>0 CR</b> — it activates
-                    automatically once the qualifying balance is detected.
+                    Staking and unstaking happen on Robinhood Chain mainnet — tokens move into the
+                    staking vault and can be withdrawn any time.
                   </li>
                   <li>
-                    Eligibility is evaluated per request against the chain, so changes in your
-                    staked position take effect without any action on your side.
+                    Your staked position is read per request against the chain, so changes take
+                    effect without any action on your side.
                   </li>
                 </ul>
                 <h3 className="docs-h3">Robinhood Chain Mainnet</h3>
@@ -312,13 +313,13 @@ export default function Docs() {
                     ['Explorer', <Mono>robinhoodchain.blockscout.com</Mono>],
                   ]}
                 />
-                <h3 className="docs-h3">Eligibility check lifecycle</h3>
+                <h3 className="docs-h3">Position check lifecycle</h3>
                 <MermaidBlock chart={CHART_STAKING} ready={mermaidReady} />
               </Section>
 
               <Section id="allocation" label="ALLOCATION" title="Daily allocation &amp; credits">
                 <p>
-                  Every eligible account receives <b>1,000 CR per day</b>. A credit (CR) is the
+                  Every account receives <b>1,000 CR per day</b>. A credit (CR) is the
                   metered unit of compute on Computree — it is consumed by inference, image
                   generation, and model workloads, and it is not transferable between accounts or
                   cycles.
@@ -418,10 +419,6 @@ export default function Docs() {
                   head={['Status', 'When']}
                   rows={[
                     [<Mono>401</Mono>, 'Missing, invalid, or revoked API key'],
-                    [
-                      <Mono>429 · INELIGIBLE</Mono>,
-                      'No daily allocation — stake ≥ 1,000 of a supported tokenized asset',
-                    ],
                     [<Mono>429 · INSUFFICIENT_CREDITS</Mono>, 'Remaining credits below the call cost'],
                     [<Mono>429</Mono>, 'Daily allocation exhausted — resets at 00:00 UTC'],
                   ]}
@@ -443,7 +440,7 @@ export default function Docs() {
 
               <Section id="lifecycle" label="LIFECYCLE" title="Request lifecycle">
                 <p>
-                  Every API request passes through authentication, eligibility, metering, and
+                  Every API request passes through authentication, metering, and
                   recording before the response returns. The inference layer itself is Computree
                   inference infrastructure backed by frontier model providers — the API surface
                   stays identical regardless of which provider executes a given request.
@@ -488,8 +485,8 @@ export default function Docs() {
                     'Every day at 00:00 UTC. The used counter returns to zero and a fresh 1,000 CR becomes available. Unused credits expire at reset.',
                   ],
                   [
-                    'What if my stake is below 1,000?',
-                    'Your daily allocation is 0 CR. It activates automatically — at the next request after your staked balance reaches ≥ 1,000 of a supported tokenized asset.',
+                    'Do I need to stake to get credits?',
+                    'No. Every connected account receives 1,000 CR per day automatically — there is no minimum stake. Staking tokenized NVDA on Robinhood Chain mainnet is optional and your position is shown in the app.',
                   ],
                   [
                     'What happens when my credits run out?',
@@ -505,7 +502,7 @@ export default function Docs() {
                   ],
                   [
                     'How do I get started?',
-                    'Stake a supported tokenized asset, connect your wallet in the app, and send your first prompt in the Playground. For programmatic access, create a ct_live_ key under API Keys.',
+                    'Connect your wallet in the app and send your first prompt in the Playground. For programmatic access, create a ct_live_ key under API Keys.',
                   ],
                 ].map(([q, a]) => (
                   <div className="docs-faq-item" key={q}>

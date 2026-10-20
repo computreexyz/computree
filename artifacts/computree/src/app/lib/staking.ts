@@ -5,8 +5,6 @@ import { robinhoodChain } from '../chain';
 export const STAKE_TOKEN_ADDRESS = '0x4b4fe1cccc53d762458308faf6f6d06bca2d795a' as const;
 export const STAKE_VAULT_ADDRESS = '0x0ca562345482791fc8c110d5395604387d45ef85' as const;
 export const BLOCKSCOUT_URL = 'https://robinhoodchain.blockscout.com';
-export const ELIGIBILITY_THRESHOLD = 1000;
-export const FAUCET_AMOUNT = 2000;
 
 export const stakeTokenAbi = [
   {
@@ -25,13 +23,6 @@ export const stakeTokenAbi = [
       { name: 'amount', type: 'uint256' },
     ],
     outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    type: 'function',
-    name: 'faucet',
-    stateMutability: 'nonpayable',
-    inputs: [],
-    outputs: [],
   },
   {
     type: 'function',
