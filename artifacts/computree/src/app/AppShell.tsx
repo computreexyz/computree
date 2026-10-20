@@ -16,6 +16,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Toaster } from '@/components/ui/sonner';
 import { CountdownChip } from './components/StatPanel';
+import { AssetMark } from './components/AppVisuals';
 import { useDemoMode, useMe } from './mock/hooks';
 import { MOCK_WALLET } from './mock/data';
 import { APP_NAV_ITEMS, MOBILE_PRIMARY_PATHS } from './nav-items';
@@ -66,8 +67,8 @@ function WalletChip() {
     <span className="app-chip" data-testid="chip-wallet" title={address}>
       <Wallet size={12} />
       <span>{truncateAddress(address)}</span>
-      <span className="app-chip-num app-hide-mobile" style={{ color: 'var(--asub)' }}>
-        {staked !== undefined ? `${staked.toLocaleString('en-US')} NVDA` : `${MOCK_WALLET.balanceCtree.toLocaleString('en-US')} NVDA`}
+      <span className="app-chip-num app-hide-mobile" style={{ color: 'var(--asub)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+        <AssetMark asset="NVDA" size={12} />{staked !== undefined ? `${staked.toLocaleString('en-US')} NVDA` : `${MOCK_WALLET.balanceCtree.toLocaleString('en-US')} NVDA`}
       </span>
       {demo ? <span className="app-demo-badge">DEMO</span> : null}
     </span>

@@ -10,7 +10,7 @@ import {
 } from 'recharts';
 import { CountUp } from '../components/CountUp';
 import { MiniBars, ResetClock, StatusGlyph } from '../components/AppArt';
-import { GpuCardArt, ModelMark, NodeRingArt } from '../components/AppVisuals';
+import { AssetMark, GpuCardArt, ModelMark, NodeRingArt } from '../components/AppVisuals';
 import { FeatureBanner } from '../components/FeatureBanner';
 import { RelativeTime, StatusPill } from '../components/StatusPill';
 import { formatCountdown, nextUtcMidnight } from '../components/StatPanel';
@@ -85,7 +85,7 @@ function AllocationHero() {
           </div>
           <div>
             <span className="app-meta">Source</span>
-            <b className="mono" data-testid="text-staked-source">{staked.toLocaleString('en-US')} NVDA staked</b>
+            <b className="mono" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }} data-testid="text-staked-source"><AssetMark asset="NVDA" size={14} />{staked.toLocaleString('en-US')} NVDA staked</b>
           </div>
         </div>
       </div>

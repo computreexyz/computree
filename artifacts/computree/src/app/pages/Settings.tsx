@@ -3,7 +3,7 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { FeatureBanner } from '../components/FeatureBanner';
-import { ControlBoardArt, KeyAccessArt } from '../components/AppVisuals';
+import { AssetMark, ControlBoardArt, KeyAccessArt } from '../components/AppVisuals';
 import { robinhoodChain } from '../chain';
 import { Panel } from '../components/StatusPill';
 import { KEYS_STORAGE, MOCK_WALLET } from '../mock/data';
@@ -65,8 +65,8 @@ function WalletSection() {
           <span className="mono" style={{ fontSize: 10 }}>{MOCK_WALLET.network.toUpperCase()}</span>
         </SettingRow>
         <SettingRow label="Staked balance (tokenized NVDA)">
-          <span className="mono" style={{ fontSize: 10, fontVariantNumeric: 'tabular-nums' }} data-testid="text-staked-balance">
-            {balance.toLocaleString('en-US')} tokenized NVDA
+          <span className="mono" style={{ fontSize: 10, fontVariantNumeric: 'tabular-nums', display: 'inline-flex', alignItems: 'center', gap: 6 }} data-testid="text-staked-balance">
+            <AssetMark asset="NVDA" size={13} />{balance.toLocaleString('en-US')} tokenized NVDA
           </span>
         </SettingRow>
         <SettingRow label="Eligibility" hint="STAKE ≥ 1,000 OF A SUPPORTED TOKENIZED ASSET">

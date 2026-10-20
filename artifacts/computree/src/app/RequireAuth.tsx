@@ -2,6 +2,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { ArrowRight } from 'lucide-react';
 import { ComputreeLogo } from '@/components/ComputreeLogo';
 import { Skeleton } from '@/components/ui/skeleton';
+import { AssetMark } from './components/AppVisuals';
 import { useDemoMode } from './mock/hooks';
 
 function GuardSkeleton() {
@@ -31,6 +32,10 @@ function ConnectScreen() {
           <br />
           CONNECT A WALLET TO VERIFY YOUR STAKE AND UNLOCK YOUR ALLOCATION.
         </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
+          <AssetMark asset="NVDA" size={22} />
+          <span className="mono" style={{ fontSize: 9, letterSpacing: '.08em', color: 'var(--ameta)' }}>TOKENIZED NVDA · ROBINHOOD CHAIN MAINNET</span>
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 26, flexWrap: 'wrap' }}>
           <button className="button button-dark" onClick={login} data-testid="button-connect-wallet">
             Connect Wallet <ArrowRight size={13} aria-hidden="true" />
