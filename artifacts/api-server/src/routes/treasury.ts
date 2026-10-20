@@ -9,7 +9,7 @@ router.get("/", (_req, res) => {
       compute30dUsd: 312_400,
       activeGpuCapacity: 214,
       avgCostPerCr: 0.41,
-      note: "awaiting on-chain integration — values are placeholders",
+      note: "awaiting on-chain integration - values are placeholders",
     },
     transactions: [],
   });

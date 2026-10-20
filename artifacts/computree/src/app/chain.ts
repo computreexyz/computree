@@ -1,7 +1,7 @@
 import { defineChain } from 'viem';
 
 /**
- * Robinhood Chain (Arbitrum Orbit L2) — home of staked tokenized assets.
+ * Robinhood Chain (Arbitrum Orbit L2) - home of staked tokenized assets.
  *
  * NOTE: these are the official mainnet parameters as announced.
  */

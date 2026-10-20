@@ -15,7 +15,7 @@ import {
 import { MOCK_PROVIDERS } from '../mock/data';
 
 /* ------------------------------------------------------------------ */
-/* Top feature banner — flat 2D identity per page                      */
+/* Top feature banner - flat 2D identity per page                      */
 /* ------------------------------------------------------------------ */
 
 type BannerFeature = 'overview' | 'compute' | 'stake' | 'playground' | 'images' | 'workloads' | 'jobs' | 'keys' | 'network' | 'treasury' | 'settings';

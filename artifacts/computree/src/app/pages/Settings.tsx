@@ -57,7 +57,7 @@ function WalletSection() {
       <div style={{ display: 'grid', gap: 0 }}>
         <SettingRow label="Address" hint={address ?? 'NOT CONNECTED'}>
           <span className="mono" style={{ fontSize: 10 }}>
-            {address ? `${address.slice(0, 10)}…${address.slice(-8)}` : '—'}
+            {address ? `${address.slice(0, 10)}…${address.slice(-8)}` : '-'}
           </span>
         </SettingRow>
         <SettingRow label="Network" hint={`${robinhoodChain.name} · Chain ID ${robinhoodChain.id}`}>
@@ -72,7 +72,7 @@ function WalletSection() {
           {eligible ? (
             <span className="status-pill" data-testid="pill-eligible">ACTIVE</span>
           ) : (
-            <span className="mono" style={{ fontSize: 10, color: 'var(--ameta)' }}>—</span>
+            <span className="mono" style={{ fontSize: 10, color: 'var(--ameta)' }}>-</span>
           )}
         </SettingRow>
         <div style={{ paddingTop: 14 }}>

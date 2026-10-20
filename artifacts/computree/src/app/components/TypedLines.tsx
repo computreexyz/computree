@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-/* Terminal typing animation — same pattern as the landing TerminalType */
+/* Terminal typing animation - same pattern as the landing TerminalType */
 /* but parameterized so app screens can type their own line sets.        */
 
 function renderFragment(text: string, keyBase: number) {

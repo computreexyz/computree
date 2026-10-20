@@ -195,7 +195,7 @@ function InspectorCard({ exchanges }: { exchanges: Exchange[] }) {
   return (
     <Collapsible title="Request inspector">
       {exchanges.length === 0 ? (
-        <span className="app-meta">No requests yet — send a prompt to inspect the wire format.</span>
+        <span className="app-meta">No requests yet - send a prompt to inspect the wire format.</span>
       ) : (
         exchanges.map((exchange) => (
           <div key={exchange.model} style={{ display: 'grid', gap: 8 }}>

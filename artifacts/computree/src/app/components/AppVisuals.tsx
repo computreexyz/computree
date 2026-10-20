@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import type { ModelId, Provider } from '../mock/data';
 
 /* ------------------------------------------------------------------ */
-/* Brand marks — official logos where available, monogram fallback     */
+/* Brand marks - official logos where available, monogram fallback     */
 /* ------------------------------------------------------------------ */
 
 const PROVIDER_LOGOS: Record<string, string> = {
@@ -71,7 +71,7 @@ export function ModelMark({ model, size = 16 }: { model: ModelId; size?: number 
 }
 
 /* ------------------------------------------------------------------ */
-/* Flat 2D technical illustrations — one visual system                 */
+/* Flat 2D technical illustrations - one visual system                 */
 /* ------------------------------------------------------------------ */
 
 const INK = '#202329';

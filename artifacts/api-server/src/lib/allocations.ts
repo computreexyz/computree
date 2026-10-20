@@ -16,7 +16,7 @@ export async function ensureAllocation(
     .values({ accountId, cycleDate, total, used: 0 })
     .onConflictDoUpdate({
       target: [allocationsTable.accountId, allocationsTable.cycleDate],
-      // Eligibility can change intraday — keep the row's total in sync.
+      // Eligibility can change intraday - keep the row's total in sync.
       set: { total },
     });
   const [allocation] = await db

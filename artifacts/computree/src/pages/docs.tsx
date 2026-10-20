@@ -3,7 +3,7 @@ import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
 
 /* ------------------------------------------------------------------ */
-/* Computree public documentation — /docs (no auth)                    */
+/* Computree public documentation - /docs (no auth)                    */
 /* ------------------------------------------------------------------ */
 
 const UPDATED = new Date().toLocaleDateString('en-US', {
@@ -52,7 +52,7 @@ function useMermaid() {
         return mermaid.run({ querySelector: '.mermaid' });
       })
       .catch(() => {
-        /* diagram render failure — raw source stays visible */
+        /* diagram render failure - raw source stays visible */
       })
       .finally(() => {
         if (!cancelled) setReady(true);
@@ -185,7 +185,7 @@ export default function Docs() {
 
   useEffect(() => {
     const previous = document.title;
-    document.title = 'Docs — Computree';
+    document.title = 'Docs - Computree';
     return () => {
       document.title = previous;
     };
@@ -229,7 +229,7 @@ export default function Docs() {
                 <p>
                   Computree is a compute access layer connecting <b>tokenized assets</b> with{' '}
                   <b>GPU infrastructure</b>. Every connected wallet receives a daily GPU compute
-                  allocation it can spend through one programmable API — staking supported tokenized
+                  allocation it can spend through one programmable API - staking supported tokenized
                   assets, with tokenized NVDA as the first, is optional and recorded on-chain.
                 </p>
                 <p>
@@ -240,11 +240,11 @@ export default function Docs() {
                 <p>Computree is built for two audiences:</p>
                 <ul>
                   <li>
-                    <b>Users of AI applications</b> — chat with frontier models, generate images, and
+                    <b>Users of AI applications</b> - chat with frontier models, generate images, and
                     run model workloads against a daily allocation instead of a subscription.
                   </li>
                   <li>
-                    <b>Developers</b> — integrate the same compute into any application through an
+                    <b>Developers</b> - integrate the same compute into any application through an
                     OpenAI-compatible GPU API with metered credits.
                   </li>
                 </ul>
@@ -258,33 +258,33 @@ export default function Docs() {
                 <MermaidBlock chart={CHART_FLOW} ready={mermaidReady} />
                 <ul>
                   <li>
-                    <b>Connect a wallet</b> — sign in with any wallet on Robinhood Chain. No
+                    <b>Connect a wallet</b> - sign in with any wallet on Robinhood Chain. No
                     minimum balance or stake is required.
                   </li>
                   <li>
-                    <b>Daily allocation</b> — every account receives 1,000 credits (CR) every day,
+                    <b>Daily allocation</b> - every account receives 1,000 credits (CR) every day,
                     automatically.
                   </li>
                   <li>
-                    <b>Optional staking</b> — stake tokenized NVDA into the on-chain vault any time;
+                    <b>Optional staking</b> - stake tokenized NVDA into the on-chain vault any time;
                     your position is read directly from the chain and displayed in the app.
                   </li>
                   <li>
-                    <b>Use compute</b> — spend credits in the Playground, Images, Workloads, or
+                    <b>Use compute</b> - spend credits in the Playground, Images, Workloads, or
                     through the GPU API.
                   </li>
                   <li>
-                    <b>Metered credits</b> — every call is metered and recorded as a job.
+                    <b>Metered credits</b> - every call is metered and recorded as a job.
                   </li>
                   <li>
-                    <b>Reset</b> — the allocation refreshes at 00:00 UTC. Unused credits expire.
+                    <b>Reset</b> - the allocation refreshes at 00:00 UTC. Unused credits expire.
                   </li>
                 </ul>
               </Section>
 
               <Section id="staking" label="STAKING" title="Staking &amp; allocation">
                 <p>
-                  Every connected account on Robinhood Chain receives the daily allocation —{' '}
+                  Every connected account on Robinhood Chain receives the daily allocation -{' '}
                   <b>there is no minimum stake</b>. Staking <b>tokenized NVDA</b> into the
                   on-chain vault is optional: it records a long-term position on mainnet that the
                   app reads and displays directly from the chain.
@@ -294,7 +294,7 @@ export default function Docs() {
                     The daily <b>1,000 CR</b> allocation is active for every account, staked or not.
                   </li>
                   <li>
-                    Staking and unstaking happen on Robinhood Chain mainnet — tokens move into the
+                    Staking and unstaking happen on Robinhood Chain mainnet - tokens move into the
                     staking vault and can be withdrawn any time.
                   </li>
                   <li>
@@ -320,7 +320,7 @@ export default function Docs() {
               <Section id="allocation" label="ALLOCATION" title="Daily allocation &amp; credits">
                 <p>
                   Every account receives <b>1,000 CR per day</b>. A credit (CR) is the
-                  metered unit of compute on Computree — it is consumed by inference, image
+                  metered unit of compute on Computree - it is consumed by inference, image
                   generation, and model workloads, and it is not transferable between accounts or
                   cycles.
                 </p>
@@ -331,19 +331,19 @@ export default function Docs() {
                     [
                       'Chat completion',
                       <span>
-                        <Mono>ceil(tokens / 100)</Mono> CR — minimum <Mono>1</Mono> CR per call
+                        <Mono>ceil(tokens / 100)</Mono> CR - minimum <Mono>1</Mono> CR per call
                       </span>,
                     ],
                     [
                       'Image generation',
                       <span>
-                        <Mono>10</Mono> CR per image — up to <Mono>2</Mono> per call
+                        <Mono>10</Mono> CR per image - up to <Mono>2</Mono> per call
                       </span>,
                     ],
                     [
                       'Embeddings',
                       <span>
-                        <Mono>1</Mono> CR per <Mono>200</Mono> tokens — minimum <Mono>1</Mono> CR
+                        <Mono>1</Mono> CR per <Mono>200</Mono> tokens - minimum <Mono>1</Mono> CR
                       </span>,
                     ],
                   ]}
@@ -357,7 +357,7 @@ export default function Docs() {
               </Section>
 
               <Section id="features" label="FEATURES" title="The four product functions">
-                <h3 className="docs-h3">AI Inference — Playground</h3>
+                <h3 className="docs-h3">AI Inference - Playground</h3>
                 <p>
                   Chat against frontier models with prompt presets, a system prompt, temperature
                   control, a compare mode that runs two models side by side, and a request inspector
@@ -396,14 +396,14 @@ export default function Docs() {
                     ['Format', 'OpenAI-compatible chat completions'],
                   ]}
                 />
-                <h3 className="docs-h3">POST /v1/chat/completions — request fields</h3>
+                <h3 className="docs-h3">POST /v1/chat/completions - request fields</h3>
                 <DataTable
                   head={['Field', 'Type', 'Notes']}
                   rows={[
-                    ['model', 'string', 'Required — model identifier from the available catalog'],
-                    ['messages', 'array', 'Required — [{ role, content }] conversation'],
-                    ['temperature', 'number', 'Optional — 0 to 2, defaults to 1'],
-                    ['stream', 'boolean', 'Not yet supported — responses are always non-streaming'],
+                    ['model', 'string', 'Required - model identifier from the available catalog'],
+                    ['messages', 'array', 'Required - [{ role, content }] conversation'],
+                    ['temperature', 'number', 'Optional - 0 to 2, defaults to 1'],
+                    ['stream', 'boolean', 'Not yet supported - responses are always non-streaming'],
                   ]}
                 />
                 <h3 className="docs-h3">Response headers</h3>
@@ -420,7 +420,7 @@ export default function Docs() {
                   rows={[
                     [<Mono>401</Mono>, 'Missing, invalid, or revoked API key'],
                     [<Mono>429 · INSUFFICIENT_CREDITS</Mono>, 'Remaining credits below the call cost'],
-                    [<Mono>429</Mono>, 'Daily allocation exhausted — resets at 00:00 UTC'],
+                    [<Mono>429</Mono>, 'Daily allocation exhausted - resets at 00:00 UTC'],
                   ]}
                 />
                 <h3 className="docs-h3">Example</h3>
@@ -442,7 +442,7 @@ export default function Docs() {
                 <p>
                   Every API request passes through authentication, metering, and
                   recording before the response returns. The inference layer itself is Computree
-                  inference infrastructure backed by frontier model providers — the API surface
+                  inference infrastructure backed by frontier model providers - the API surface
                   stays identical regardless of which provider executes a given request.
                 </p>
                 <MermaidBlock chart={CHART_LIFECYCLE} ready={mermaidReady} />
@@ -462,13 +462,13 @@ export default function Docs() {
                 </p>
                 <p>
                   <b>Transparency principle:</b> every job is recorded with its model, GPU class,
-                  provider, duration, and credits — the Jobs page is a live ledger of your compute.
+                  provider, duration, and credits - the Jobs page is a live ledger of your compute.
                 </p>
               </Section>
 
               <Section id="treasury" label="TREASURY" title="Treasury">
                 <p>
-                  The Computree treasury exists to <b>fund infrastructure acquisition</b> — the GPU
+                  The Computree treasury exists to <b>fund infrastructure acquisition</b> - the GPU
                   capacity the network makes available to users. It aggregates protocol resources
                   and deploys them toward compute purchases across the provider network.
                 </p>
@@ -486,7 +486,7 @@ export default function Docs() {
                   ],
                   [
                     'Do I need to stake to get credits?',
-                    'No. Every connected account receives 1,000 CR per day automatically — there is no minimum stake. Staking tokenized NVDA on Robinhood Chain mainnet is optional and your position is shown in the app.',
+                    'No. Every connected account receives 1,000 CR per day automatically - there is no minimum stake. Staking tokenized NVDA on Robinhood Chain mainnet is optional and your position is shown in the app.',
                   ],
                   [
                     'What happens when my credits run out?',
@@ -498,7 +498,7 @@ export default function Docs() {
                   ],
                   [
                     'Which models are available?',
-                    'Frontier models through the unified API — the catalog evolves over time. The current selection is visible in the Playground model picker.',
+                    'Frontier models through the unified API - the catalog evolves over time. The current selection is visible in the Playground model picker.',
                   ],
                   [
                     'How do I get started?',

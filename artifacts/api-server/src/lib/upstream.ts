@@ -1,4 +1,4 @@
-/** Shared upstream helpers — keep provider names out of client-facing text. */
+/** Shared upstream helpers - keep provider names out of client-facing text. */
 
 /** 'auto' is the public alias routed by the inference service. */
 export function upstreamModel(model: string): string {

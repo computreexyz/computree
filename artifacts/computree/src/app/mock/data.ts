@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------ */
-/* Computree app — mock data layer.                                    */
+/* Computree app - mock data layer.                                    */
 /* Shapes mirror the future API contracts; swap the fetchers in        */
 /* hooks.ts for real HTTP calls without touching the pages.            */
 /* ------------------------------------------------------------------ */

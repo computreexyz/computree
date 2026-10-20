@@ -16,7 +16,7 @@ import type {
   TreasuryTransaction,
 } from './data';
 
-/* Real fetchers against the Computree API — query keys and return shapes */
+/* Real fetchers against the Computree API - query keys and return shapes */
 /* are the contract the pages rely on.                                    */
 
 /* ----------------------------- API wire types --------------------------- */
@@ -45,7 +45,7 @@ interface ApiKeyResponse {
 }
 
 export interface CreatedApiKey extends ApiKey {
-  /** Full secret — returned by the API exactly once at creation time. */
+  /** Full secret - returned by the API exactly once at creation time. */
   secret: string;
 }
 
@@ -154,7 +154,7 @@ async function fetchTreasury(): Promise<TreasuryResponse> {
   return apiFetch<TreasuryResponse>('/api/treasury');
 }
 
-/* Don't retry auth failures — surface the error state instead of looping. */
+/* Don't retry auth failures - surface the error state instead of looping. */
 function queryRetry(failureCount: number, error: unknown): boolean {
   if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
     return false;

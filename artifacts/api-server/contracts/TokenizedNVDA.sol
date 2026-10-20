@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-/// @title Tokenized NVDA — demo ERC20 with a public faucet.
+/// @title Tokenized NVDA - demo ERC20 with a public faucet.
 contract TokenizedNVDA {
     string public constant name = "Tokenized NVDA";
     string public constant symbol = "NVDA";

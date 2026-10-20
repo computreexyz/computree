@@ -223,13 +223,13 @@ export default function Stake() {
       <FeatureBanner
         feature="stake"
         title="Stake"
-        meta="Your daily GPU allocation is always active — staking tokenized NVDA is optional"
+        meta="Your daily GPU allocation is always active - staking tokenized NVDA is optional"
       />
 
       {readOnly ? (
         <div className="app-panel app-panel-body" data-testid="banner-readonly">
           <span className="app-sub">
-            Connect a wallet to stake — demo mode shows read-only data.
+            Connect a wallet to stake - demo mode shows read-only data.
           </span>
         </div>
       ) : null}
@@ -257,7 +257,7 @@ export default function Stake() {
             </div>
             <div>
               <span className="app-meta">Daily allocation</span>
-              <b>{allocation ? `${allocation.used} / ${allocation.total} CR used` : '—'}</b>
+              <b>{allocation ? `${allocation.used} / ${allocation.total} CR used` : '-'}</b>
             </div>
             <div>
               <span className="app-meta">Total staked network-wide</span>
@@ -341,8 +341,8 @@ export default function Stake() {
         <Panel title="How it works" flush={false}>
           <div style={{ display: 'grid', gap: 0 }}>
             {[
-              ['01', 'Connect a wallet', 'A daily 1,000 CR allocation activates automatically for every connected wallet — no minimum stake.'],
-              ['02', 'Stake tokenized NVDA (optional)', 'Tokens move into the staking vault on Robinhood Chain mainnet — you can unstake any time.'],
+              ['01', 'Connect a wallet', 'A daily 1,000 CR allocation activates automatically for every connected wallet - no minimum stake.'],
+              ['02', 'Stake tokenized NVDA (optional)', 'Tokens move into the staking vault on Robinhood Chain mainnet - you can unstake any time.'],
               ['03', 'Spend credits anywhere', 'Playground, Images, Workloads, and the GPU API all draw from the same allocation.'],
             ].map(([num, title, body]) => (
               <div key={num} style={{ display: 'flex', gap: 14, padding: '10px 0', borderBottom: '1px solid var(--ahair)' }}>

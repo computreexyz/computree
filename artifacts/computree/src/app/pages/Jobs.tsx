@@ -85,7 +85,7 @@ function JobDrawer({ job, onClose }: { job: ComputeJob | null; onClose: () => vo
                     <span style={{ fontWeight: 700, fontSize: 10 }}>{step.label}</span>
                     <span />
                     <span className="mono" style={{ fontSize: 9, color: step.ts ? 'var(--asub)' : 'var(--ameta)' }}>
-                      {step.ts ? format(step.ts, 'HH:mm:ss') : '—'}
+                      {step.ts ? format(step.ts, 'HH:mm:ss') : '-'}
                     </span>
                   </div>
                   {index < arr.length - 1 ? (

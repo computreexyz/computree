@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 /* ------------------------------------------------------------------ */
-/* Hero — tree with GPU fruits and ecosystem brand badges              */
+/* Hero - tree with GPU fruits and ecosystem brand badges              */
 /* ------------------------------------------------------------------ */
 
 type FruitSpot = { x: number; y: number; size: number; tilt: number; dur: number; delay: number };
@@ -70,7 +70,7 @@ export function HeroTreeSim() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Problem section — solid server rack with blinking LEDs              */
+/* Problem section - solid server rack with blinking LEDs              */
 /* ------------------------------------------------------------------ */
 
 export function ServerRackSim({ className = '' }: { className?: string }) {
@@ -107,7 +107,7 @@ export function ServerRackSim({ className = '' }: { className?: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Infrastructure — acquisition pipeline with travelling packets       */
+/* Infrastructure - acquisition pipeline with travelling packets       */
 /* ------------------------------------------------------------------ */
 
 const PIPE_NODES = ['TREASURY', 'ACQUISITION', 'PROVIDER', 'NVIDIA GPU', 'COMPUTREE', 'USER'];
@@ -143,7 +143,7 @@ export function AcquisitionFlowSim() {
 }
 
 /* ------------------------------------------------------------------ */
-/* NVIDIA section — solid GPU card with spinning fans                  */
+/* NVIDIA section - solid GPU card with spinning fans                  */
 /* ------------------------------------------------------------------ */
 
 function FanBlades({ cx, cy, reverse = false }: { cx: number; cy: number; reverse?: boolean }) {
@@ -189,7 +189,7 @@ export function GpuCardSim({ className = '' }: { className?: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Provider network — topology with pulses and packets                 */
+/* Provider network - topology with pulses and packets                 */
 /* ------------------------------------------------------------------ */
 
 const TOPO_NODES: Array<[string, number, number]> = [
@@ -253,7 +253,7 @@ export function NetworkTopologySim() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Expansion — nodes join the network on a loop                        */
+/* Expansion - nodes join the network on a loop                        */
 /* ------------------------------------------------------------------ */
 
 export function ExpansionSim() {
@@ -298,7 +298,7 @@ export function ExpansionSim() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Ambient network — background motion for dark sections               */
+/* Ambient network - background motion for dark sections               */
 /* ------------------------------------------------------------------ */
 
 const AMBIENT_NODES: Array<[number, number]> = [
@@ -335,7 +335,7 @@ export function AmbientFlow({ className = '' }: { className?: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* API section — terminal typing animation                             */
+/* API section - terminal typing animation                             */
 /* ------------------------------------------------------------------ */
 
 const TERMINAL_LINES = [

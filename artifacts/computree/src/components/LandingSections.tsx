@@ -58,7 +58,7 @@ export function Hero() {
             <div className="section-label eyebrow">COMPUTREE</div>
             <h1 className="display">Put Tokenized Stock to Work on GPU Compute</h1>
             <p>Computree brings tokenized assets and GPU infrastructure into a programmable system where supported assets can connect with real computing capacity, giving developers an API-based way to access GPU resources.</p>
-            <p>Every connected wallet receives a daily allocation of compute, refreshed every 24 hours — no minimum stake required. Staking tokenized assets is optional.</p>
+            <p>Every connected wallet receives a daily allocation of compute, refreshed every 24 hours - no minimum stake required. Staking tokenized assets is optional.</p>
             <div className="hero-actions">
               <Link className="button button-dark" href="/app" data-testid="link-hero-access">Access GPU Compute <span aria-hidden="true">→</span></Link>
               <a className="button button-outline" href="#infrastructure" data-testid="link-hero-infrastructure">Explore Infrastructure <span aria-hidden="true">↗</span></a>
@@ -115,7 +115,7 @@ export function IntroductionSection() {
             preload="auto"
             disablePictureInPicture
             controlsList="nodownload nofullscreen noremoteplayback"
-            aria-label="GPU compute becomes one API — animated visualization"
+            aria-label="GPU compute becomes one API - animated visualization"
           />
         </div>
       </div>
@@ -177,7 +177,7 @@ export function CTREEAllocation() {
           <div className="section-label eyebrow">DAILY ALLOCATION</div>
           <div className="allocation-promise">YOUR WALLET BECOMES COMPUTE ACCESS.</div>
           <h2 className="section-title">EVERY WALLET UNLOCKS A DAILY COMPUTE ALLOCATION.</h2>
-          <p className="lead">Connect any wallet on Robinhood Chain — no minimum stake required.</p>
+          <p className="lead">Connect any wallet on Robinhood Chain - no minimum stake required.</p>
           <p className="lead">Every account receives 1,000 CR of daily compute, automatically.</p>
           <p className="lead">Staking supported tokenized assets such as tokenized NVDA is optional and recorded on-chain.</p>
           <p className="lead">Your allocation can be consumed across supported workloads and applications.</p>
@@ -367,7 +367,7 @@ export function TokenFlowSection() {
   const steps = ['CONNECTED WALLET', 'COMPUTE ALLOCATION', 'COMPUTREE API', 'GPU INFRASTRUCTURE', 'NVIDIA GPU', 'WORKLOAD', 'RESULT'];
   return (
     <section className="section token-flow-section" id="token-flow">
-      <div className="container token-flow-layout"><div><SectionIntro title="FROM WALLET ACCESS TO PHYSICAL COMPUTE." body={<>Every connected account receives a measurable amount of daily compute — no minimum stake required.<br /><br />That compute is backed by infrastructure acquired by the network.<br /><br />The workload executes on GPU infrastructure.<br /><br />The result returns to the application.<br /><br />The entire process can be represented in one flow:</>} /></div><div className="token-flow">{steps.map((step, index) => <div className="token-flow-step" key={step}><span className="token-step-index mono">0{index + 1}</span><span>{step}</span>{index < steps.length - 1 && <span aria-hidden="true">↓</span>}</div>)}</div></div>
+      <div className="container token-flow-layout"><div><SectionIntro title="FROM WALLET ACCESS TO PHYSICAL COMPUTE." body={<>Every connected account receives a measurable amount of daily compute - no minimum stake required.<br /><br />That compute is backed by infrastructure acquired by the network.<br /><br />The workload executes on GPU infrastructure.<br /><br />The result returns to the application.<br /><br />The entire process can be represented in one flow:</>} /></div><div className="token-flow">{steps.map((step, index) => <div className="token-flow-step" key={step}><span className="token-step-index mono">0{index + 1}</span><span>{step}</span>{index < steps.length - 1 && <span aria-hidden="true">↓</span>}</div>)}</div></div>
     </section>
   );
 }
@@ -397,7 +397,7 @@ export function FinalCTA() {
     <section className="final-cta dark-section" id="access">
       <AmbientFlow className="cta-art" />
       <div className="cta-overlay" />
-      <div className="container cta-content"><div className="section-label eyebrow">COMPUTREE</div><h2 className="section-title">COMPUTE IS THE PRODUCT.</h2><h3 className="cta-secondary-title">ACCESS GPU COMPUTE.</h3><p>Access NVIDIA GPU-backed compute through a programmable API.</p><p>Every connected wallet receives a daily compute allocation — no minimum stake.</p><p>The network acquires the infrastructure.</p><p>Your application decides what to build with it.</p><p>Computree turns GPU capacity into a resource that applications can access through one programmable interface.</p><p>Connect a wallet to activate your daily allocation — staking tokenized NVDA is optional.</p><p>Infrastructure is acquired by the network.</p><p>Workloads run on supported GPU environments.</p><p>Your application receives the result.</p><div className="cta-buttons"><Link className="button button-light" href="/app">Access GPU Compute <span aria-hidden="true">→</span></Link><a className="button button-outline-light" href="#api">Read the Documentation <span aria-hidden="true">→</span></a></div></div>
+      <div className="container cta-content"><div className="section-label eyebrow">COMPUTREE</div><h2 className="section-title">COMPUTE IS THE PRODUCT.</h2><h3 className="cta-secondary-title">ACCESS GPU COMPUTE.</h3><p>Access NVIDIA GPU-backed compute through a programmable API.</p><p>Every connected wallet receives a daily compute allocation - no minimum stake.</p><p>The network acquires the infrastructure.</p><p>Your application decides what to build with it.</p><p>Computree turns GPU capacity into a resource that applications can access through one programmable interface.</p><p>Connect a wallet to activate your daily allocation - staking tokenized NVDA is optional.</p><p>Infrastructure is acquired by the network.</p><p>Workloads run on supported GPU environments.</p><p>Your application receives the result.</p><div className="cta-buttons"><Link className="button button-light" href="/app">Access GPU Compute <span aria-hidden="true">→</span></Link><a className="button button-outline-light" href="#api">Read the Documentation <span aria-hidden="true">→</span></a></div></div>
     </section>
   );
 }

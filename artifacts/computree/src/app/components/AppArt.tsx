@@ -1,7 +1,7 @@
 import type { JobStatus } from '../mock/data';
 
 /* ------------------------------------------------------------------ */
-/* Status glyphs — animated, meaningful (utility layer)                */
+/* Status glyphs - animated, meaningful (utility layer)                */
 /* ------------------------------------------------------------------ */
 
 export function StatusGlyph({ status, size = 12 }: { status: JobStatus | 'online' | 'offline'; size?: number }) {
@@ -47,7 +47,7 @@ export function StatusGlyph({ status, size = 12 }: { status: JobStatus | 'online
 }
 
 /* ------------------------------------------------------------------ */
-/* Geometric icon set (stroke 1.6, viewBox 24) — small UI utility only */
+/* Geometric icon set (stroke 1.6, viewBox 24) - small UI utility only */
 /* ------------------------------------------------------------------ */
 
 const ICONS = {
@@ -74,7 +74,7 @@ export function AppIcon({ name, size = 15 }: { name: AppIconName; size?: number 
 }
 
 /* ------------------------------------------------------------------ */
-/* Reset clock — synchronized with the real countdown                  */
+/* Reset clock - synchronized with the real countdown                  */
 /* ------------------------------------------------------------------ */
 
 export function ResetClock({ elapsed, now, size = 84 }: { elapsed: number; now: number; size?: number }) {
@@ -113,7 +113,7 @@ export function ResetClock({ elapsed, now, size = 84 }: { elapsed: number; now: 
 }
 
 /* ------------------------------------------------------------------ */
-/* Mini bars — actual data, entrance animation only                    */
+/* Mini bars - actual data, entrance animation only                    */
 /* ------------------------------------------------------------------ */
 
 export function MiniBars({ values, height = 44, barWidth = 12, gap = 7 }: { values: number[]; height?: number; barWidth?: number; gap?: number }) {

@@ -105,7 +105,7 @@ export async function getStakedBalance(address: string): Promise<number> {
 }
 
 function eligibilityOf(balance: number): Eligibility {
-  // Every connected account receives the daily allocation — there is no
+  // Every connected account receives the daily allocation - there is no
   // minimum stake. The staked balance is still reported for display.
   return {
     eligible: true,

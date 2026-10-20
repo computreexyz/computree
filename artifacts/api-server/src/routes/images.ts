@@ -105,7 +105,7 @@ router.post("/generate", async (req, res, next) => {
       ...FALLBACK_MODELS.filter((m) => m !== (parsed.data.model ?? DEFAULT_MODEL)),
     ];
 
-    // Image models return one image per call — one call per requested image,
+    // Image models return one image per call - one call per requested image,
     // each with its own fallback chain.
     const images: string[] = [];
     let text: string | undefined;

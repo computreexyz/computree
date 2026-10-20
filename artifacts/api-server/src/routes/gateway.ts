@@ -91,7 +91,7 @@ router.post("/chat/completions", async (req, res, next) => {
       return;
     }
 
-    // Streaming is not metered yet — always request a non-streaming response.
+    // Streaming is not metered yet - always request a non-streaming response.
     const payload = { ...parsed.data, model: upstreamModel(parsed.data.model), stream: false };
 
     const upstream = await fetch(OPENROUTER_URL, {

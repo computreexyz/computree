@@ -6,7 +6,7 @@ interface IERC20 {
     function transfer(address to, uint256 amount) external returns (bool);
 }
 
-/// @title ComputreeStaking — vault for staked tokenized assets.
+/// @title ComputreeStaking - vault for staked tokenized assets.
 contract ComputreeStaking {
     IERC20 public immutable token;
 
