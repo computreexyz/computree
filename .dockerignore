@@ -1,0 +1,11 @@
+**/node_modules/**
+**/dist/**
+**/.git/**
+**/.env
+**/.env.*
+**/*.tsbuildinfo
+**/post-merge.sh
+attached_assets/**
+artifacts/computree/**
+artifacts/mockup-sandbox/**
+**/*.log

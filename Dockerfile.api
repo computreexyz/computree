@@ -1,0 +1,18 @@
+FROM node:24-slim
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@12.9.1 --activate
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY tsconfig.json tsconfig.base.json ./
+COPY lib ./lib
+COPY scripts ./scripts
+COPY artifacts/api-server ./artifacts/api-server
+
+RUN pnpm install --frozen-lockfile
+RUN pnpm --filter @workspace/api-server run build
+
+EXPOSE 5000
+ENV PORT=5000
+CMD ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]
