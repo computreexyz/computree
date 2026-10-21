@@ -13,6 +13,7 @@ import { db } from "../lib/db";
 import { redactUpstreamText, upstreamModel } from "../lib/upstream";
 import { logger } from "../lib/logger";
 import { ensureAllocation } from "../lib/allocations";
+import { getEligibility } from "../lib/eligibility";
 import {
   creditsForUsage,
   newJobId,
@@ -84,8 +85,21 @@ router.post("/chat/completions", async (req, res, next) => {
       res.status(401).json({ error: "api key has no associated account" });
       return;
     }
+    const eligibility = await getEligibility(account, req);
+    if (!eligibility.eligible) {
+      res.status(429).json({
+        error: "No daily allocation - stake tokenized NVDA to unlock compute",
+        code: "INELIGIBLE",
+      });
+      return;
+    }
+
     const cycleDate = utcToday();
-    const allocation = await ensureAllocation(key.accountId, cycleDate, 1000);
+    const allocation = await ensureAllocation(
+      key.accountId,
+      cycleDate,
+      eligibility.eligible ? 1000 : 0,
+    );
     if (allocation.used >= allocation.total) {
       res.status(429).json({ error: "daily allocation exhausted" });
       return;

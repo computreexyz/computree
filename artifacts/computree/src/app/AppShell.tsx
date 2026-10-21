@@ -69,7 +69,7 @@ function WalletChip() {
       <span>{truncateAddress(address)}</span>
       {staked !== undefined ? (
         <span className="app-chip-num app-hide-mobile" style={{ color: 'var(--asub)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-          <AssetMark asset="NVDA" size={12} />{staked.toLocaleString('en-US')} NVDA
+          <AssetMark asset="NVDA" size={12} />{staked.toLocaleString('en-US')} NVDAon
         </span>
       ) : null}
       {demo ? <span className="app-demo-badge">DEMO</span> : null}

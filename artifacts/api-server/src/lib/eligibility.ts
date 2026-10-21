@@ -1,27 +1,25 @@
 import type { Request } from "express";
 import {
   createPublicClient,
-  defineChain,
+  fallback,
   http,
   type Address,
   type PublicClient,
 } from "viem";
+import { mainnet } from "viem/chains";
 import type { Account } from "@workspace/db/schema";
 import { getPrivy } from "./auth";
 import { logger } from "./logger";
 
-const RPC_URL = "https://rpc.mainnet.chain.robinhood.com";
+// Ethereum mainnet RPCs - first healthy endpoint answers.
+const RPC_URLS = [
+  "https://rpc.mevblocker.io",
+  "https://ethereum.publicnode.com",
+  "https://eth.llamarpc.com",
+];
 const STAKE_ASSET_LABEL = "tokenized NVDA";
-
-const robinhoodChain = defineChain({
-  id: 4663,
-  name: "Robinhood Chain",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: { default: { http: [RPC_URL] } },
-  blockExplorers: {
-    default: { name: "Blockscout", url: "https://robinhoodchain.blockscout.com" },
-  },
-});
+// Minimum staked NVDAon required for access. Default 0 = any positive stake.
+const MIN_STAKE = Number(process.env.STAKE_MIN_NVDA ?? "0");
 
 const stakingAbi = [
   {
@@ -78,8 +76,10 @@ let chainClient: PublicClient | null = null;
 function getChainClient(): PublicClient {
   if (!chainClient) {
     chainClient = createPublicClient({
-      chain: robinhoodChain,
-      transport: http(RPC_URL, { timeout: 6_000 }),
+      chain: mainnet,
+      transport: fallback(
+        RPC_URLS.map((url) => http(url, { timeout: 6_000 })),
+      ),
     });
   }
   return chainClient;
@@ -105,10 +105,8 @@ export async function getStakedBalance(address: string): Promise<number> {
 }
 
 function eligibilityOf(balance: number): Eligibility {
-  // Every connected account receives the daily allocation - there is no
-  // minimum stake. The staked balance is still reported for display.
   return {
-    eligible: true,
+    eligible: balance > MIN_STAKE,
     balance,
     asset: STAKE_ASSET_LABEL,
     staked: balance,
@@ -117,10 +115,10 @@ function eligibilityOf(balance: number): Eligibility {
 
 export async function getEligibility(account: Account, req: Request): Promise<Eligibility> {
   if (process.env.DEMO_AUTH === "1") {
-    // Demo/dev stays usable without a wallet; an explicit wallet header
-    // opts into the real staked-balance check instead.
+    // Demo/dev simulates unlocked access without a wallet; an explicit
+    // wallet header opts into the real staked-balance check instead.
     const header = req.header("x-wallet-address");
-    if (!header) return eligibilityOf(0);
+    if (!header) return { ...eligibilityOf(0), eligible: true };
   }
   const address = await getWalletAddress(account, req);
   if (!address) return eligibilityOf(0);

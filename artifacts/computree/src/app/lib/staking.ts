@@ -1,10 +1,10 @@
 import { createPublicClient, http, parseUnits, type Address } from 'viem';
-import { robinhoodChain } from '../chain';
+import { appChain } from '../chain';
 
-/* Live Robinhood Chain mainnet deployments (Chain ID 4663). */
-export const STAKE_TOKEN_ADDRESS = '0x4b4fe1cccc53d762458308faf6f6d06bca2d795a' as const;
-export const STAKE_VAULT_ADDRESS = '0x0ca562345482791fc8c110d5395604387d45ef85' as const;
-export const BLOCKSCOUT_URL = 'https://robinhoodchain.blockscout.com';
+/* Live Ethereum mainnet deployments (Chain ID 1). */
+export const STAKE_TOKEN_ADDRESS = '0x2d1f7226bd1f780af6b9a49dcc0ae00e8df4bdee' as const;
+export const STAKE_VAULT_ADDRESS = '0xc3d3e456eaa5d835484c4e457190f5d9d53843f1' as const;
+export const EXPLORER_URL = 'https://etherscan.io';
 
 export const stakeTokenAbi = [
   {
@@ -65,7 +65,7 @@ export const stakingVaultAbi = [
 ] as const;
 
 export const stakingPublicClient = createPublicClient({
-  chain: robinhoodChain,
+  chain: appChain,
   transport: http(),
 });
 
@@ -121,8 +121,8 @@ export function truncateAddress(address: string): string {
   return `${address.slice(0, 8)}…${address.slice(-6)}`;
 }
 
-export const addressUrl = (address: string) => `${BLOCKSCOUT_URL}/address/${address}`;
-export const txUrl = (hash: string) => `${BLOCKSCOUT_URL}/tx/${hash}`;
+export const addressUrl = (address: string) => `${EXPLORER_URL}/address/${address}`;
+export const txUrl = (hash: string) => `${EXPLORER_URL}/tx/${hash}`;
 
 /** Short human-readable reason from a viem/wallet error. */
 export function txErrorReason(err: unknown): string {

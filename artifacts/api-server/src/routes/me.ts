@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
         walletAddress: account.walletAddress,
       },
       eligibility,
-      chain: { id: 4663, name: "Robinhood Chain", testnet: false },
+      chain: { id: 1, name: "Ethereum", testnet: false },
     });
   } catch (err) {
     next(err);

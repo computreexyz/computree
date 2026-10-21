@@ -54,7 +54,7 @@ export interface TreasuryTransaction {
   date: number;
   asset: 'USDC' | 'ETH' | 'CTREE';
   amount: string;
-  network: 'Base' | 'Ethereum' | 'Robinhood';
+  network: 'Base' | 'Ethereum';
   purpose: string;
   tx: string;
 }
@@ -252,7 +252,7 @@ export const MOCK_TRANSACTIONS: TreasuryTransaction[] = [
   { id: 'tx2', date: NOW - 5 * 86400000, asset: 'USDC', amount: '61,500', network: 'Base', purpose: 'GPU CAPACITY · LAMBDA', tx: `0x${hex(mulberry32(22), 40)}` },
   { id: 'tx3', date: NOW - 9 * 86400000, asset: 'ETH', amount: '12.4', network: 'Ethereum', purpose: 'GPU CAPACITY · NEBIUS', tx: `0x${hex(mulberry32(33), 40)}` },
   { id: 'tx4', date: NOW - 14 * 86400000, asset: 'USDC', amount: '120,000', network: 'Base', purpose: 'TREASURY REBALANCE', tx: `0x${hex(mulberry32(44), 40)}` },
-  { id: 'tx5', date: NOW - 21 * 86400000, asset: 'CTREE', amount: '2,400,000', network: 'Robinhood', purpose: 'EMISSION · ALLOCATION POOL', tx: `0x${hex(mulberry32(55), 40)}` },
+  { id: 'tx5', date: NOW - 21 * 86400000, asset: 'CTREE', amount: '2,400,000', network: 'Ethereum', purpose: 'EMISSION · ALLOCATION POOL', tx: `0x${hex(mulberry32(55), 40)}` },
 ];
 
 /* ------------------------------ api keys ------------------------------ */
@@ -280,5 +280,5 @@ export function maskApiKey(secret: string): string {
 
 export const MOCK_WALLET = {
   address: '0x7f3a9c21d4e8b6f0a2c4e6d8b1f3a5c7e9d2b4f6',
-  network: 'Robinhood Chain Mainnet',
+  network: 'Ethereum Mainnet',
 };

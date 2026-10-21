@@ -28,13 +28,13 @@ function ConnectScreen() {
         <div className="section-label eyebrow" style={{ marginTop: 26 }}>COMPUTREE APP</div>
         <h1>CONNECT YOUR WALLET.</h1>
         <p className="mono" style={{ fontSize: 10, lineHeight: 1.9, letterSpacing: '.04em', color: 'var(--asub)', maxWidth: 420 }}>
-          EVERY CONNECTED WALLET RECEIVES A DAILY GPU COMPUTE ALLOCATION - NO MINIMUM STAKE.
+          STAKE TOKENIZED NVDA TO UNLOCK DAILY GPU COMPUTE.
           <br />
-          CONNECT A WALLET TO ACTIVATE YOUR ALLOCATION. STAKING TOKENIZED NVDA IS OPTIONAL.
+          CONNECT A WALLET TO VERIFY YOUR STAKE AND ACTIVATE YOUR ALLOCATION.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
           <AssetMark asset="NVDA" size={22} />
-          <span className="mono" style={{ fontSize: 9, letterSpacing: '.08em', color: 'var(--ameta)' }}>TOKENIZED NVDA · ROBINHOOD CHAIN MAINNET</span>
+          <span className="mono" style={{ fontSize: 9, letterSpacing: '.08em', color: 'var(--ameta)' }}>NVDAON · ETHEREUM MAINNET</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 26, flexWrap: 'wrap' }}>
           <button className="button button-dark" onClick={login} data-testid="button-connect-wallet">

@@ -11,12 +11,12 @@ import {
 } from 'viem';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
-import { robinhoodChain } from '../chain';
+import { appChain } from '../chain';
 import { FeatureBanner } from '../components/FeatureBanner';
 import { StakingArt } from '../components/AppVisuals';
 import { CountUp } from '../components/CountUp';
 import { Panel } from '../components/StatusPill';
-import { useAllocation, useDemoMode } from '../mock/hooks';
+import { useAllocation, useDemoMode, useMe } from '../mock/hooks';
 import {
   addressUrl,
   parseNvdaAmount,
@@ -31,7 +31,7 @@ import {
   txUrl,
 } from '../lib/staking';
 
-type SigningClient = WalletClient<CustomTransport, typeof robinhoodChain, Account>;
+type SigningClient = WalletClient<CustomTransport, typeof appChain, Account>;
 
 type TxPhase = 'confirm' | 'pending';
 
@@ -99,6 +99,7 @@ export default function Stake() {
   const wallet = wallets[0];
   const address = wallet?.address as Address | undefined;
   const readOnly = !address;
+  const { data: me } = useMe();
 
   const { data: position } = useQuery({
     queryKey: ['stake', 'position', address],
@@ -109,6 +110,7 @@ export default function Stake() {
 
   const staked = position?.stakedBalance ?? 0;
   const walletBalance = position?.walletBalance ?? 0;
+  const eligible = me?.eligibility.eligible ?? staked > 0;
 
   const [tx, setTx] = useState<TxStatus | null>(null);
   const [lastTx, setLastTx] = useState<{ label: string; hash: Hash } | null>(null);
@@ -120,13 +122,13 @@ export default function Stake() {
   const getWalletClient = useCallback(async (): Promise<SigningClient> => {
     if (!wallet) throw new Error('No wallet connected');
     const chainId = Number(wallet.chainId.split(':')[1]);
-    if (chainId !== robinhoodChain.id) {
-      await wallet.switchChain(robinhoodChain.id);
+    if (chainId !== appChain.id) {
+      await wallet.switchChain(appChain.id);
     }
     const provider = await wallet.getEthereumProvider();
     return createWalletClient({
       account: wallet.address as Address,
-      chain: robinhoodChain,
+      chain: appChain,
       transport: custom(provider),
     });
   }, [wallet]);
@@ -223,7 +225,7 @@ export default function Stake() {
       <FeatureBanner
         feature="stake"
         title="Stake"
-        meta="Your daily GPU allocation is always active - staking tokenized NVDA is optional"
+        meta="Stake tokenized NVDA on Ethereum to unlock your daily GPU allocation"
       />
 
       {readOnly ? (
@@ -244,16 +246,22 @@ export default function Stake() {
               <span className="app-big" style={{ fontSize: 42 }} data-testid="text-staked-balance">
                 <CountUp value={staked} format={(n) => n.toLocaleString('en-US', { maximumFractionDigits: 2 })} />
               </span>
-              <span style={{ font: '500 15px var(--afont)', color: 'var(--ameta)' }}>NVDA staked</span>
+              <span style={{ font: '500 15px var(--afont)', color: 'var(--ameta)' }}>NVDAon staked</span>
             </div>
             <div style={{ marginTop: 16 }}>
-              <span className="status-pill" data-testid="pill-eligible">ALLOCATION ACTIVE</span>
+              {eligible ? (
+                <span className="status-pill" data-testid="pill-eligible">ELIGIBLE</span>
+              ) : (
+                <span className="status-pill status-queued" data-testid="pill-not-eligible">
+                  NOT ELIGIBLE · STAKE NVDAon TO UNLOCK
+                </span>
+              )}
             </div>
           </div>
           <div className="ov-hero-side">
             <div>
               <span className="app-meta">Wallet balance</span>
-              <b data-testid="text-wallet-balance">{walletBalance.toLocaleString('en-US', { maximumFractionDigits: 2 })} NVDA</b>
+              <b data-testid="text-wallet-balance">{walletBalance.toLocaleString('en-US', { maximumFractionDigits: 2 })} NVDAon</b>
             </div>
             <div>
               <span className="app-meta">Daily allocation</span>
@@ -261,7 +269,7 @@ export default function Stake() {
             </div>
             <div>
               <span className="app-meta">Total staked network-wide</span>
-              <b className="mono">{(position?.totalStaked ?? 0).toLocaleString('en-US', { maximumFractionDigits: 2 })} NVDA</b>
+              <b className="mono">{(position?.totalStaked ?? 0).toLocaleString('en-US', { maximumFractionDigits: 2 })} NVDAon</b>
             </div>
           </div>
         </div>
@@ -281,7 +289,7 @@ export default function Stake() {
         <Panel title="Stake" flush={false}>
           <div style={{ display: 'grid', gap: 12 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span className="app-meta">AMOUNT · NVDA</span>
+              <span className="app-meta">AMOUNT · NVDAON</span>
               <span className="app-meta">BALANCE {walletBalance.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
             </div>
             <AmountInput
@@ -314,7 +322,7 @@ export default function Stake() {
 
           <div style={{ display: 'grid', gap: 12 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span className="app-meta">UNSTAKE · NVDA</span>
+              <span className="app-meta">UNSTAKE · NVDAON</span>
               <span className="app-meta">STAKED {staked.toLocaleString('en-US', { maximumFractionDigits: 2 })}</span>
             </div>
             <AmountInput
@@ -341,8 +349,8 @@ export default function Stake() {
         <Panel title="How it works" flush={false}>
           <div style={{ display: 'grid', gap: 0 }}>
             {[
-              ['01', 'Connect a wallet', 'A daily 1,000 CR allocation activates automatically for every connected wallet - no minimum stake.'],
-              ['02', 'Stake tokenized NVDA (optional)', 'Tokens move into the staking vault on Robinhood Chain mainnet - you can unstake any time.'],
+              ['01', 'Stake tokenized NVDA', 'NVDAon moves into the staking vault on Ethereum mainnet - you can unstake any time.'],
+              ['02', 'Allocation unlocks automatically', 'Once a staked position is detected on-chain, the daily 1,000 CR allocation activates.'],
               ['03', 'Spend credits anywhere', 'Playground, Images, Workloads, and the GPU API all draw from the same allocation.'],
             ].map(([num, title, body]) => (
               <div key={num} style={{ display: 'flex', gap: 14, padding: '10px 0', borderBottom: '1px solid var(--ahair)' }}>
@@ -359,7 +367,7 @@ export default function Stake() {
             <AddressLink label="Staking vault" address={STAKE_VAULT_ADDRESS} />
           </div>
           <div className="mono" style={{ marginTop: 10, fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }}>
-            POSITION IS READ FROM THE STAKING VAULT ON EVERY REQUEST
+            ELIGIBILITY IS READ FROM THE STAKING VAULT ON EVERY REQUEST
           </div>
         </Panel>
       </div>

@@ -27,7 +27,7 @@ import {
   WorkloadSection,
 } from '@/components/LandingSections';
 import { AppShell } from '@/app/AppShell';
-import { robinhoodChain } from '@/app/chain';
+import { appChain } from '@/app/chain';
 import { RequireAuth } from '@/app/RequireAuth';
 import Docs from '@/pages/docs';
 import Compute from '@/app/pages/Compute';
@@ -137,8 +137,8 @@ function App() {
         config={{
           loginMethods: ['wallet', 'email'],
           appearance: { accentColor: '#151a21' },
-          defaultChain: robinhoodChain,
-          supportedChains: [robinhoodChain],
+          defaultChain: appChain,
+          supportedChains: [appChain],
           embeddedWallets: {
             ethereum: { createOnLogin: 'users-without-wallets' },
           },

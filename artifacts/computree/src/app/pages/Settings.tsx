@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { FeatureBanner } from '../components/FeatureBanner';
 import { AssetMark, ControlBoardArt, KeyAccessArt } from '../components/AppVisuals';
-import { robinhoodChain } from '../chain';
+import { appChain } from '../chain';
 import { Panel } from '../components/StatusPill';
 import { KEYS_STORAGE, MOCK_WALLET } from '../mock/data';
 import { DEMO_STORAGE, useDemoMode, useMe } from '../mock/hooks';
@@ -60,19 +60,19 @@ function WalletSection() {
             {address ? `${address.slice(0, 10)}…${address.slice(-8)}` : '-'}
           </span>
         </SettingRow>
-        <SettingRow label="Network" hint={`${robinhoodChain.name} · Chain ID ${robinhoodChain.id}`}>
+        <SettingRow label="Network" hint={`${appChain.name} · Chain ID ${appChain.id}`}>
           <span className="mono" style={{ fontSize: 10 }}>{MOCK_WALLET.network.toUpperCase()}</span>
         </SettingRow>
-        <SettingRow label="Staked balance (tokenized NVDA)">
+        <SettingRow label="Staked balance (NVDAon)">
           <span className="mono" style={{ fontSize: 10, fontVariantNumeric: 'tabular-nums', display: 'inline-flex', alignItems: 'center', gap: 6 }} data-testid="text-staked-balance">
-            <AssetMark asset="NVDA" size={13} />{balance.toLocaleString('en-US')} tokenized NVDA
+            <AssetMark asset="NVDA" size={13} />{balance.toLocaleString('en-US')} NVDAon
           </span>
         </SettingRow>
-        <SettingRow label="Daily allocation" hint="1,000 CR EVERY DAY · NO MINIMUM STAKE">
+        <SettingRow label="Eligibility" hint="STAKE TOKENIZED NVDA TO ACTIVATE YOUR DAILY ALLOCATION">
           {eligible ? (
-            <span className="status-pill" data-testid="pill-eligible">ACTIVE</span>
+            <span className="status-pill" data-testid="pill-eligible">ELIGIBLE</span>
           ) : (
-            <span className="mono" style={{ fontSize: 10, color: 'var(--ameta)' }}>-</span>
+            <span className="status-pill status-queued" data-testid="pill-not-eligible">NOT ELIGIBLE · STAKE NVDAon</span>
           )}
         </SettingRow>
         <div style={{ paddingTop: 14 }}>

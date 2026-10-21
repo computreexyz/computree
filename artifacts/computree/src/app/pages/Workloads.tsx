@@ -118,6 +118,11 @@ export default function Workloads() {
                 <Play size={12} /> {sending ? 'Running…' : 'Run'}
               </button>
             </div>
+            {noAllocation ? (
+              <div className="mono" style={{ fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }} data-testid="note-stake-to-run">
+                STAKE TOKENIZED NVDA (NVDAon) TO RUN WORKLOADS
+              </div>
+            ) : null}
             {error ? (
               <div className="pg-error" role="alert" data-testid="banner-workload-error">
                 {error}

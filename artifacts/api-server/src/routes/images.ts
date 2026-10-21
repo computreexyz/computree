@@ -10,6 +10,7 @@ import { getAccount, requireAuth } from "../lib/auth";
 import { db } from "../lib/db";
 import { ensureAllocation } from "../lib/allocations";
 import { redactUpstreamText } from "../lib/upstream";
+import { getEligibility } from "../lib/eligibility";
 import { newJobId, utcToday } from "../lib/metering";
 
 const router: IRouter = Router();
@@ -83,8 +84,21 @@ router.post("/generate", async (req, res, next) => {
       return;
     }
 
+    const eligibility = await getEligibility(account, req);
+    if (!eligibility.eligible) {
+      res.status(429).json({
+        error: "No daily allocation - stake tokenized NVDA to unlock compute",
+        code: "INELIGIBLE",
+      });
+      return;
+    }
+
     const cycleDate = utcToday();
-    const allocation = await ensureAllocation(account.id, cycleDate, 1000);
+    const allocation = await ensureAllocation(
+      account.id,
+      cycleDate,
+      eligibility.eligible ? 1000 : 0,
+    );
     const maxCost = CREDITS_PER_IMAGE * parsed.data.count;
     if (allocation.used >= allocation.total) {
       res.status(429).json({ error: "daily allocation exhausted" });
