@@ -14,6 +14,13 @@ if (!process.env.DATABASE_URL) {
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
+  // Supabase's pooler terminates long-lived / idle server connections.
+  // Recycle clients before that happens so a dropped connection never
+  // surfaces as an unhandled 'error' event on a checked-out client.
+  keepAlive: true,
+  idleTimeoutMillis: 30_000,
+  connectionTimeoutMillis: 10_000,
+  maxUses: 1000,
 });
 
 // An unhandled 'error' event from an idle pool client (e.g. the remote end
