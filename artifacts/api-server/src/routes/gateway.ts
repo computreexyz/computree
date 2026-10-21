@@ -149,12 +149,19 @@ router.post("/chat/completions", async (req, res, next) => {
         startedAt,
         completedAt,
       });
-      res.status(upstream.status).json(parsedErr ?? { error: message });
+      res.status(upstream.status).json({ error: message });
       return;
     }
 
     const data = (await upstream.json()) as {
+      id?: string;
+      created?: number;
       model?: string;
+      choices?: Array<{
+        index?: number;
+        finish_reason?: string;
+        message?: { role?: string; content?: string };
+      }>;
       usage?: {
         prompt_tokens?: number;
         completion_tokens?: number;
@@ -209,7 +216,29 @@ router.post("/chat/completions", async (req, res, next) => {
     const remaining = Math.max(0, updated.total - updated.used);
     res.set("x-ctree-credits-used", String(credits));
     res.set("x-ctree-remaining", String(remaining));
-    res.json(data);
+    // Return a clean OpenAI-compatible response - upstream provider metadata
+    // (provider name, cost details, reasoning internals) never leaks.
+    const promptTokens = data.usage?.prompt_tokens ?? 0;
+    const completionTokens = data.usage?.completion_tokens ?? 0;
+    res.json({
+      id: data.id ?? `gen-${Date.now()}`,
+      object: "chat.completion",
+      created: data.created ?? Math.floor(Date.now() / 1000),
+      model: data.model ?? model,
+      choices: (data.choices ?? []).map((choice, index) => ({
+        index: choice.index ?? index,
+        finish_reason: choice.finish_reason ?? "stop",
+        message: {
+          role: "assistant",
+          content: choice.message?.content ?? "",
+        },
+      })),
+      usage: {
+        prompt_tokens: promptTokens,
+        completion_tokens: completionTokens,
+        total_tokens: promptTokens + completionTokens,
+      },
+    });
   } catch (err) {
     if (key) {
       try {

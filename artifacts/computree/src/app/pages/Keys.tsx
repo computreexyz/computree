@@ -20,7 +20,7 @@ import { KeyAccessArt } from '../components/AppVisuals';
 import { Panel, RelativeTime } from '../components/StatusPill';
 import { TypedLines } from '../components/TypedLines';
 import { type ApiKey } from '../mock/data';
-import { useApiKeys } from '../mock/hooks';
+import { useApiKeys, useMe } from '../mock/hooks';
 import { CURL_TYPED_LINES, JS_SNIPPET, PYTHON_SNIPPET } from '../snippets';
 
 function CodeWindow({ label, method, children }: { label: string; method: string; children: React.ReactNode }) {
@@ -84,6 +84,8 @@ function KeyCard({ apiKey, onRevoke }: { apiKey: ApiKey; onRevoke: (key: ApiKey)
 
 export default function Keys() {
   const { keys, addKey, revokeKey } = useApiKeys();
+  const { data: me } = useMe();
+  const ineligible = me ? !me.eligibility.eligible : false;
   const [createOpen, setCreateOpen] = useState(false);
   const [name, setName] = useState('');
   const [revealed, setRevealed] = useState<string | null>(null);
@@ -134,6 +136,11 @@ export default function Keys() {
 
       <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', alignItems: 'start' }}>
         <div style={{ display: 'grid', gap: 10 }}>
+          {ineligible ? (
+            <div className="mono" style={{ padding: '0 2px', fontSize: 9, letterSpacing: '.06em', color: 'var(--ameta)' }} data-testid="note-stake-for-keys">
+              STAKE TOKENIZED NVDA (NVDAon) TO CREATE API KEYS
+            </div>
+          ) : null}
           {keys.length === 0 ? (
             <div className="app-panel app-panel-body">
               <div className="app-sub">No active keys. Create one to start calling the API.</div>

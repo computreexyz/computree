@@ -5,6 +5,7 @@ import { apiKeysTable, type ApiKey } from "@workspace/db/schema";
 import { getAccount, requireAuth } from "../lib/auth";
 import { db } from "../lib/db";
 import { ensureAllocation } from "../lib/allocations";
+import { getEligibility } from "../lib/eligibility";
 import {
   generateApiKeySecret,
   maskApiKey,
@@ -62,11 +63,20 @@ router.post("/", async (req, res, next) => {
       res.status(400).json({ error: parsed.error.issues[0]?.message ?? "invalid body" });
       return;
     }
+    const account = getAccount(req);
+    const eligibility = await getEligibility(account, req);
+    if (!eligibility.eligible) {
+      res.status(403).json({
+        error: "API keys require an active allocation - stake tokenized NVDA first",
+        code: "INELIGIBLE",
+      });
+      return;
+    }
     const secret = generateApiKeySecret();
     const [key] = await db
       .insert(apiKeysTable)
       .values({
-        accountId: getAccount(req).id,
+        accountId: account.id,
         name: parsed.data.name,
         keyPrefix: maskApiKey(secret),
         keyHash: sha256Hex(secret),

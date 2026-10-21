@@ -418,6 +418,10 @@ export default function Docs() {
                   rows={[
                     [<Mono>401</Mono>, 'Missing, invalid, or revoked API key'],
                     [
+                      <Mono>403 · INELIGIBLE</Mono>,
+                      'API key creation requires an active allocation - stake tokenized NVDA first',
+                    ],
+                    [
                       <Mono>429 · INELIGIBLE</Mono>,
                       'No daily allocation - stake tokenized NVDA to unlock compute',
                     ],
